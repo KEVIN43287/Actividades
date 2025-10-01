@@ -9,10 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gestión de Archivos</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root{
       --bg:#0f1110;
@@ -132,7 +128,6 @@
       box-shadow: 0 8px 22px rgba(0,0,0,0.6);
       text-decoration:none;
       color:var(--text);
-      cursor:pointer;
     }
     .task-card:hover{
       transform: translateY(-8px);
@@ -142,30 +137,7 @@
     .task-icon{font-size:28px;color:var(--accent)}
     .task-num{font-size:28px;font-weight:700;color:var(--text)}
     .task-label{font-weight:600;color:var(--text)}
-
-    /* FILE MANAGER */
-    .file-section{margin-top:20px}
-    .file-section h3{color:var(--accent);font-size:18px;margin-bottom:10px}
-    .file-input{margin-bottom:12px}
-    .file-list{list-style:none;padding:0;margin:0}
-    .file-list li{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      background:#222;
-      padding:8px 12px;
-      border-radius:6px;
-      margin-bottom:6px;
-    }
-    .file-list a{color:var(--accent);text-decoration:none}
-    .file-list button{
-      background:#ff4444;
-      color:white;
-      border:none;
-      border-radius:6px;
-      padding:4px 8px;
-      cursor:pointer;
-    }
+    .task-sub{font-size:13px;color:var(--muted)}
 
     /* SECTIONS with transition */
     .section{
@@ -185,17 +157,12 @@
       header{ grid-template-columns: 1fr; row-gap:12px; text-align:center; }
       nav.header-nav{ justify-self:center; }
     }
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    button { margin: 5px; padding: 10px; }
-    ul { list-style: none; padding: 0; }
-    li { margin: 5px 0; }
-    a { margin-left: 10px; }
   </style>
 </head>
 <body>
   <header>
     <div class="header-left">
-      <img src="upla.PNG" alt="Logo">
+      <img src="logo.png" alt="Logo">
     </div>
 
     <div class="header-center">
@@ -211,167 +178,56 @@
   </header>
 
   <main>
-    <!-- INICIO -->
     <section id="inicio" class="section active">
       <div class="panel">
         <h2>Bienvenido</h2>
         <div class="welcome">
-          <p>Bienvenido al portal de <strong>Base de Datos 2</strong>. Aquí accederás a las tareas semanales del curso.</p>
+          <p>
+            Bienvenido al portal de <strong>Base de Datos 2</strong>. Esta página es el centro de recursos del curso:
+            objetivos, contenidos y acceso a las tareas semanales.
+          </p>
+          <p>
+            En este curso profundizaremos en diseño lógico y físico de bases de datos, normalización, consultas avanzadas en SQL,
+            índices y optimización, procedimientos almacenados, triggers y administración básica de servidores de bases de datos.
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- TAREAS -->
     <section id="tareas" class="section">
       <div class="panel">
         <h2>Tareas - Semanas</h2>
         <div class="tasks-grid">
-          <!-- 13 SEMANAS -->
-          <div class="task-card" onclick="openWeek(1)"><div class="task-icon"><i class="fas fa-database"></i></div><div class="task-num">01</div><div class="task-label">Semana 1</div></div>
-          <div class="task-card" onclick="openWeek(2)"><div class="task-icon"><i class="fas fa-code"></i></div><div class="task-num">02</div><div class="task-label">Semana 2</div></div>
-          <div class="task-card" onclick="openWeek(3)"><div class="task-icon"><i class="fas fa-table"></i></div><div class="task-num">03</div><div class="task-label">Semana 3</div></div>
-          <div class="task-card" onclick="openWeek(4)"><div class="task-icon"><i class="fas fa-cogs"></i></div><div class="task-num">04</div><div class="task-label">Semana 4</div></div>
-          <div class="task-card" onclick="openWeek(5)"><div class="task-icon"><i class="fas fa-project-diagram"></i></div><div class="task-num">05</div><div class="task-label">Semana 5</div></div>
-          <div class="task-card" onclick="openWeek(6)"><div class="task-icon"><i class="fas fa-server"></i></div><div class="task-num">06</div><div class="task-label">Semana 6</div></div>
-          <div class="task-card" onclick="openWeek(7)"><div class="task-icon"><i class="fas fa-chart-line"></i></div><div class="task-num">07</div><div class="task-label">Semana 7</div></div>
-          <div class="task-card" onclick="openWeek(8)"><div class="task-icon"><i class="fas fa-key"></i></div><div class="task-num">08</div><div class="task-label">Semana 8</div></div>
-          <div class="task-card" onclick="openWeek(9)"><div class="task-icon"><i class="fas fa-lock"></i></div><div class="task-num">09</div><div class="task-label">Semana 9</div></div>
-          <div class="task-card" onclick="openWeek(10)"><div class="task-icon"><i class="fas fa-sitemap"></i></div><div class="task-num">10</div><div class="task-label">Semana 10</div></div>
-          <div class="task-card" onclick="openWeek(11)"><div class="task-icon"><i class="fas fa-laptop-code"></i></div><div class="task-num">11</div><div class="task-label">Semana 11</div></div>
-          <div class="task-card" onclick="openWeek(12)"><div class="task-icon"><i class="fas fa-database"></i></div><div class="task-num">12</div><div class="task-label">Semana 12</div></div>
-          <div class="task-card" onclick="openWeek(13)"><div class="task-icon"><i class="fas fa-check-circle"></i></div><div class="task-num">13</div><div class="task-label">Semana 13</div></div>
+          <a class="task-card" href="#"><div class="task-icon"><i class="fas fa-database"></i></div><div class="task-num">01</div><div class="task-label">Semana 1</div></a>
+          <a class="task-card" href="#"><div class="task-icon"><i class="fas fa-code"></i></div><div class="task-num">02</div><div class="task-label">Semana 2</div></a>
+          <a class="task-card" href="#"><div class="task-icon"><i class="fas fa-table"></i></div><div class="task-num">03</div><div class="task-label">Semana 3</div></a>
+          <a class="task-card" href="#"><div class="task-icon"><i class="fas fa-cogs"></i></div><div class="task-num">04</div><div class="task-label">Semana 4</div></a>
+          <a class="task-card" href="#"><div class="task-icon"><i class="fas fa-project-diagram"></i></div><div class="task-num">05</div><div class="task-label">Semana 5</div></a>
+          <a class="task-card" href="#"><div class="task-icon"><i class="fas fa-server"></i></div><div class="task-num">06</div><div class="task-label">Semana 6</div></a>
+          <a class="task-card" href="#"><div class="task-icon"><i class="fas fa-chart-line"></i></div><div class="task-num">07</div><div class="task-label">Semana 7</div></a>
+          <a class="task-card" href="#"><div class="task-icon"><i class="fas fa-key"></i></div><div class="task-num">08</div><div class="task-label">Semana 8</div></a>
+          <a class="task-card" href="#"><div class="task-icon"><i class="fas fa-lock"></i></div><div class="task-num">09</div><div class="task-label">Semana 9</div></a>
+          <a class="task-card" href="#"><div class="task-icon"><i class="fas fa-sitemap"></i></div><div class="task-num">10</div><div class="task-label">Semana 10</div></a>
+          <a class="task-card" href="#"><div class="task-icon"><i class="fas fa-laptop-code"></i></div><div class="task-num">11</div><div class="task-label">Semana 11</div></a>
+          <a class="task-card" href="#"><div class="task-icon"><i class="fas fa-database"></i></div><div class="task-num">12</div><div class="task-label">Semana 12</div></a>
+          <a class="task-card" href="#"><div class="task-icon"><i class="fas fa-check-circle"></i></div><div class="task-num">13</div><div class="task-label">Semana 13</div></a>
         </div>
-      </div>
-    </section>
-
-    <!-- SEMANAS INDIVIDUALES -->
-    <section id="semana" class="section">
-      <div class="panel">
-        <h2 id="week-title">Semana</h2>
-        <div class="file-section">
-          <h3>Gestión de Archivos</h3>
-          <input type="file" id="file-input" class="file-input" multiple />
-          <ul id="file-list" class="file-list"></ul>
-        </div>
-        <button onclick="backToTasks()">← Volver a Tareas</button>
       </div>
     </section>
   </main>
-  <h2>📂 Subir y Gestionar Archivos</h2>
-  
-  <!-- Input para seleccionar archivo -->
-  <input type="file" id="fileInput">
-  <button onclick="uploadFile()">Subir archivo</button>
-  
-  <h3>Archivos guardados:</h3>
-  <ul id="fileList"></ul>
 
   <script>
-    let currentWeek = null;
-    const filesByWeek = {};
-    // 🚀 Tus credenciales de Supabase
-    const SUPABASE_URL = "https://dfnwymvyzdeahuyhvltt.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmbnd5bXZ5emRlYWh1eWh2bHR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkzMTM0NTksImV4cCI6MjA3NDg4OTQ1OX0.-fVeyRAsMiB5Fwgx9aOTJURGYK4Owoc1cfo9g0opjcs";
-
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    const bucket = "archivos"; // 👈 nombre del bucket en Supabase Storage
-
-    // Subir archivo
-    async function uploadFile() {
-      const fileInput = document.getElementById("fileInput");
-      const file = fileInput.files[0];
-      if (!file) {
-        alert("Selecciona un archivo primero");
-        return;
-      }
-
     function showSection(evt, id) {
       if (evt) evt.preventDefault();
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
-      if(document.getElementById('nav-' + id)) {
-        document.getElementById('nav-' + id).setAttribute('aria-current','page');
-      const { error } = await supabase.storage.from(bucket).upload(file.name, file, {
-        upsert: true
+      document.querySelectorAll('.section').forEach(s => {
+        s.classList.remove('active');
       });
-
-      if (error) {
-        alert("Error al subir: " + error.message);
-      } else {
-        alert("Archivo subido con éxito ✅");
-        listFiles();
-      }
+      const el = document.getElementById(id);
+      if (el) el.classList.add('active');
+      document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
+      document.getElementById('nav-' + id).setAttribute('aria-current','page');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
-    function openWeek(num){
-      currentWeek = num;
-      document.getElementById("week-title").textContent = "Semana " + num;
-      showSection(null,"semana");
-      renderFiles();
-    }
-    // Listar archivos
-    async function listFiles() {
-      const { data, error } = await supabase.storage.from(bucket).list();
-      if (error) {
-        console.error(error);
-        return;
-      }
-
-    function backToTasks(){
-      showSection(null,"tareas");
-    }
-      const fileList = document.getElementById("fileList");
-      fileList.innerHTML = "";
-
-    document.getElementById("file-input").addEventListener("change", function(e){
-      if(!currentWeek) return;
-      if(!filesByWeek[currentWeek]) filesByWeek[currentWeek] = [];
-      [...e.target.files].forEach(file=>{
-        const url = URL.createObjectURL(file);
-        filesByWeek[currentWeek].push({name:file.name, url:url});
-      });
-      e.target.value = "";
-      renderFiles();
-    });
-      for (let file of data) {
-        const { data: urlData } = supabase.storage.from(bucket).getPublicUrl(file.name);
-
-    function renderFiles(){
-      const list = document.getElementById("file-list");
-      list.innerHTML = "";
-      (filesByWeek[currentWeek]||[]).forEach((f,idx)=>{
-        const li = document.createElement("li");
-        li.innerHTML = `<a href="${f.url}" target="_blank">${f.name}</a>
-                        <button onclick="deleteFile(${idx})">Borrar</button>`;
-        list.appendChild(li);
-      });
-        li.innerHTML = `
-          ${file.name} 
-          <a href="${urlData.publicUrl}" target="_blank">Ver</a> 
-          <button onclick="deleteFile('${file.name}')">Eliminar</button>
-        `;
-        fileList.appendChild(li);
-      }
-    }
-
-    function deleteFile(idx){
-      filesByWeek[currentWeek].splice(idx,1);
-      renderFiles();
-    // Eliminar archivo
-    async function deleteFile(fileName) {
-      const { error } = await supabase.storage.from(bucket).remove([fileName]);
-      if (error) {
-        alert("Error al eliminar: " + error.message);
-      } else {
-        alert("Archivo eliminado 🚮");
-        listFiles();
-      }
-    }
-
-    // Cargar lista al inicio
-    listFiles();
   </script>
 </body>
 </html>
