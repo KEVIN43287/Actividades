@@ -3,161 +3,484 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Base de Datos II</title>
+  <title>Centro BASE DE DATOS 2</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BASE DE DATOS 2 - Inicio</title>
+
+  <!-- Google Font + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background-color: black;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f9;
+      color: #333;
+    }
+    header {
+      background: #2c3e50;
       color: white;
+      padding: 20px;
       text-align: center;
     }
-
-    header {
-      background-color: #111;
-      padding: 20px;
-      font-size: 24px;
-      font-weight: bold;
+    header h1 {
+      margin: 5px 0;
+      font-size: 28px;
     }
-
+    header h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: normal;
+    }
     nav {
-      margin: 20px 0;
+      margin-top: 15px;
     }
-
     nav button {
-      background: #00ff88;
+      background: #3498db;
+      color: white;
       border: none;
       padding: 10px 20px;
       margin: 5px;
-      border-radius: 8px;
       cursor: pointer;
-      font-weight: bold;
-      transition: transform 0.3s;
+      border-radius: 5px;
+      font-size: 16px;
     }
-
     nav button:hover {
-      transform: scale(1.1);
+      background: #2980b9;
     }
-
     .page {
       display: none;
       padding: 20px;
+      text-align: center;
     }
-
     .active {
       display: block;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .weeks {
+      display: grid;
+    :root{
+      --bg:#0f1110;
+      --panel:#161616;
+      --accent:#00ff88;
+      --muted:#b9e6c4;
+      --text:#e9efe8;
+      --card-border: rgba(0,255,136,0.12);
     }
 
-    .semana {
-      border: 1px solid #00ff88;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Poppins", Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.5;
+    }
+
+    /* HEADER */
+    header{
+      display:grid;
+      grid-template-columns: auto 1fr auto;
+      align-items:center;
+      gap:20px;
+      padding:18px 26px;
+      background:#0b0b0b;
+    }
+
+    .header-left img{
+      height:72px; width:auto;
+      display:block;
+      border-radius:8px;
+    }
+
+    .header-center{
+      text-align:center;
+    }
+    .header-center h1{
+      margin:0;
+      font-size:22px;
+      text-transform:uppercase;
+      color:var(--text);
+    }
+    .header-center .uni{
+      margin-top:6px;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .header-center .name{
+      margin-top:4px;
+      font-size:14px;
+      font-weight:600;
+      color:var(--accent);
+    }
+
+    nav.header-nav{
+      display:flex;
+      gap:12px;
+      justify-self:end;
+    }
+    nav.header-nav a{
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:600;
+      padding:8px 12px;
+      border-radius:8px;
+      transition: all .16s ease;
+    }
+    nav.header-nav a[aria-current="page"]{
+      background: rgba(0,255,136,0.08);
+      color:var(--text);
+    }
+    nav.header-nav a:hover{
+      transform:translateY(-3px);
+      color:var(--text);
+      background: rgba(0,255,136,0.06);
+    }
+
+    main{
+      max-width:1100px;
+      margin:28px auto;
+      padding:0 18px 60px;
+    }
+
+    .panel{
+      background:var(--panel);
+      border-radius:12px;
+      padding:22px;
+      box-shadow: 0 10px 32px rgba(0,0,0,0.6);
+      border:1px solid var(--card-border);
+    }
+
+    h2{margin:0 0 14px 0;color:var(--accent);font-size:20px}
+    .welcome p{color:#dfeee2;margin:12px 0}
+
+    .tasks-grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .week {
+      border: 2px solid #3498db;
       border-radius: 10px;
       padding: 15px;
-      margin: 15px auto;
-      max-width: 500px;
-      background-color: #111;
+      background: white;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
-
-    .semana h3 {
-      margin: 0 0 10px;
-      color: #00ff88;
+    .week h3 {
+      margin-top: 0;
+      color: #2c3e50;
     }
-
-    input[type="file"] {
-      margin: 10px 0;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-      margin-top: 10px;
-    }
-
-    ul li {
-      margin: 5px 0;
-      background: #222;
-      padding: 5px;
-      border-radius: 5px;
-    }
-
-    ul li a {
-      color: #00ff88;
-      text-decoration: none;
-    }
-
-    ul li button {
-      margin-left: 10px;
-      padding: 3px 8px;
-      background: red;
+    .week button {
+      margin: 5px;
+      padding: 8px 12px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      color: white;
+      font-size: 14px;
+    }
+    .upload-btn { background: #27ae60; color: white; }
+    .delete-btn { background: #e74c3c; color: white; }
+    .view-link { display: block; margin: 5px 0; }
+      gap:18px;
+    }
+
+    .task-card{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      text-align:center;
+      padding:22px;
+      border-radius:12px;
+      border:2px solid var(--card-border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.6);
+      text-decoration:none;
+      color:var(--text);
+      cursor:pointer;
+    }
+    .task-card:hover{
+      transform: translateY(-8px);
+      box-shadow: 0 18px 46px rgba(0,255,136,0.08);
+      border-color: rgba(0,255,136,0.28);
+    }
+    .task-icon{font-size:28px;color:var(--accent)}
+    .task-num{font-size:28px;font-weight:700;color:var(--text)}
+    .task-label{font-weight:600;color:var(--text)}
+
+    /* FILE MANAGER */
+    .file-section{margin-top:20px}
+    .file-section h3{color:var(--accent);font-size:18px;margin-bottom:10px}
+    .file-input{margin-bottom:12px}
+    .file-list{list-style:none;padding:0;margin:0}
+    .file-list li{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      background:#222;
+      padding:8px 12px;
+      border-radius:6px;
+      margin-bottom:6px;
+    }
+    .file-list a{color:var(--accent);text-decoration:none}
+    .file-list button{
+      background:#ff4444;
+      color:white;
+      border:none;
+      border-radius:6px;
+      padding:4px 8px;
+      cursor:pointer;
+    }
+
+    /* SECTIONS with transition */
+    .section{
+      display:none;
+      opacity:0;
+      transform: translateY(10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .section.active{
+      display:block;
+      opacity:1;
+      transform: translateY(0);
+    }
+
+    @media (max-width:520px){
+      .tasks-grid{ grid-template-columns:1fr; }
+      header{ grid-template-columns: 1fr; row-gap:12px; text-align:center; }
+      nav.header-nav{ justify-self:center; }
     }
   </style>
 </head>
 <body>
-
   <header>
-    Kevin Alfredo Macha Bruno <br>
-    Universidad Peruana Los Andes <br>
-    Base de Datos II
+    <img src="logo.png" alt="Logo" width="100"><!-- tu logo -->
+    <h1>Centro BASE DE DATOS 2</h1>
+    <h2>Kevin Alfredo Macha Bruno - Universidad Peruana Los Andes</h2>
+    <nav>
+      <button onclick="showPage('inicio')">Inicio</button>
+      <button onclick="showPage('tareas')">Tareas</button>
+    <div class="header-left">
+      <img src="upla.PNG" alt="Logo">
+    </div>
+
+    <div class="header-center">
+      <h1>BASE DE DATOS 2</h1>
+      <div class="uni">Universidad Peruana Los Andes</div>
+      <div class="name">Kevin Alfredo Macha Bruno</div>
+    </div>
+
+    <nav class="header-nav">
+      <a href="#" id="nav-inicio" aria-current="page" onclick="showSection(event,'inicio')">Inicio</a>
+      <a href="#" id="nav-tareas" onclick="showSection(event,'tareas')">Tareas</a>
+    </nav>
   </header>
 
-  <nav>
-    <button onclick="showPage('inicio')">Inicio</button>
-    <button onclick="showPage('tareas')">Tareas</button>
-  </nav>
+  <!-- Página de Inicio -->
+  <section id="inicio" class="page active">
+    <h2>Bienvenidos</h2>
+    <p>Este curso de Base de Datos 2 está diseñado para reforzar y profundizar los conocimientos de modelamiento, administración y optimización de bases de datos, con un enfoque práctico orientado a proyectos reales.</p>
+  </section>
 
-  <div id="inicio" class="page active">
-    <h1>Bienvenido</h1>
-    <p>Selecciona "Tareas" para ver las semanas.</p>
-  </div>
+  <!-- Página de Tareas -->
+  <section id="tareas" class="page">
+    <h2>Semanas de trabajo</h2>
+    <div class="weeks" id="weeks"></div>
+  </section>
 
-  <div id="tareas" class="page">
-    <h1>Semanas</h1>
-    <div id="semanas"></div>
-  </div>
+  <!-- Firebase y lógica -->
+  <script type="module">
+    // Importar Firebase desde CDN
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getStorage, ref, uploadBytes, listAll, getDownloadURL, deleteObject } 
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+    // Tu configuración Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyC4MdEcp4sy7eY4OjwaqKr1btGaEnpbJHU",
+      authDomain: "kevin-c60d5.firebaseapp.com",
+      projectId: "kevin-c60d5",
+      storageBucket: "kevin-c60d5.firebasestorage.app",
+      messagingSenderId: "622220585683",
+      appId: "1:622220585683:web:3daf9e5620877d554d0226",
+      measurementId: "G-1BJ0KG2YBR"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const storage = getStorage(app);
+
+    // Mostrar páginas
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  <main>
+    <!-- INICIO -->
+    <section id="inicio" class="section active">
+      <div class="panel">
+        <h2>Bienvenido</h2>
+        <div class="welcome">
+          <p>Bienvenido al portal de <strong>Base de Datos 2</strong>. Aquí accederás a las tareas semanales del curso.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAREAS -->
+    <section id="tareas" class="section">
+      <div class="panel">
+        <h2>Tareas - Semanas</h2>
+        <div class="tasks-grid">
+          <!-- 13 SEMANAS -->
+          <div class="task-card" onclick="openWeek(1)"><div class="task-icon"><i class="fas fa-database"></i></div><div class="task-num">01</div><div class="task-label">Semana 1</div></div>
+          <div class="task-card" onclick="openWeek(2)"><div class="task-icon"><i class="fas fa-code"></i></div><div class="task-num">02</div><div class="task-label">Semana 2</div></div>
+          <div class="task-card" onclick="openWeek(3)"><div class="task-icon"><i class="fas fa-table"></i></div><div class="task-num">03</div><div class="task-label">Semana 3</div></div>
+          <div class="task-card" onclick="openWeek(4)"><div class="task-icon"><i class="fas fa-cogs"></i></div><div class="task-num">04</div><div class="task-label">Semana 4</div></div>
+          <div class="task-card" onclick="openWeek(5)"><div class="task-icon"><i class="fas fa-project-diagram"></i></div><div class="task-num">05</div><div class="task-label">Semana 5</div></div>
+          <div class="task-card" onclick="openWeek(6)"><div class="task-icon"><i class="fas fa-server"></i></div><div class="task-num">06</div><div class="task-label">Semana 6</div></div>
+          <div class="task-card" onclick="openWeek(7)"><div class="task-icon"><i class="fas fa-chart-line"></i></div><div class="task-num">07</div><div class="task-label">Semana 7</div></div>
+          <div class="task-card" onclick="openWeek(8)"><div class="task-icon"><i class="fas fa-key"></i></div><div class="task-num">08</div><div class="task-label">Semana 8</div></div>
+          <div class="task-card" onclick="openWeek(9)"><div class="task-icon"><i class="fas fa-lock"></i></div><div class="task-num">09</div><div class="task-label">Semana 9</div></div>
+          <div class="task-card" onclick="openWeek(10)"><div class="task-icon"><i class="fas fa-sitemap"></i></div><div class="task-num">10</div><div class="task-label">Semana 10</div></div>
+          <div class="task-card" onclick="openWeek(11)"><div class="task-icon"><i class="fas fa-laptop-code"></i></div><div class="task-num">11</div><div class="task-label">Semana 11</div></div>
+          <div class="task-card" onclick="openWeek(12)"><div class="task-icon"><i class="fas fa-database"></i></div><div class="task-num">12</div><div class="task-label">Semana 12</div></div>
+          <div class="task-card" onclick="openWeek(13)"><div class="task-icon"><i class="fas fa-check-circle"></i></div><div class="task-num">13</div><div class="task-label">Semana 13</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEMANAS INDIVIDUALES -->
+    <section id="semana" class="section">
+      <div class="panel">
+        <h2 id="week-title">Semana</h2>
+        <div class="file-section">
+          <h3>Gestión de Archivos</h3>
+          <input type="file" id="file-input" class="file-input" multiple />
+          <ul id="file-list" class="file-list"></ul>
+        </div>
+        <button onclick="backToTasks()">← Volver a Tareas</button>
+      </div>
+    </section>
+  </main>
 
   <script>
-    function showPage(pageId) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');
+    let currentWeek = null;
+    const filesByWeek = {};
+
+    function showSection(evt, id) {
+      if (evt) evt.preventDefault();
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
     }
+    window.showPage = showPage;
 
-    const semanasDiv = document.getElementById('semanas');
-
-    for (let i = 1; i <= 16; i++) {
-      const semana = document.createElement('div');
-      semana.classList.add('semana');
-      semana.innerHTML = `
+    // Generar semanas
+    const weeksContainer = document.getElementById("weeks");
+    for (let i = 1; i <= 13; i++) {
+      const weekDiv = document.createElement("div");
+      weekDiv.classList.add("week");
+      weekDiv.innerHTML = `
         <h3>Semana ${i}</h3>
-        <input type="file" multiple onchange="subirArchivos(event, ${i})">
-        <ul id="lista${i}"></ul>
+        <input type="file" id="fileInput${i}" multiple style="display:none"/>
+        <button class="upload-btn" onclick="uploadFiles(${i})">Subir archivos</button>
+        <div id="filesList${i}"></div>
       `;
-      semanasDiv.appendChild(semana);
+      weeksContainer.appendChild(weekDiv);
+      loadFiles(i);
     }
 
-    function subirArchivos(event, semana) {
-      const lista = document.getElementById('lista' + semana);
-      const files = event.target.files;
+    // Subir archivos
+    window.uploadFiles = function(week) {
+      const input = document.getElementById(fileInput${week});
+      input.click();
+      input.onchange = async () => {
+        const files = input.files;
+        for (let file of files) {
+          const storageRef = ref(storage, semana${week}/${file.name});
+          await uploadBytes(storageRef, file);
+        }
+        loadFiles(week);
+      };
+    };
 
-      for (let file of files) {
-        const li = document.createElement('li');
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(file);
-        link.textContent = file.name;
-        link.target = "_blank";
-
-        const btnBorrar = document.createElement('button');
-        btnBorrar.textContent = "Eliminar";
-        btnBorrar.onclick = () => li.remove();
-
-        li.appendChild(link);
-        li.appendChild(btnBorrar);
-        lista.appendChild(li);
+    // Cargar archivos
+    async function loadFiles(week) {
+      const listDiv = document.getElementById(filesList${week});
+      listDiv.innerHTML = "Cargando...";
+      const listRef = ref(storage, semana${week});
+      try {
+        const res = await listAll(listRef);
+        listDiv.innerHTML = "";
+        for (let itemRef of res.items) {
+          const url = await getDownloadURL(itemRef);
+          const div = document.createElement("div");
+          div.innerHTML = `
+            <a href="${url}" target="_blank" class="view-link">${itemRef.name}</a>
+            <button class="delete-btn" onclick="deleteFile('${itemRef.fullPath}', ${week})">Borrar</button>
+          `;
+          listDiv.appendChild(div);
+        }
+      } catch (err) {
+        listDiv.innerHTML = "Sin archivos.";
+      document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
+      if(document.getElementById('nav-' + id)) {
+        document.getElementById('nav-' + id).setAttribute('aria-current','page');
       }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openWeek(num){
+      currentWeek = num;
+      document.getElementById("week-title").textContent = "Semana " + num;
+      showSection(null,"semana");
+      renderFiles();
+    }
+
+    // Borrar archivo
+    window.deleteFile = async function(path, week) {
+      const fileRef = ref(storage, path);
+      await deleteObject(fileRef);
+      loadFiles(week);
+    };
+    function backToTasks(){
+      showSection(null,"tareas");
+    }
+
+    document.getElementById("file-input").addEventListener("change", function(e){
+      if(!currentWeek) return;
+      if(!filesByWeek[currentWeek]) filesByWeek[currentWeek] = [];
+      [...e.target.files].forEach(file=>{
+        const url = URL.createObjectURL(file);
+        filesByWeek[currentWeek].push({name:file.name, url:url});
+      });
+      e.target.value = "";
+      renderFiles();
+    });
+
+    function renderFiles(){
+      const list = document.getElementById("file-list");
+      list.innerHTML = "";
+      (filesByWeek[currentWeek]||[]).forEach((f,idx)=>{
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="${f.url}" target="_blank">${f.name}</a>
+                        <button onclick="deleteFile(${idx})">Borrar</button>`;
+        list.appendChild(li);
+      });
+    }
+
+    function deleteFile(idx){
+      filesByWeek[currentWeek].splice(idx,1);
+      renderFiles();
     }
   </script>
-
 </body>
 </html>
