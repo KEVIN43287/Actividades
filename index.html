@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Centro BASE DE DATOS 2</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>BASE DE DATOS 2 - Inicio</title>
@@ -12,60 +9,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Centro BASE DE DATOS 2</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f4f4f9;
-      color: #333;
-    }
-    header {
-      background: #2c3e50;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    header h1 {
-      margin: 5px 0;
-      font-size: 28px;
-    }
-    header h2 {
-      margin: 0;
-      font-size: 18px;
-      font-weight: normal;
-    }
-    nav {
-      margin-top: 15px;
-    }
-    nav button {
-      background: #3498db;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      margin: 5px;
-      cursor: pointer;
-      border-radius: 5px;
-      font-size: 16px;
-    }
-    nav button:hover {
-      background: #2980b9;
-    }
-    .page {
-      display: none;
-      padding: 20px;
-      text-align: center;
-    }
-    .active {
-      display: block;
-      animation: fadeIn 0.5s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .weeks {
-      display: grid;
     :root{
       --bg:#0f1110;
       --panel:#161616;
@@ -165,32 +112,60 @@
     .tasks-grid{
       margin-top:18px;
       display:grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      margin-top: 20px;
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f9;
+      color: #333;
     }
-    .week {
-      border: 2px solid #3498db;
-      border-radius: 10px;
-      padding: 15px;
-      background: white;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 20px;
+      text-align: center;
     }
-    .week h3 {
-      margin-top: 0;
-      color: #2c3e50;
+    header h1 {
+      margin: 5px 0;
+      font-size: 28px;
     }
-    .week button {
-      margin: 5px;
-      padding: 8px 12px;
+    header h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: normal;
+    }
+    nav {
+      margin-top: 15px;
+    }
+    nav button {
+      background: #3498db;
+      color: white;
       border: none;
-      border-radius: 5px;
+      padding: 10px 20px;
+      margin: 5px;
       cursor: pointer;
-      font-size: 14px;
+      border-radius: 5px;
+      font-size: 16px;
     }
-    .upload-btn { background: #27ae60; color: white; }
-    .delete-btn { background: #e74c3c; color: white; }
-    .view-link { display: block; margin: 5px 0; }
+    nav button:hover {
+      background: #2980b9;
+    }
+    .page {
+      display: none;
+      padding: 20px;
+      text-align: center;
+    }
+    .active {
+      display: block;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .weeks {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap:18px;
     }
 
@@ -262,16 +237,35 @@
       header{ grid-template-columns: 1fr; row-gap:12px; text-align:center; }
       nav.header-nav{ justify-self:center; }
     }
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .week {
+      border: 2px solid #3498db;
+      border-radius: 10px;
+      padding: 15px;
+      background: white;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .week h3 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+    .week button {
+      margin: 5px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .upload-btn { background: #27ae60; color: white; }
+    .delete-btn { background: #e74c3c; color: white; }
+    .view-link { display: block; margin: 5px 0; }
   </style>
 </head>
 <body>
   <header>
-    <img src="logo.png" alt="Logo" width="100"><!-- tu logo -->
-    <h1>Centro BASE DE DATOS 2</h1>
-    <h2>Kevin Alfredo Macha Bruno - Universidad Peruana Los Andes</h2>
-    <nav>
-      <button onclick="showPage('inicio')">Inicio</button>
-      <button onclick="showPage('tareas')">Tareas</button>
     <div class="header-left">
       <img src="upla.PNG" alt="Logo">
     </div>
@@ -285,45 +279,15 @@
     <nav class="header-nav">
       <a href="#" id="nav-inicio" aria-current="page" onclick="showSection(event,'inicio')">Inicio</a>
       <a href="#" id="nav-tareas" onclick="showSection(event,'tareas')">Tareas</a>
+    <img src="logo.png" alt="Logo" width="100"><!-- tu logo -->
+    <h1>Centro BASE DE DATOS 2</h1>
+    <h2>Kevin Alfredo Macha Bruno - Universidad Peruana Los Andes</h2>
+    <nav>
+      <button onclick="showPage('inicio')">Inicio</button>
+      <button onclick="showPage('tareas')">Tareas</button>
     </nav>
   </header>
 
-  <!-- Página de Inicio -->
-  <section id="inicio" class="page active">
-    <h2>Bienvenidos</h2>
-    <p>Este curso de Base de Datos 2 está diseñado para reforzar y profundizar los conocimientos de modelamiento, administración y optimización de bases de datos, con un enfoque práctico orientado a proyectos reales.</p>
-  </section>
-
-  <!-- Página de Tareas -->
-  <section id="tareas" class="page">
-    <h2>Semanas de trabajo</h2>
-    <div class="weeks" id="weeks"></div>
-  </section>
-
-  <!-- Firebase y lógica -->
-  <script type="module">
-    // Importar Firebase desde CDN
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getStorage, ref, uploadBytes, listAll, getDownloadURL, deleteObject } 
-      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
-
-    // Tu configuración Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyC4MdEcp4sy7eY4OjwaqKr1btGaEnpbJHU",
-      authDomain: "kevin-c60d5.firebaseapp.com",
-      projectId: "kevin-c60d5",
-      storageBucket: "kevin-c60d5.firebasestorage.app",
-      messagingSenderId: "622220585683",
-      appId: "1:622220585683:web:3daf9e5620877d554d0226",
-      measurementId: "G-1BJ0KG2YBR"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const storage = getStorage(app);
-
-    // Mostrar páginas
-    function showPage(id) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   <main>
     <!-- INICIO -->
     <section id="inicio" class="section active">
@@ -379,8 +343,81 @@
     function showSection(evt, id) {
       if (evt) evt.preventDefault();
       document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  <!-- Página de Inicio -->
+  <section id="inicio" class="page active">
+    <h2>Bienvenidos</h2>
+    <p>Este curso de Base de Datos 2 está diseñado para reforzar y profundizar los conocimientos de modelamiento, administración y optimización de bases de datos, con un enfoque práctico orientado a proyectos reales.</p>
+  </section>
+
+  <!-- Página de Tareas -->
+  <section id="tareas" class="page">
+    <h2>Semanas de trabajo</h2>
+    <div class="weeks" id="weeks"></div>
+  </section>
+
+  <!-- Firebase y lógica -->
+  <script type="module">
+    // Importar Firebase desde CDN
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getStorage, ref, uploadBytes, listAll, getDownloadURL, deleteObject } 
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+    // Tu configuración Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyC4MdEcp4sy7eY4OjwaqKr1btGaEnpbJHU",
+      authDomain: "kevin-c60d5.firebaseapp.com",
+      projectId: "kevin-c60d5",
+      storageBucket: "kevin-c60d5.firebasestorage.app",
+      messagingSenderId: "622220585683",
+      appId: "1:622220585683:web:3daf9e5620877d554d0226",
+      measurementId: "G-1BJ0KG2YBR"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const storage = getStorage(app);
+
+    // Mostrar páginas
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById(id).classList.add('active');
+      document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
+      if(document.getElementById('nav-' + id)) {
+        document.getElementById('nav-' + id).setAttribute('aria-current','page');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    function openWeek(num){
+      currentWeek = num;
+      document.getElementById("week-title").textContent = "Semana " + num;
+      showSection(null,"semana");
+      renderFiles();
+    }
+
+    function backToTasks(){
+      showSection(null,"tareas");
+    }
+
+    document.getElementById("file-input").addEventListener("change", function(e){
+      if(!currentWeek) return;
+      if(!filesByWeek[currentWeek]) filesByWeek[currentWeek] = [];
+      [...e.target.files].forEach(file=>{
+        const url = URL.createObjectURL(file);
+        filesByWeek[currentWeek].push({name:file.name, url:url});
+      });
+      e.target.value = "";
+      renderFiles();
+    });
+
+    function renderFiles(){
+      const list = document.getElementById("file-list");
+      list.innerHTML = "";
+      (filesByWeek[currentWeek]||[]).forEach((f,idx)=>{
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="${f.url}" target="_blank">${f.name}</a>
+                        <button onclick="deleteFile(${idx})">Borrar</button>`;
+        list.appendChild(li);
+      });
     window.showPage = showPage;
 
     // Generar semanas
@@ -431,56 +468,19 @@
         }
       } catch (err) {
         listDiv.innerHTML = "Sin archivos.";
-      document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
-      if(document.getElementById('nav-' + id)) {
-        document.getElementById('nav-' + id).setAttribute('aria-current','page');
       }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function openWeek(num){
-      currentWeek = num;
-      document.getElementById("week-title").textContent = "Semana " + num;
-      showSection(null,"semana");
-      renderFiles();
-    }
-
-    // Borrar archivo
-    window.deleteFile = async function(path, week) {
-      const fileRef = ref(storage, path);
-      await deleteObject(fileRef);
-      loadFiles(week);
-    };
-    function backToTasks(){
-      showSection(null,"tareas");
-    }
-
-    document.getElementById("file-input").addEventListener("change", function(e){
-      if(!currentWeek) return;
-      if(!filesByWeek[currentWeek]) filesByWeek[currentWeek] = [];
-      [...e.target.files].forEach(file=>{
-        const url = URL.createObjectURL(file);
-        filesByWeek[currentWeek].push({name:file.name, url:url});
-      });
-      e.target.value = "";
-      renderFiles();
-    });
-
-    function renderFiles(){
-      const list = document.getElementById("file-list");
-      list.innerHTML = "";
-      (filesByWeek[currentWeek]||[]).forEach((f,idx)=>{
-        const li = document.createElement("li");
-        li.innerHTML = `<a href="${f.url}" target="_blank">${f.name}</a>
-                        <button onclick="deleteFile(${idx})">Borrar</button>`;
-        list.appendChild(li);
-      });
     }
 
     function deleteFile(idx){
       filesByWeek[currentWeek].splice(idx,1);
       renderFiles();
     }
+    // Borrar archivo
+    window.deleteFile = async function(path, week) {
+      const fileRef = ref(storage, path);
+      await deleteObject(fileRef);
+      loadFiles(week);
+    };
   </script>
 </body>
 </html>
