@@ -3,82 +3,96 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Página de Kevin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control de Semanas</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 40px;
-      background: #f0f0f0;
-    }
-    h1 {
-      color: #333;
-    }
-    #fileList {
-      margin-top: 20px;
-      list-style: none;
-      padding: 0;
-    }
-    #fileList li {
       background: #fff;
-      margin: 8px auto;
-      padding: 10px;
-      border-radius: 5px;
-      width: 300px;
-      box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
     }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .semana {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 250px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+
     button {
-      margin: 10px;
-      padding: 10px 15px;
-      font-size: 14px;
+      padding: 5px 10px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      background: #007BFF;
+    }
+
+    .done {
+      background: green;
       color: white;
     }
-    button:hover {
-      background: #0056b3;
+
+    .not-done {
+      background: red;
+      color: white;
     }
   </style>
 </head>
 <body>
-  <h1>Mis Archivos</h1>
-  
-  <input type="file" id="fileInput">
-  <br>
-  <button onclick="subirArchivo()">Subir archivo</button>
-  <button onclick="eliminarArchivos()">Eliminar todo</button>
-
-  <ul id="fileList"></ul>
+  <h1>Control de Semanas</h1>
+  <div class="container" id="semanasContainer"></div>
 
   <script>
-    let archivos = [];
+    const semanasContainer = document.getElementById("semanasContainer");
 
-    function subirArchivo() {
-      const input = document.getElementById("fileInput");
-      if (input.files.length > 0) {
-        const archivo = input.files[0];
-        archivos.push(archivo);
-        mostrarArchivos();
-      }
-    }
+    // Generar 20 semanas
+    for (let i = 1; i <= 20; i++) {
+      const semanaDiv = document.createElement("div");
+      semanaDiv.classList.add("semana");
 
-    function eliminarArchivos() {
-      archivos = [];
-      mostrarArchivos();
-    }
+      const label = document.createElement("span");
+      label.textContent = "Semana " + i;
 
-    function mostrarArchivos() {
-      const lista = document.getElementById("fileList");
-      lista.innerHTML = "";
-      archivos.forEach((archivo, index) => {
-        const li = document.createElement("li");
-        li.textContent = archivo.name;
-        lista.appendChild(li);
+      const button = document.createElement("button");
+      button.textContent = "Pendiente";
+      button.classList.add("not-done");
+
+      // Acción al hacer clic
+      button.addEventListener("click", () => {
+        if (button.classList.contains("not-done")) {
+          button.textContent = "Hecho";
+          button.classList.remove("not-done");
+          button.classList.add("done");
+        } else {
+          button.textContent = "Pendiente";
+          button.classList.remove("done");
+          button.classList.add("not-done");
+        }
       });
+
+      semanaDiv.appendChild(label);
+      semanaDiv.appendChild(button);
+      semanasContainer.appendChild(semanaDiv);
     }
   </script>
 </body>
 </html>
-
