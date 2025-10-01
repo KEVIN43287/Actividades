@@ -9,9 +9,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Centro BASE DE DATOS 2</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestión de Archivos</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root{
       --bg:#0f1110;
@@ -112,59 +113,6 @@
     .tasks-grid{
       margin-top:18px;
       display:grid;
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f4f4f9;
-      color: #333;
-    }
-    header {
-      background: #2c3e50;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    header h1 {
-      margin: 5px 0;
-      font-size: 28px;
-    }
-    header h2 {
-      margin: 0;
-      font-size: 18px;
-      font-weight: normal;
-    }
-    nav {
-      margin-top: 15px;
-    }
-    nav button {
-      background: #3498db;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      margin: 5px;
-      cursor: pointer;
-      border-radius: 5px;
-      font-size: 16px;
-    }
-    nav button:hover {
-      background: #2980b9;
-    }
-    .page {
-      display: none;
-      padding: 20px;
-      text-align: center;
-    }
-    .active {
-      display: block;
-      animation: fadeIn 0.5s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .weeks {
-      display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap:18px;
     }
@@ -237,31 +185,11 @@
       header{ grid-template-columns: 1fr; row-gap:12px; text-align:center; }
       nav.header-nav{ justify-self:center; }
     }
-      gap: 15px;
-      margin-top: 20px;
-    }
-    .week {
-      border: 2px solid #3498db;
-      border-radius: 10px;
-      padding: 15px;
-      background: white;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    .week h3 {
-      margin-top: 0;
-      color: #2c3e50;
-    }
-    .week button {
-      margin: 5px;
-      padding: 8px 12px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    .upload-btn { background: #27ae60; color: white; }
-    .delete-btn { background: #e74c3c; color: white; }
-    .view-link { display: block; margin: 5px 0; }
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    button { margin: 5px; padding: 10px; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 5px 0; }
+    a { margin-left: 10px; }
   </style>
 </head>
 <body>
@@ -279,12 +207,6 @@
     <nav class="header-nav">
       <a href="#" id="nav-inicio" aria-current="page" onclick="showSection(event,'inicio')">Inicio</a>
       <a href="#" id="nav-tareas" onclick="showSection(event,'tareas')">Tareas</a>
-    <img src="logo.png" alt="Logo" width="100"><!-- tu logo -->
-    <h1>Centro BASE DE DATOS 2</h1>
-    <h2>Kevin Alfredo Macha Bruno - Universidad Peruana Los Andes</h2>
-    <nav>
-      <button onclick="showPage('inicio')">Inicio</button>
-      <button onclick="showPage('tareas')">Tareas</button>
     </nav>
   </header>
 
@@ -335,54 +257,50 @@
       </div>
     </section>
   </main>
+  <h2>📂 Subir y Gestionar Archivos</h2>
+  
+  <!-- Input para seleccionar archivo -->
+  <input type="file" id="fileInput">
+  <button onclick="uploadFile()">Subir archivo</button>
+  
+  <h3>Archivos guardados:</h3>
+  <ul id="fileList"></ul>
 
   <script>
     let currentWeek = null;
     const filesByWeek = {};
+    // 🚀 Tus credenciales de Supabase
+    const SUPABASE_URL = "https://dfnwymvyzdeahuyhvltt.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmbnd5bXZ5emRlYWh1eWh2bHR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkzMTM0NTksImV4cCI6MjA3NDg4OTQ1OX0.-fVeyRAsMiB5Fwgx9aOTJURGYK4Owoc1cfo9g0opjcs";
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const bucket = "archivos"; // 👈 nombre del bucket en Supabase Storage
+
+    // Subir archivo
+    async function uploadFile() {
+      const fileInput = document.getElementById("fileInput");
+      const file = fileInput.files[0];
+      if (!file) {
+        alert("Selecciona un archivo primero");
+        return;
+      }
 
     function showSection(evt, id) {
       if (evt) evt.preventDefault();
       document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  <!-- Página de Inicio -->
-  <section id="inicio" class="page active">
-    <h2>Bienvenidos</h2>
-    <p>Este curso de Base de Datos 2 está diseñado para reforzar y profundizar los conocimientos de modelamiento, administración y optimización de bases de datos, con un enfoque práctico orientado a proyectos reales.</p>
-  </section>
-
-  <!-- Página de Tareas -->
-  <section id="tareas" class="page">
-    <h2>Semanas de trabajo</h2>
-    <div class="weeks" id="weeks"></div>
-  </section>
-
-  <!-- Firebase y lógica -->
-  <script type="module">
-    // Importar Firebase desde CDN
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getStorage, ref, uploadBytes, listAll, getDownloadURL, deleteObject } 
-      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
-
-    // Tu configuración Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyC4MdEcp4sy7eY4OjwaqKr1btGaEnpbJHU",
-      authDomain: "kevin-c60d5.firebaseapp.com",
-      projectId: "kevin-c60d5",
-      storageBucket: "kevin-c60d5.firebasestorage.app",
-      messagingSenderId: "622220585683",
-      appId: "1:622220585683:web:3daf9e5620877d554d0226",
-      measurementId: "G-1BJ0KG2YBR"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const storage = getStorage(app);
-
-    // Mostrar páginas
-    function showPage(id) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
       if(document.getElementById('nav-' + id)) {
         document.getElementById('nav-' + id).setAttribute('aria-current','page');
+      const { error } = await supabase.storage.from(bucket).upload(file.name, file, {
+        upsert: true
+      });
+
+      if (error) {
+        alert("Error al subir: " + error.message);
+      } else {
+        alert("Archivo subido con éxito ✅");
+        listFiles();
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -393,10 +311,19 @@
       showSection(null,"semana");
       renderFiles();
     }
+    // Listar archivos
+    async function listFiles() {
+      const { data, error } = await supabase.storage.from(bucket).list();
+      if (error) {
+        console.error(error);
+        return;
+      }
 
     function backToTasks(){
       showSection(null,"tareas");
     }
+      const fileList = document.getElementById("fileList");
+      fileList.innerHTML = "";
 
     document.getElementById("file-input").addEventListener("change", function(e){
       if(!currentWeek) return;
@@ -408,6 +335,8 @@
       e.target.value = "";
       renderFiles();
     });
+      for (let file of data) {
+        const { data: urlData } = supabase.storage.from(bucket).getPublicUrl(file.name);
 
     function renderFiles(){
       const list = document.getElementById("file-list");
@@ -418,69 +347,31 @@
                         <button onclick="deleteFile(${idx})">Borrar</button>`;
         list.appendChild(li);
       });
-    window.showPage = showPage;
-
-    // Generar semanas
-    const weeksContainer = document.getElementById("weeks");
-    for (let i = 1; i <= 13; i++) {
-      const weekDiv = document.createElement("div");
-      weekDiv.classList.add("week");
-      weekDiv.innerHTML = `
-        <h3>Semana ${i}</h3>
-        <input type="file" id="fileInput${i}" multiple style="display:none"/>
-        <button class="upload-btn" onclick="uploadFiles(${i})">Subir archivos</button>
-        <div id="filesList${i}"></div>
-      `;
-      weeksContainer.appendChild(weekDiv);
-      loadFiles(i);
-    }
-
-    // Subir archivos
-    window.uploadFiles = function(week) {
-      const input = document.getElementById(fileInput${week});
-      input.click();
-      input.onchange = async () => {
-        const files = input.files;
-        for (let file of files) {
-          const storageRef = ref(storage, semana${week}/${file.name});
-          await uploadBytes(storageRef, file);
-        }
-        loadFiles(week);
-      };
-    };
-
-    // Cargar archivos
-    async function loadFiles(week) {
-      const listDiv = document.getElementById(filesList${week});
-      listDiv.innerHTML = "Cargando...";
-      const listRef = ref(storage, semana${week});
-      try {
-        const res = await listAll(listRef);
-        listDiv.innerHTML = "";
-        for (let itemRef of res.items) {
-          const url = await getDownloadURL(itemRef);
-          const div = document.createElement("div");
-          div.innerHTML = `
-            <a href="${url}" target="_blank" class="view-link">${itemRef.name}</a>
-            <button class="delete-btn" onclick="deleteFile('${itemRef.fullPath}', ${week})">Borrar</button>
-          `;
-          listDiv.appendChild(div);
-        }
-      } catch (err) {
-        listDiv.innerHTML = "Sin archivos.";
+        li.innerHTML = `
+          ${file.name} 
+          <a href="${urlData.publicUrl}" target="_blank">Ver</a> 
+          <button onclick="deleteFile('${file.name}')">Eliminar</button>
+        `;
+        fileList.appendChild(li);
       }
     }
 
     function deleteFile(idx){
       filesByWeek[currentWeek].splice(idx,1);
       renderFiles();
+    // Eliminar archivo
+    async function deleteFile(fileName) {
+      const { error } = await supabase.storage.from(bucket).remove([fileName]);
+      if (error) {
+        alert("Error al eliminar: " + error.message);
+      } else {
+        alert("Archivo eliminado 🚮");
+        listFiles();
+      }
     }
-    // Borrar archivo
-    window.deleteFile = async function(path, week) {
-      const fileRef = ref(storage, path);
-      await deleteObject(fileRef);
-      loadFiles(week);
-    };
+
+    // Cargar lista al inicio
+    listFiles();
   </script>
 </body>
 </html>
