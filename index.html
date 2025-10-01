@@ -1,238 +1,128 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BASE DE DATOS 2 - Inicio</title>
-
-  <!-- Google Font + Font Awesome -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mi Proyecto Web</title>
   <style>
-    :root{
-      --bg:#0f1110;
-      --panel:#161616;
-      --accent:#00ff88;
-      --muted:#b9e6c4;
-      --text:#e9efe8;
-      --card-border: rgba(0,255,136,0.12);
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: #eee;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:"Poppins", Arial, sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      line-height:1.5;
+    header {
+      background: #222;
+      padding: 1rem;
     }
-    header{
-      display:grid;
-      grid-template-columns: auto 1fr auto;
-      align-items:center;
-      gap:20px;
-      padding:18px 26px;
-      background:#0b0b0b;
+    nav.header-nav {
+      display: flex;
+      gap: 1rem;
     }
-    .header-left img{height:72px;width:auto;display:block;border-radius:8px;}
-    .header-center{text-align:center;}
-    .header-center h1{margin:0;font-size:22px;text-transform:uppercase;color:var(--text);}
-    .header-center .uni{margin-top:6px;font-size:13px;color:var(--muted);}
-    .header-center .name{margin-top:4px;font-size:14px;font-weight:600;color:var(--accent);}
-    nav.header-nav{display:flex;gap:12px;justify-self:end;}
-    nav.header-nav a{color:var(--accent);text-decoration:none;font-weight:600;padding:8px 12px;border-radius:8px;transition: all .16s ease;}
-    nav.header-nav a[aria-current="page"]{background: rgba(0,255,136,0.08);color:var(--text);}
-    nav.header-nav a:hover{transform:translateY(-3px);color:var(--text);background: rgba(0,255,136,0.06);}
-    main{max-width:1100px;margin:28px auto;padding:0 18px 60px;}
-    .panel{background:var(--panel);border-radius:12px;padding:22px;box-shadow:0 10px 32px rgba(0,0,0,0.6);border:1px solid var(--card-border);}
-    h2{margin:0 0 14px 0;color:var(--accent);font-size:20px}
-    .welcome p{color:#dfeee2;margin:12px 0}
-    .tasks-grid{margin-top:18px;display:grid;grid-template-columns: repeat(2, 1fr);gap:18px;}
-    .task-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:22px;border-radius:12px;border:2px solid var(--card-border);background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));transition: transform .18s ease, box-shadow .18s ease, border-color .18s;box-shadow: 0 8px 22px rgba(0,0,0,0.6);text-decoration:none;color:var(--text);cursor:pointer;}
-    .task-card:hover{transform: translateY(-8px);box-shadow: 0 18px 46px rgba(0,255,136,0.08);border-color: rgba(0,255,136,0.28);}
-    .task-icon{font-size:28px;color:var(--accent)}
-    .task-num{font-size:28px;font-weight:700;color:var(--text)}
-    .task-label{font-weight:600;color:var(--text)}
-    .file-section{margin-top:20px}
-    .file-section h3{color:var(--accent);font-size:18px;margin-bottom:10px}
-    .file-input{margin-bottom:12px}
-    .file-list{list-style:none;padding:0;margin:0}
-    .file-list li{display:flex;justify-content:space-between;align-items:center;background:#222;padding:8px 12px;border-radius:6px;margin-bottom:6px;}
-    .file-list a{color:var(--accent);text-decoration:none}
-    .file-list button{background:#ff4444;color:white;border:none;border-radius:6px;padding:4px 8px;cursor:pointer;}
-    .section{display:none;opacity:0;transform: translateY(10px);transition: opacity 0.5s ease, transform 0.5s ease;}
-    .section.active{display:block;opacity:1;transform: translateY(0);}
-    @media (max-width:520px){
-      .tasks-grid{ grid-template-columns:1fr; }
-      header{ grid-template-columns: 1fr; row-gap:12px; text-align:center; }
-      nav.header-nav{ justify-self:center; }
+    nav.header-nav a {
+      color: #eee;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav.header-nav a[aria-current="page"] {
+      color: #00ff88;
+    }
+    .section {
+      display: none;
+      padding: 2rem;
+    }
+    .section.active {
+      display: block;
+    }
+    h1, h2 {
+      color: #00ff88;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .card {
+      background: #1a1a1a;
+      padding: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.3s;
+    }
+    .card:hover {
+      background: #2a2a2a;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      background: #00ff88;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="header-left">
-      <img src="upla.PNG" alt="Logo">
-    </div>
-    <div class="header-center">
-      <h1>BASE DE DATOS 2</h1>
-      <div class="uni">Universidad Peruana Los Andes</div>
-      <div class="name">Kevin Alfredo Macha Bruno</div>
-    </div>
     <nav class="header-nav">
-      <a href="#" id="nav-inicio" aria-current="page" onclick="showSection(event,'inicio')">Inicio</a>
+      <a href="#" id="nav-inicio" onclick="showSection(event,'inicio')">Inicio</a>
       <a href="#" id="nav-tareas" onclick="showSection(event,'tareas')">Tareas</a>
+      <a href="#" id="nav-acerca" onclick="showSection(event,'acerca')">Acerca</a>
     </nav>
   </header>
 
-  <main>
-    <section id="inicio" class="section active">
-      <div class="panel">
-        <h2>Bienvenido</h2>
-        <div class="welcome">
-          <p>Bienvenido al portal de <strong>Base de Datos 2</strong>. Aquí accederás a las tareas semanales del curso.</p>
-        </div>
-      </div>
-    </section>
+  <!-- Secciones -->
+  <section id="inicio" class="section active">
+    <h1>Bienvenido</h1>
+    <p>Esta es mi página web de prueba.</p>
+  </section>
 
-    <section id="tareas" class="section">
-      <div class="panel">
-        <h2>Tareas - Semanas</h2>
-        <div class="tasks-grid">
-          <!-- 13 SEMANAS -->
-          <div class="task-card" onclick="openWeek(1)"><div class="task-icon"><i class="fas fa-database"></i></div><div class="task-num">01</div><div class="task-label">Semana 1</div></div>
-          <div class="task-card" onclick="openWeek(2)"><div class="task-icon"><i class="fas fa-code"></i></div><div class="task-num">02</div><div class="task-label">Semana 2</div></div>
-          <div class="task-card" onclick="openWeek(3)"><div class="task-icon"><i class="fas fa-table"></i></div><div class="task-num">03</div><div class="task-label">Semana 3</div></div>
-          <div class="task-card" onclick="openWeek(4)"><div class="task-icon"><i class="fas fa-cogs"></i></div><div class="task-num">04</div><div class="task-label">Semana 4</div></div>
-          <div class="task-card" onclick="openWeek(5)"><div class="task-icon"><i class="fas fa-project-diagram"></i></div><div class="task-num">05</div><div class="task-label">Semana 5</div></div>
-          <div class="task-card" onclick="openWeek(6)"><div class="task-icon"><i class="fas fa-server"></i></div><div class="task-num">06</div><div class="task-label">Semana 6</div></div>
-          <div class="task-card" onclick="openWeek(7)"><div class="task-icon"><i class="fas fa-chart-line"></i></div><div class="task-num">07</div><div class="task-label">Semana 7</div></div>
-          <div class="task-card" onclick="openWeek(8)"><div class="task-icon"><i class="fas fa-key"></i></div><div class="task-num">08</div><div class="task-label">Semana 8</div></div>
-          <div class="task-card" onclick="openWeek(9)"><div class="task-icon"><i class="fas fa-lock"></i></div><div class="task-num">09</div><div class="task-label">Semana 9</div></div>
-          <div class="task-card" onclick="openWeek(10)"><div class="task-icon"><i class="fas fa-sitemap"></i></div><div class="task-num">10</div><div class="task-label">Semana 10</div></div>
-          <div class="task-card" onclick="openWeek(11)"><div class="task-icon"><i class="fas fa-laptop-code"></i></div><div class="task-num">11</div><div class="task-label">Semana 11</div></div>
-          <div class="task-card" onclick="openWeek(12)"><div class="task-icon"><i class="fas fa-database"></i></div><div class="task-num">12</div><div class="task-label">Semana 12</div></div>
-          <div class="task-card" onclick="openWeek(13)"><div class="task-icon"><i class="fas fa-check-circle"></i></div><div class="task-num">13</div><div class="task-label">Semana 13</div></div>
-        </div>
-      </div>
-    </section>
+  <section id="tareas" class="section">
+    <h2>Lista de Semanas</h2>
+    <div class="cards">
+      <div class="card" onclick="openWeek(1)">Semana 1</div>
+      <div class="card" onclick="openWeek(2)">Semana 2</div>
+      <div class="card" onclick="openWeek(3)">Semana 3</div>
+    </div>
+  </section>
 
-    <section id="semana" class="section">
-      <div class="panel">
-        <h2 id="week-title">Semana</h2>
-        <div class="file-section">
-          <h3>Gestión de Archivos</h3>
-          <input type="file" id="file-input" class="file-input" multiple />
-          <ul id="file-list" class="file-list"></ul>
-        </div>
-        <button onclick="backToTasks()">← Volver a Tareas</button>
-      </div>
-    </section>
-  </main>
+  <section id="semana" class="section">
+    <h2 id="week-title">Semana</h2>
+    <p>Aquí iría el contenido de la semana seleccionada.</p>
+    <button onclick="backToTasks()">Volver a Tareas</button>
+  </section>
 
-  <!-- ✅ Librería de Supabase -->
-  <!-- === Supabase client y manejo de archivos (pegar todo esto) === -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script>
-  const SUPABASE_URL = "https://dfnwymvyzdeahuyhvltt.supabase.co";
-  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmbnd5bXZ5emRlYWh1eWh2bHR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkzMTM0NTksImV4cCI6MjA3NDg4OTQ1OX0.-fVeyRAsMiB5Fwgx9aOTJURGYK4Owoc1cfo9g0opjcs";
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  const BUCKET = "semanas";
+  <section id="acerca" class="section">
+    <h2>Acerca de</h2>
+    <p>Proyecto de ejemplo sin base de datos.</p>
+  </section>
 
-  let currentWeek = null;
-
-  function showSection(evt, id) {
-    if (evt) evt.preventDefault();
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    const el = document.getElementById(id);
-    if (el) el.classList.add('active');
-    document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
-    if (document.getElementById('nav-' + id)) {
-      document.getElementById('nav-' + id).setAttribute('aria-current','page');
+  <!-- Script de navegación -->
+  <script>
+    function showSection(evt, id) {
+      if (evt) evt.preventDefault();
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
+      const nav = document.getElementById('nav-' + id);
+      if (nav) nav.setAttribute('aria-current','page');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
 
-  function openWeek(num){
-    currentWeek = num;
-    const title = document.getElementById("week-title");
-    if (title) title.textContent = "Semana " + num;
-    showSection(null,"semana");
-    listFilesForWeek();
-  }
-  window.openWeek = openWeek;
-
-  function backToTasks(){
-    showSection(null,"tareas");
-  }
-  window.backToTasks = backToTasks;
-
-  const fileInput = document.getElementById("file-input");
-  if (fileInput) {
-    fileInput.addEventListener("change", async (e) => {
-      if (!currentWeek) { alert("Selecciona primero una semana."); e.target.value = ""; return; }
-      if (!e.target.files || e.target.files.length === 0) return;
-      const folder = `semana${currentWeek}`;
-      for (const file of e.target.files) {
-        try {
-          const uniqueName = `${Date.now()}_${file.name}`;
-          const path = `${folder}/${uniqueName}`;
-          const { error } = await supabase.storage.from(BUCKET).upload(path, file, { upsert: false });
-          if (error) {
-            console.error("Upload error:", error);
-            alert("Error al subir: " + error.message);
-          }
-        } catch (err) {
-          console.error("Upload exception:", err);
-          alert("Error subiendo: " + (err.message || err));
-        }
-      }
-      e.target.value = "";
-      await listFilesForWeek();
-    });
-  } else {
-    console.warn("No se encontró input file con id=file-input");
-  }
-
-  async function listFilesForWeek(){
-    const listEl = document.getElementById("file-list");
-    if (!listEl) return;
-    listEl.innerHTML = "<li>Cargando...</li>";
-    if (!currentWeek) { listEl.innerHTML = "<li>Selecciona una semana.</li>"; return; }
-    const folder = `semana${currentWeek}`;
-    try {
-      const { data, error } = await supabase.storage.from(BUCKET).list(folder);
-      if (error) { console.error("List error:", error); listEl.innerHTML = `<li>Error al listar archivos: ${error.message}</li>`; return; }
-      if (!data || data.length === 0) { listEl.innerHTML = "<li>No hay archivos.</li>"; return; }
-      listEl.innerHTML = "";
-      for (const item of data) {
-        const { data: urlData } = supabase.storage.from(BUCKET).getPublicUrl(`${folder}/${item.name}`);
-        const publicUrl = urlData && urlData.publicUrl ? urlData.publicUrl : "#";
-        const li = document.createElement("li");
-        li.innerHTML = `<a href="${publicUrl}" target="_blank" rel="noopener noreferrer">${item.name}</a>
-                        <button class="btn-del" data-path="${folder}/${item.name}">Borrar</button>`;
-        listEl.appendChild(li);
-      }
-      listEl.querySelectorAll('.btn-del').forEach(btn => {
-        btn.addEventListener('click', async (ev) => {
-          const path = ev.currentTarget.getAttribute('data-path');
-          if (!confirm('¿Eliminar este archivo?')) return;
-          const { error } = await supabase.storage.from(BUCKET).remove([path]);
-          if (error) alert('Error borrando: ' + error.message); else await listFilesForWeek();
-        });
-      });
-    } catch (err) {
-      console.error("listFilesForWeek exception:", err);
-      listEl.innerHTML = `<li>Error inesperado: ${err.message || err}</li>`;
+    let currentWeek = null;
+    function openWeek(num) {
+      currentWeek = num;
+      document.getElementById("week-title").textContent = "Semana " + num;
+      showSection(null, "semana");
     }
-  }
-  window.listFilesForWeek = listFilesForWeek;
-
-  document.addEventListener('DOMContentLoaded', () => {
-    // no hacemos nada hasta que el usuario abra una semana
-  });
-</script>
-<!-- === FIN SCRIPT === -->
-
-  
+    function backToTasks() {
+      showSection(null, "tareas");
+    }
+  </script>
+</body>
+</html>
