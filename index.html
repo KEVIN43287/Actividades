@@ -249,236 +249,150 @@
     </section>
   </main>
 
-  <script>
-    let currentWeek = null;
-    const filesByWeek = {};
-
-    function showSection(evt, id) {
-      if (evt) evt.preventDefault();
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
-      if(document.getElementById('nav-' + id)) {
-        document.getElementById('nav-' + id).setAttribute('aria-current','page');
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function openWeek(num){
-      currentWeek = num;
-      document.getElementById("week-title").textContent = "Semana " + num;
-      showSection(null,"semana");
-      renderFiles();
-    }
-
-    function backToTasks(){
-      showSection(null,"tareas");
-    }
-
-    document.getElementById("file-input").addEventListener("change", function(e){
-      if(!currentWeek) return;
-      if(!filesByWeek[currentWeek]) filesByWeek[currentWeek] = [];
-      [...e.target.files].forEach(file=>{
-        const url = URL.createObjectURL(file);
-        filesByWeek[currentWeek].push({name:file.name, url:url});
-      });
-      e.target.value = "";
-      renderFiles();
-    });
-
-    function renderFiles(){
-      const list = document.getElementById("file-list");
-      list.innerHTML = "";
-      (filesByWeek[currentWeek]||[]).forEach((f,idx)=>{
-        const li = document.createElement("li");
-        li.innerHTML = `<a href="${f.url}" target="_blank">${f.name}</a>
-                        <button onclick="deleteFile(${idx})">Borrar</button>`;
-        list.appendChild(li);
-      });
-    }
-
-    function deleteFile(idx){
-      filesByWeek[currentWeek].splice(idx,1);
-      renderFiles();
-    }
+  <!-- Librería Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+  /* ---------------- CONFIG: pega aquí tus datos ---------------- */
+  const SUPABASE_URL = "https://ojubyvygeuuqmagxawsl.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qdWJ5dnlnZXV1cW1hZ3hhd3NsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkzNzk0NjIsImV4cCI6MjA3NDk1NTQ2Mn0.jS7UOdQKEc2NLtxA3Vybn1iu7SfW7Up2YZ3E-RAiLZ0";
+  const BUCKET = "semanas";
+  /* ------------------------------------------------------------- */
 
-<script>
-/* ---------------- CONFIG: pega aquí tus datos (o deja si ya los tienes) ---------------- */
-const SUPABASE_URL = "https://ojubyvygeuuqmagxawsl.supabase.co"; // <- pega tu Project URL
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qdWJ5dnlnZXV1cW1hZ3hhd3NsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkzNzk0NjIsImV4cCI6MjA3NDk1NTQ2Mn0.jS7UOdQKEc2NLtxA3Vybn1iu7SfW7Up2YZ3E-RAiLZ0"; // <- pega tu anon key
-const BUCKET = "semanas"; // <- nombre EXACTO del bucket que creaste en Supabase
-/* ------------------------------------------------------------------------------------- */
+  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  let currentWeek = null;
+  const filesByWeek = {}; // fallback local
 
-// variables (mantener compatibilidad con tu HTML)
-let currentWeek = null;
-// Fallback local (por si no quieres usar Supabase en algún momento)
-const filesByWeek = {};
-
-// -- Funciones que replican tu comportamiento original (sin romper nada visual) --
-function showSection(evt, id) {
-  if (evt) evt.preventDefault();
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  const el = document.getElementById(id);
-  if (el) el.classList.add('active');
-  document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
-  const nav = document.getElementById('nav-' + id);
-  if (nav) nav.setAttribute('aria-current','page');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function openWeek(num){
-  currentWeek = num;
-  const title = document.getElementById("week-title");
-  if (title) title.textContent = "Semana " + num;
-  showSection(null,"semana");
-  // intentar cargar de Supabase; si falla, usar el fallback local
-  loadFiles().catch(err=>{
-    console.warn('loadFiles error (fallback):', err);
-    renderFiles(); // fallback local
-  });
-}
-
-function backToTasks(){
-  showSection(null,"tareas");
-}
-
-/* ----------------- file input: subir múltiples archivos ----------------- */
-const fileInput = document.getElementById("file-input");
-if (fileInput) {
-  fileInput.addEventListener("change", async function(e){
-    if (!currentWeek) { alert('Selecciona primero una semana.'); e.target.value=''; return; }
-    const files = Array.from(e.target.files || []);
-    if (files.length === 0) return;
-    // Intentar subir a Supabase; si falla, almacenar localmente
-    try {
-      await Promise.all(files.map(f => uploadFileToSupabase(f)));
-      e.target.value = "";
-      await loadFiles();
-    } catch (err) {
-      console.error('Error subiendo a Supabase, se usa fallback local:', err);
-      // fallback: guardar en memoria local solo para esta sesión
-      if (!filesByWeek[currentWeek]) filesByWeek[currentWeek] = [];
-      files.forEach(file => {
-        const url = URL.createObjectURL(file);
-        filesByWeek[currentWeek].push({ name: file.name, url });
-      });
-      e.target.value = "";
-      renderFiles();
-    }
-  });
-}
-
-/* ----------------- SUBIR archivo a Supabase ----------------- */
-async function uploadFileToSupabase(file) {
-  if (!currentWeek) throw new Error('Semana no seleccionada');
-  if (!BUCKET) throw new Error('Nombre del bucket no configurado');
-  const folder = `semana${currentWeek}`;
-  // nombre único para evitar colisiones
-  const safeName = file.name.replace(/\s+/g, '_');
-  const path = `${folder}/${Date.now()}_${safeName}`;
-  const { data, error } = await _supabase.storage.from(BUCKET).upload(path, file, { upsert: false });
-  if (error) {
-    // si ya existe, intenta con upsert true (opcional)
-    throw error;
+  function showSection(evt, id) {
+    if (evt) evt.preventDefault();
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    const el = document.getElementById(id);
+    if (el) el.classList.add('active');
+    document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
+    const nav = document.getElementById('nav-' + id);
+    if (nav) nav.setAttribute('aria-current','page');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  return data;
-}
 
-/* ----------------- LISTAR archivos (Supabase) ----------------- */
-async function loadFiles() {
-  const list = document.getElementById("file-list");
-  if (!list) return;
-  list.innerHTML = "<li>Cargando...</li>";
-  if (!currentWeek) { list.innerHTML = "<li>Selecciona una semana</li>"; return; }
-  // Intentar listar del bucket
-  try {
+  function openWeek(num){
+    currentWeek = num;
+    const title = document.getElementById("week-title");
+    if (title) title.textContent = "Semana " + num;
+    showSection(null,"semana");
+    loadFiles().catch(err=>{
+      console.warn('loadFiles error (fallback):', err);
+      renderFiles(); 
+    });
+  }
+
+  function backToTasks(){
+    showSection(null,"tareas");
+  }
+
+  const fileInput = document.getElementById("file-input");
+  if (fileInput) {
+    fileInput.addEventListener("change", async function(e){
+      if (!currentWeek) { alert('Selecciona primero una semana.'); e.target.value=''; return; }
+      const files = Array.from(e.target.files || []);
+      if (files.length === 0) return;
+      try {
+        await Promise.all(files.map(f => uploadFileToSupabase(f)));
+        e.target.value = "";
+        await loadFiles();
+      } catch (err) {
+        console.error('Error subiendo a Supabase, fallback local:', err);
+        if (!filesByWeek[currentWeek]) filesByWeek[currentWeek] = [];
+        files.forEach(file => {
+          const url = URL.createObjectURL(file);
+          filesByWeek[currentWeek].push({ name: file.name, url });
+        });
+        e.target.value = "";
+        renderFiles();
+      }
+    });
+  }
+
+  async function uploadFileToSupabase(file) {
+    if (!currentWeek) throw new Error('Semana no seleccionada');
     const folder = `semana${currentWeek}`;
-    const { data, error } = await _supabase.storage.from(BUCKET).list(folder, { limit: 100, offset: 0 });
-    if (error) {
-      // si el bucket no existe o hay permisos, mostrar mensaje claro
-      console.error('Supabase list error:', error);
-      list.innerHTML = `<li>Error al listar archivos: ${error.message || error.code || 'revisa consola'}</li>`;
-      return;
+    const safeName = file.name.replace(/\s+/g, '_');
+    const path = `${folder}/${Date.now()}_${safeName}`;
+    const { data, error } = await _supabase.storage.from(BUCKET).upload(path, file, { upsert: false });
+    if (error) throw error;
+    return data;
+  }
+
+  async function loadFiles() {
+    const list = document.getElementById("file-list");
+    if (!list) return;
+    list.innerHTML = "<li>Cargando...</li>";
+    if (!currentWeek) { list.innerHTML = "<li>Selecciona una semana</li>"; return; }
+    try {
+      const folder = `semana${currentWeek}`;
+      const { data, error } = await _supabase.storage.from(BUCKET).list(folder, { limit: 100 });
+      if (error) {
+        console.error('Supabase list error:', error);
+        list.innerHTML = `<li>Error al listar archivos: ${error.message || error.code}</li>`;
+        return;
+      }
+      list.innerHTML = "";
+      if (!data || data.length === 0) {
+        list.innerHTML = "<li>No hay archivos.</li>";
+        return;
+      }
+      for (const item of data) {
+        const { data: urlData } = _supabase.storage.from(BUCKET).getPublicUrl(`${folder}/${item.name}`);
+        const publicUrl = urlData?.publicUrl || '#';
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = publicUrl;
+        a.textContent = item.name;
+        a.target = "_blank";
+        const btn = document.createElement('button');
+        btn.textContent = 'Borrar';
+        btn.addEventListener('click', async () => {
+          if (!confirm(`¿Eliminar "${item.name}"?`)) return;
+          const { error: delErr } = await _supabase.storage.from(BUCKET).remove([`${folder}/${item.name}`]);
+          if (delErr) {
+            alert('Error al borrar: ' + (delErr.message || delErr));
+            console.error('delete error', delErr);
+            return;
+          }
+          await loadFiles();
+        });
+        li.appendChild(a);
+        li.appendChild(btn);
+        list.appendChild(li);
+      }
+    } catch (err) {
+      console.error('loadFiles catch', err);
+      list.innerHTML = "<li>Error al comunicarse con Supabase</li>";
     }
+  }
+
+  function renderFiles(){
+    const list = document.getElementById("file-list");
+    if (!list) return;
     list.innerHTML = "";
-    if (!data || data.length === 0) {
-      list.innerHTML = "<li>No hay archivos.</li>";
-      return;
-    }
-    // Por cada archivo obtener la URL pública y renderizar
-    for (const item of data) {
-      // obtener URL pública
-      const { data: urlData } = _supabase.storage.from(BUCKET).getPublicUrl(`${folder}/${item.name}`);
-      const publicUrl = urlData && urlData.publicUrl ? urlData.publicUrl : '#';
+    const arr = filesByWeek[currentWeek] || [];
+    if (arr.length === 0) { list.innerHTML = "<li>No hay archivos.</li>"; return; }
+    arr.forEach((f, idx) => {
       const li = document.createElement('li');
-      // enlace
       const a = document.createElement('a');
-      a.href = publicUrl;
-      a.textContent = item.name;
+      a.href = f.url;
+      a.textContent = f.name;
       a.target = "_blank";
-      // boton borrar
       const btn = document.createElement('button');
       btn.textContent = 'Borrar';
-      btn.addEventListener('click', async () => {
-        if (!confirm(`¿Eliminar "${item.name}"?`)) return;
-        const { error: delErr } = await _supabase.storage.from(BUCKET).remove([`${folder}/${item.name}`]);
-        if (delErr) {
-          alert('Error al borrar: ' + (delErr.message || delErr));
-          console.error('delete error', delErr);
-          return;
-        }
-        await loadFiles();
+      btn.addEventListener('click', () => {
+        filesByWeek[currentWeek].splice(idx,1);
+        renderFiles();
       });
       li.appendChild(a);
       li.appendChild(btn);
       list.appendChild(li);
-    }
-  } catch (err) {
-    console.error('loadFiles catch', err);
-    list.innerHTML = "<li>Error al comunicarse con Supabase (revisa consola)</li>";
-  }
-}
-
-/* ----------------- BORRAR archivo fallback (local) ----------------- */
-function deleteFile(idx){
-  if (!currentWeek || !filesByWeek[currentWeek]) return;
-  filesByWeek[currentWeek].splice(idx,1);
-  renderFiles();
-}
-
-/* ----------------- renderFiles local (si no usas supabase) ----------------- */
-function renderFiles(){
-  const list = document.getElementById("file-list");
-  if (!list) return;
-  list.innerHTML = "";
-  const arr = filesByWeek[currentWeek] || [];
-  if (arr.length === 0) { list.innerHTML = "<li>No hay archivos.</li>"; return; }
-  arr.forEach((f, idx) => {
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    a.href = f.url;
-    a.textContent = f.name;
-    a.target = "_blank";
-    const btn = document.createElement('button');
-    btn.textContent = 'Borrar';
-    btn.addEventListener('click', () => {
-      filesByWeek[currentWeek].splice(idx,1);
-      renderFiles();
     });
-    li.appendChild(a);
-    li.appendChild(btn);
-    list.appendChild(li);
-  });
-}
-
-/* ----------------- Al cargar la página: si ya hay semana abierta, preparar -- */
-document.addEventListener('DOMContentLoaded', () => {
-  // si querías listar automáticamente la semana 1 al abrir, descomenta:
-  // openWeek(1);
-});
-</script>
+  }
+  </script>
 </body>
 </html>
