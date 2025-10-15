@@ -111,7 +111,7 @@
     .tasks-grid{
       margin-top:18px;
       display:grid;
-      grid-template-columns: repeat(2, 1fr); /* EXACTAMENTE 2 por fila */
+      grid-template-columns: repeat(2, 1fr);
       gap:18px;
     }
 
@@ -133,7 +133,6 @@
     .task-card .num{font-size:26px;font-weight:700;color:var(--text)}
     .task-card .label{margin-top:6px;font-weight:600;color:var(--muted)}
 
-    /* Semana detalle (sin botones de subir/borrar) */
     .file-section{margin-top:20px}
     .file-section h3{color:var(--accent);font-size:18px;margin-bottom:10px}
     .file-list{list-style:none;padding:0;margin:0}
@@ -148,7 +147,6 @@
     }
     .file-list a{color:var(--accent);text-decoration:none;font-weight:600}
 
-    /* SECTIONS with transition */
     .section{
       display:none;
       opacity:0;
@@ -161,7 +159,6 @@
       transform: translateY(0);
     }
 
-    /* Responsive: en pantallas muy pequeñas apila 2 col -> 1 col */
     @media (max-width:520px){
       .tasks-grid{grid-template-columns:1fr}
       header{flex-direction:column;align-items:center}
@@ -172,7 +169,6 @@
 <body>
   <header>
     <div class="header-left">
-      <!-- deja espacio para que pongas tu logo con el mismo nombre de archivo upla.PNG -->
       <img src="upla.PNG" alt="Logo Universidad">
     </div>
 
@@ -194,8 +190,8 @@
       <div class="panel">
         <h2>Bienvenido</h2>
         <div class="welcome">
-          <p>Hola este es el portal del curso <strong>Base de Datos 2</strong>. Aquí verás las semanas y los recursos del curso.</p>
-          <p>Puedes navegar con los botones del encabezado: <strong>Inicio</strong> y <strong>Tareas</strong>.</p>
+          <p>Hola, este es el portal del curso <strong>Base de Datos 2</strong>.</p>
+          <p>Aquí podrás acceder a las tareas de cada semana del curso.</p>
         </div>
       </div>
     </section>
@@ -204,22 +200,17 @@
     <section id="tareas" class="section">
       <div class="panel">
         <h2>Tareas - Semanas</h2>
-        <div class="tasks-grid" id="weeksGrid">
-          <!-- Las 16 tarjetas se generan con JS abajo -->
-        </div>
+        <div class="tasks-grid" id="weeksGrid"></div>
       </div>
     </section>
 
-    <!-- SEMANA DETALLE -->
+    <!-- SEMANA -->
     <section id="semana" class="section">
       <div class="panel">
         <h2 id="week-title">Semana</h2>
         <div class="file-section">
           <h3>Archivos</h3>
-          <ul id="file-list" class="file-list">
-            <!-- Aquí aparecerán los nombres/links (si decides agregarlos) -->
-            <li style="color:var(--muted)">No hay archivos configurados para esta vista (sin base de datos).</li>
-          </ul>
+          <ul id="file-list" class="file-list"></ul>
         </div>
         <div style="margin-top:16px;">
           <button onclick="backToTasks()" style="background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:8px;color:var(--muted);cursor:pointer;">← Volver a Tareas</button>
@@ -229,13 +220,10 @@
   </main>
 
   <script>
-    /* ---------------------------
-       Restaurado: navegación y UI
-       --------------------------- */
-    const WEEKS = 16; // semanas 1..16
+    const WEEKS = 16;
     const weeksGrid = document.getElementById('weeksGrid');
 
-    // Generar tarjetas (2 por fila por CSS grid)
+    // Generar las 16 tarjetas
     for (let i = 1; i <= WEEKS; i++) {
       const card = document.createElement('div');
       card.className = 'task-card';
@@ -252,41 +240,24 @@
       if (evt) evt.preventDefault();
       document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
-      // marcar en nav
       document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
-      if (document.getElementById('nav-' + id)) {
-        document.getElementById('nav-' + id).setAttribute('aria-current','page');
-      } else {
-        // si no existe nav id, reset manual:
-        document.getElementById('nav-inicio').removeAttribute('aria-current');
-        document.getElementById('nav-tareas').removeAttribute('aria-current');
-      }
+      const nav = document.getElementById('nav-' + id);
+      if (nav) nav.setAttribute('aria-current', 'page');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function openWeek(num){
+    function openWeek(num) {
       document.getElementById('week-title').textContent = 'Semana ' + num;
-      // En la versión sin base de datos, aquí mostramos un placeholder.
       const list = document.getElementById('file-list');
-      list.innerHTML = ''; // vaciar
-      // Si quieres listar archivos manualmente aquí, puedes insertar <li> con links.
-      // Por ahora mostramos el texto de ejemplo (no hay storage):
-      const li = document.createElement('li');
-      li.textContent = 'Aquí se mostrarían los archivos de la semana (sin base de datos).';
-      li.style.color = 'var(--muted)';
-      list.appendChild(li);
-
-      showSection(null,'semana');
+      list.innerHTML = `
+        <li style="color:var(--muted)">Aquí se mostrarían los archivos de la semana ${num} (sin base de datos).</li>
+      `;
+      showSection(null, 'semana');
     }
 
-    function backToTasks(){
-      showSection(null,'tareas');
+    function backToTasks() {
+      showSection(null, 'tareas');
     }
-
-    // Nota: si en el futuro quieres que las semanas muestren archivos reales
-    // alojados en tu repo de GitHub (solo lectura), puedo añadir la
-    // integración con la API de GitHub en 1 línea y sin tocar el diseño.
-    // Por ahora, de acuerdo a tu pedido, NO hay integración/DB.
   </script>
 </body>
 </html>
