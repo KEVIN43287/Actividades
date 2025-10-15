@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>BASE DE DATOS 2 - Kevin Alfredo Macha Bruno</title>
 
+  <!-- Fuentes y estilos -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -18,15 +19,14 @@
       --card-border: rgba(0,255,136,0.12);
     }
 
-    *{box-sizing:border-box}
-    body{
+    body {
       margin:0;
       font-family:"Poppins", Arial, sans-serif;
       background:var(--bg);
       color:var(--text);
     }
 
-    header{
+    header {
       display:grid;
       grid-template-columns:auto 1fr auto;
       align-items:center;
@@ -35,25 +35,29 @@
       background:#0b0b0b;
     }
 
-    .header-left img{height:72px;border-radius:8px}
-    .header-center{text-align:center}
-    .header-center h1{margin:0;font-size:24px;text-transform:uppercase;color:var(--text)}
-    .header-center .uni{margin-top:6px;font-size:13px;color:var(--muted)}
-    .header-center .name{margin-top:4px;font-size:14px;font-weight:700;color:var(--accent)}
+    .header-left img { height:72px; border-radius:8px; }
+    .header-center { text-align:center; }
+    .header-center h1 { margin:0; font-size:24px; text-transform:uppercase; color:var(--text); }
+    .header-center .uni { margin-top:6px; font-size:13px; color:var(--muted); }
+    .header-center .name { margin-top:4px; font-size:14px; font-weight:700; color:var(--accent); }
 
-    nav.header-nav{display:flex;gap:12px;justify-self:end}
-    nav.header-nav a{
-      color:var(--accent);text-decoration:none;font-weight:600;
-      padding:8px 12px;border-radius:8px;transition:.2s;
+    nav.header-nav { display:flex; gap:12px; justify-self:end; }
+    nav.header-nav a {
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:600;
+      padding:8px 12px;
+      border-radius:8px;
+      transition:all .2s;
     }
-    nav.header-nav a[aria-current="page"]{
-      background: rgba(0,255,136,0.08);color:var(--text);
+    nav.header-nav a[aria-current="page"] {
+      background:rgba(0,255,136,0.08);
+      color:var(--text);
     }
-    nav.header-nav a:hover{background: rgba(0,255,136,0.06);color:var(--text)}
+    nav.header-nav a:hover { background:rgba(0,255,136,0.06); color:var(--text); }
 
-    main{max-width:1100px;margin:28px auto;padding:0 18px 60px}
-
-    .panel{
+    main { max-width:1100px; margin:28px auto; padding:0 18px 60px; }
+    .panel {
       background:var(--panel);
       border-radius:12px;
       padding:22px;
@@ -61,15 +65,16 @@
       border:1px solid var(--card-border);
     }
 
-    h2{color:var(--accent)}
-    .tasks-grid{
+    h2 { color:var(--accent); }
+
+    .tasks-grid {
       margin-top:18px;
       display:grid;
       grid-template-columns:repeat(2,1fr);
       gap:18px;
     }
 
-    .task-card{
+    .task-card {
       background:var(--panel);
       border-radius:12px;
       padding:22px;
@@ -79,14 +84,14 @@
       transition:.18s;
       cursor:pointer;
     }
-    .task-card:hover{
+    .task-card:hover {
       transform:translateY(-6px);
       box-shadow:0 16px 36px rgba(0,255,136,0.12);
     }
 
-    .file-section h3{color:var(--accent)}
-    .file-list{list-style:none;padding:0;margin:0}
-    .file-list li{
+    .file-section h3 { color:var(--accent); }
+    .file-list { list-style:none; padding:0; margin:0; }
+    .file-list li {
       display:flex;
       align-items:center;
       gap:12px;
@@ -95,21 +100,17 @@
       border-radius:6px;
       margin-bottom:8px;
     }
-    .file-list a{color:var(--accent);text-decoration:none;font-weight:600}
+    .file-list a { color:var(--accent); text-decoration:none; font-weight:600; }
 
-    .section{display:none;opacity:0;transform:translateY(10px);transition:.4s}
-    .section.active{display:block;opacity:1;transform:translateY(0)}
+    .section { display:none; opacity:0; transform:translateY(10px); transition:.4s; }
+    .section.active { display:block; opacity:1; transform:translateY(0); }
 
-    @media (max-width:520px){
-      .tasks-grid{grid-template-columns:1fr}
-    }
+    @media (max-width:520px){ .tasks-grid{ grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
   <header>
-    <div class="header-left">
-      <img src="upla.PNG" alt="Logo Universidad">
-    </div>
+    <div class="header-left"><img src="upla.PNG" alt="Logo Universidad"></div>
     <div class="header-center">
       <h1>BASE DE DATOS 2</h1>
       <div class="uni">Universidad Peruana Los Andes</div>
@@ -125,7 +126,7 @@
     <section id="inicio" class="section active">
       <div class="panel">
         <h2>Bienvenido</h2>
-        <p>Hola este es el portal del curso <strong>Base de Datos 2</strong>. Aquí verás las semanas y los recursos del curso.</p>
+        <p>Hola, este es el portal del curso <strong>Base de Datos 2</strong>. Aquí verás las semanas y recursos del curso.</p>
       </div>
     </section>
 
@@ -154,12 +155,13 @@
     const WEEKS = 16;
     const weeksGrid = document.getElementById("weeksGrid");
 
+    // Crear tarjetas para las 16 semanas
     for (let i = 1; i <= WEEKS; i++) {
       const card = document.createElement("div");
       card.className = "task-card";
       card.innerHTML = `
         <div class="icon"><i class="fas fa-folder-open"></i></div>
-        <div class="num">${String(i).padStart(2,"0")}</div>
+        <div class="num">${String(i).padStart(2, "0")}</div>
         <div class="label">Semana ${i}</div>
       `;
       card.onclick = () => openWeek(i);
@@ -171,43 +173,43 @@
       document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
       document.getElementById(id).classList.add("active");
       document.querySelectorAll("nav.header-nav a").forEach(a => a.removeAttribute("aria-current"));
-      if (document.getElementById("nav-" + id)) {
-        document.getElementById("nav-" + id).setAttribute("aria-current", "page");
-      }
+      const current = document.getElementById("nav-" + id);
+      if (current) current.setAttribute("aria-current", "page");
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    async function openWeek(num) {
+    function openWeek(num) {
       document.getElementById("week-title").textContent = "Semana " + num;
       const list = document.getElementById("file-list");
-      list.innerHTML = "<li style='color:var(--muted)'>Cargando archivos...</li>";
+      list.innerHTML = "";
 
-      try {
-        const response = await fetch(archivos/semana${num}/);
-        const text = await response.text();
-        const temp = document.createElement("div");
-        temp.innerHTML = text;
-        const links = [...temp.querySelectorAll("a")].filter(a => !a.href.endsWith("/"));
-        list.innerHTML = "";
-        if (links.length === 0) {
-          list.innerHTML = "<li style='color:var(--muted)'>No hay archivos en esta semana.</li>";
-        } else {
-          links.forEach(a => {
-            const li = document.createElement("li");
-            const fileName = decodeURIComponent(a.href.split("/").pop());
-            li.innerHTML = <i class="fas fa-file"></i> <a href="archivos/semana${num}/${fileName}" target="_blank">${fileName}</a>;
-            list.appendChild(li);
-          });
-        }
-      } catch (err) {
-        list.innerHTML = "<li style='color:var(--muted)'>No se pudieron cargar los archivos.</li>";
-      }
+      // Aquí listamos manualmente los archivos que subas a cada carpeta
+      fetch(archivos/semana${num}/)
+        .then(res => res.text())
+        .then(html => {
+          const temp = document.createElement("div");
+          temp.innerHTML = html;
+          const links = [...temp.querySelectorAll("a")].filter(a => !a.href.endsWith("/"));
+          list.innerHTML = "";
+          if (links.length === 0) {
+            list.innerHTML = "<li style='color:var(--muted)'>No hay archivos en esta semana.</li>";
+          } else {
+            links.forEach(a => {
+              const fileName = decodeURIComponent(a.href.split("/").pop());
+              const li = document.createElement("li");
+              li.innerHTML = <i class="fas fa-file"></i> <a href="archivos/semana${num}/${fileName}" target="_blank">${fileName}</a>;
+              list.appendChild(li);
+            });
+          }
+        })
+        .catch(() => {
+          list.innerHTML = "<li style='color:var(--muted)'>No se pudieron cargar los archivos.</li>";
+        });
+
       showSection(null, "semana");
     }
 
-    function backToTasks() {
-      showSection(null, "tareas");
-    }
+    function backToTasks() { showSection(null, "tareas"); }
   </script>
 </body>
 </html>
