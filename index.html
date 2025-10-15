@@ -29,7 +29,6 @@
       line-height:1.5;
     }
 
-    /* HEADER */
     header{
       display:grid;
       grid-template-columns: auto 1fr auto;
@@ -123,29 +122,6 @@
     .task-num{font-size:28px;font-weight:700;color:var(--text)}
     .task-label{font-weight:600;color:var(--text)}
 
-    .file-section{margin-top:20px}
-    .file-section h3{color:var(--accent);font-size:18px;margin-bottom:10px}
-    .file-input{margin-bottom:12px}
-    .file-list{list-style:none;padding:0;margin:0}
-    .file-list li{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      background:#222;
-      padding:8px 12px;
-      border-radius:6px;
-      margin-bottom:6px;
-    }
-    .file-list a{color:var(--accent);text-decoration:none}
-    .file-list button{
-      background:#ff4444;
-      color:white;
-      border:none;
-      border-radius:6px;
-      padding:4px 8px;
-      cursor:pointer;
-    }
-
     .section{display:none;opacity:0;transform: translateY(10px);transition: opacity 0.5s ease, transform 0.5s ease;}
     .section.active{display:block;opacity:1;transform: translateY(0);}
 
@@ -188,7 +164,6 @@
       <div class="panel">
         <h2>Tareas - Semanas</h2>
         <div class="tasks-grid">
-          <!-- 13 SEMANAS -->
           <div class="task-card" onclick="openWeek(1)"><div class="task-icon"><i class="fas fa-database"></i></div><div class="task-num">01</div><div class="task-label">Semana 1</div></div>
           <div class="task-card" onclick="openWeek(2)"><div class="task-icon"><i class="fas fa-code"></i></div><div class="task-num">02</div><div class="task-label">Semana 2</div></div>
           <div class="task-card" onclick="openWeek(3)"><div class="task-icon"><i class="fas fa-table"></i></div><div class="task-num">03</div><div class="task-label">Semana 3</div></div>
@@ -209,11 +184,7 @@
     <section id="semana" class="section">
       <div class="panel">
         <h2 id="week-title">Semana</h2>
-        <div class="file-section">
-          <h3>Gestión de Archivos</h3>
-          <input type="file" id="file-input" class="file-input" multiple />
-          <ul id="file-list" class="file-list"></ul>
-        </div>
+        <p style="color:#dfeee2;">Aquí podrás revisar el contenido de esta semana.</p>
         <button onclick="backToTasks()">← Volver a Tareas</button>
       </div>
     </section>
@@ -221,7 +192,6 @@
 
   <script>
     let currentWeek = null;
-    const filesByWeek = {};
 
     function showSection(evt, id) {
       if (evt) evt.preventDefault();
@@ -238,38 +208,10 @@
       currentWeek = num;
       document.getElementById("week-title").textContent = "Semana " + num;
       showSection(null,"semana");
-      renderFiles();
     }
 
     function backToTasks(){
       showSection(null,"tareas");
-    }
-
-    document.getElementById("file-input").addEventListener("change", function(e){
-      if(!currentWeek) return;
-      if(!filesByWeek[currentWeek]) filesByWeek[currentWeek] = [];
-      [...e.target.files].forEach(file=>{
-        const url = URL.createObjectURL(file);
-        filesByWeek[currentWeek].push({name:file.name, url:url});
-      });
-      e.target.value = "";
-      renderFiles();
-    });
-
-    function renderFiles(){
-      const list = document.getElementById("file-list");
-      list.innerHTML = "";
-      (filesByWeek[currentWeek]||[]).forEach((f,idx)=>{
-        const li = document.createElement("li");
-        li.innerHTML = `<a href="${f.url}" target="_blank">${f.name}</a>
-                        <button onclick="deleteFile(${idx})">Borrar</button>`;
-        list.appendChild(li);
-      });
-    }
-
-    function deleteFile(idx){
-      filesByWeek[currentWeek].splice(idx,1);
-      renderFiles();
     }
   </script>
 </body>
