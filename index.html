@@ -1,398 +1,180 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BASE DE DATOS 2 - Inicio</title>
-
-  <!-- Google Font + Font Awesome -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Base de Datos - Kevin Macha Bruno</title>
   <style>
-    :root{
-      --bg:#0f1110;
-      --panel:#161616;
-      --accent:#00ff88;
-      --muted:#b9e6c4;
-      --text:#e9efe8;
-      --card-border: rgba(0,255,136,0.12);
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:"Poppins", Arial, sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      line-height:1.5;
+    header {
+      background: #111;
+      padding: 20px 0;
+      box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
     }
 
-    /* HEADER */
-    header{
-      display:grid;
-      grid-template-columns: auto 1fr auto;
-      align-items:center;
-      gap:20px;
-      padding:18px 26px;
-      background:#0b0b0b;
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #00ffff;
     }
 
-    .header-left img{
-      height:72px; width:auto;
-      display:block;
-      border-radius:8px;
+    h2 {
+      color: #ccc;
+      margin-top: 0;
+      font-weight: normal;
     }
 
-    .header-center{
-      text-align:center;
-    }
-    .header-center h1{
-      margin:0;
-      font-size:22px;
-      text-transform:uppercase;
-      color:var(--text);
-    }
-    .header-center .uni{
-      margin-top:6px;
-      font-size:13px;
-      color:var(--muted);
-    }
-    .header-center .name{
-      margin-top:4px;
-      font-size:14px;
-      font-weight:600;
-      color:var(--accent);
+    main {
+      padding: 30px 0;
     }
 
-    nav.header-nav{
-      display:flex;
-      gap:12px;
-      justify-self:end;
-    }
-    nav.header-nav a{
-      color:var(--accent);
-      text-decoration:none;
-      font-weight:600;
-      padding:8px 12px;
-      border-radius:8px;
-      transition: all .16s ease;
-    }
-    nav.header-nav a[aria-current="page"]{
-      background: rgba(0,255,136,0.08);
-      color:var(--text);
-    }
-    nav.header-nav a:hover{
-      transform:translateY(-3px);
-      color:var(--text);
-      background: rgba(0,255,136,0.06);
+    .semanas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      width: 90%;
+      margin: 0 auto;
     }
 
-    main{
-      max-width:1100px;
-      margin:28px auto;
-      padding:0 18px 60px;
+    .semana {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 15px;
+      padding: 20px;
+      transition: all 0.3s ease;
     }
 
-    .panel{
-      background:var(--panel);
-      border-radius:12px;
-      padding:22px;
-      box-shadow: 0 10px 32px rgba(0,0,0,0.6);
-      border:1px solid var(--card-border);
+    .semana:hover {
+      background: #222;
+      transform: translateY(-5px);
+      box-shadow: 0 0 10px #00ffff33;
     }
 
-    h2{margin:0 0 14px 0;color:var(--accent);font-size:20px}
-    .welcome p{color:#dfeee2;margin:12px 0}
-
-    .tasks-grid{
-      margin-top:18px;
-      display:grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap:18px;
+    .semana h3 {
+      color: #00ffff;
+      margin-bottom: 10px;
     }
 
-    .task-card{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      text-align:center;
-      padding:22px;
-      border-radius:12px;
-      border:2px solid var(--card-border);
-      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.6);
-      text-decoration:none;
-      color:var(--text);
-      cursor:pointer;
-    }
-    .task-card:hover{
-      transform: translateY(-8px);
-      box-shadow: 0 18px 46px rgba(0,255,136,0.08);
-      border-color: rgba(0,255,136,0.28);
-    }
-    .task-icon{font-size:28px;color:var(--accent)}
-    .task-num{font-size:28px;font-weight:700;color:var(--text)}
-    .task-label{font-weight:600;color:var(--text)}
-
-    /* FILE MANAGER */
-    .file-section{margin-top:20px}
-    .file-section h3{color:var(--accent);font-size:18px;margin-bottom:10px}
-    .file-input{margin-bottom:12px}
-    .file-list{list-style:none;padding:0;margin:0}
-    .file-list li{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      background:#222;
-      padding:8px 12px;
-      border-radius:6px;
-      margin-bottom:6px;
-    }
-    .file-list a{color:var(--accent);text-decoration:none}
-    .file-list button{
-      background:#ff4444;
-      color:white;
-      border:none;
-      border-radius:6px;
-      padding:4px 8px;
-      cursor:pointer;
+    .archivos {
+      background: #222;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 0.95rem;
+      color: #ddd;
     }
 
-    /* SECTIONS with transition */
-    .section{
-      display:none;
-      opacity:0;
-      transform: translateY(10px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .section.active{
-      display:block;
-      opacity:1;
-      transform: translateY(0);
+    footer {
+      background: #111;
+      padding: 15px;
+      margin-top: 40px;
+      font-size: 0.85rem;
+      color: #aaa;
     }
 
-    @media (max-width:520px){
-      .tasks-grid{ grid-template-columns:1fr; }
-      header{ grid-template-columns: 1fr; row-gap:12px; text-align:center; }
-      nav.header-nav{ justify-self:center; }
-    }
   </style>
 </head>
 <body>
   <header>
-    <div class="header-left">
-      <img src="upla.PNG" alt="Logo">
-    </div>
-
-    <div class="header-center">
-      <h1>BASE DE DATOS 2</h1>
-      <div class="uni">Universidad Peruana Los Andes</div>
-      <div class="name">Kevin Alfredo Macha Bruno</div>
-    </div>
-
-    <nav class="header-nav">
-      <a href="#" id="nav-inicio" aria-current="page" onclick="showSection(event,'inicio')">Inicio</a>
-      <a href="#" id="nav-tareas" onclick="showSection(event,'tareas')">Tareas</a>
-    </nav>
+    <h1>Base de Datos - Universidad Peruana de Ciencias Aplicadas</h1>
+    <h2>Kevin Alfredo Macha Bruno</h2>
   </header>
 
   <main>
-    <!-- INICIO -->
-    <section id="inicio" class="section active">
-      <div class="panel">
-        <h2>Bienvenido</h2>
-        <div class="welcome">
-          <p>Bienvenido al portal de de Kevin sobre<strong>Base de Datos 2</strong>. Aquí accederás a las tareas semanales del curso y encontraras guías utiles para realizar el curso.</p>
-        </div>
+    <h2>Semanas del Curso</h2>
+    <div class="semanas">
+      <!-- SEMANAS -->
+      <div class="semana">
+        <h3>Semana 1</h3>
+        <div class="archivos">Archivo: Introducción a la Base de Datos.pdf</div>
       </div>
-    </section>
 
-    <!-- TAREAS -->
-    <section id="tareas" class="section">
-      <div class="panel">
-        <h2>Tareas - Semanas</h2>
-        <div class="tasks-grid">
-          <!-- 13 SEMANAS -->
-          <div class="task-card" onclick="openWeek(1)"><div class="task-icon"><i class="fas fa-database"></i></div><div class="task-num">01</div><div class="task-label">Semana 1</div></div>
-          <div class="task-card" onclick="openWeek(2)"><div class="task-icon"><i class="fas fa-code"></i></div><div class="task-num">02</div><div class="task-label">Semana 2</div></div>
-          <div class="task-card" onclick="openWeek(3)"><div class="task-icon"><i class="fas fa-table"></i></div><div class="task-num">03</div><div class="task-label">Semana 3</div></div>
-          <div class="task-card" onclick="openWeek(4)"><div class="task-icon"><i class="fas fa-cogs"></i></div><div class="task-num">04</div><div class="task-label">Semana 4</div></div>
-          <div class="task-card" onclick="openWeek(5)"><div class="task-icon"><i class="fas fa-project-diagram"></i></div><div class="task-num">05</div><div class="task-label">Semana 5</div></div>
-          <div class="task-card" onclick="openWeek(6)"><div class="task-icon"><i class="fas fa-server"></i></div><div class="task-num">06</div><div class="task-label">Semana 6</div></div>
-          <div class="task-card" onclick="openWeek(7)"><div class="task-icon"><i class="fas fa-chart-line"></i></div><div class="task-num">07</div><div class="task-label">Semana 7</div></div>
-          <div class="task-card" onclick="openWeek(8)"><div class="task-icon"><i class="fas fa-key"></i></div><div class="task-num">08</div><div class="task-label">Semana 8</div></div>
-          <div class="task-card" onclick="openWeek(9)"><div class="task-icon"><i class="fas fa-lock"></i></div><div class="task-num">09</div><div class="task-label">Semana 9</div></div>
-          <div class="task-card" onclick="openWeek(10)"><div class="task-icon"><i class="fas fa-sitemap"></i></div><div class="task-num">10</div><div class="task-label">Semana 10</div></div>
-          <div class="task-card" onclick="openWeek(11)"><div class="task-icon"><i class="fas fa-laptop-code"></i></div><div class="task-num">11</div><div class="task-label">Semana 11</div></div>
-          <div class="task-card" onclick="openWeek(12)"><div class="task-icon"><i class="fas fa-database"></i></div><div class="task-num">12</div><div class="task-label">Semana 12</div></div>
-          <div class="task-card" onclick="openWeek(13)"><div class="task-icon"><i class="fas fa-check-circle"></i></div><div class="task-num">13</div><div class="task-label">Semana 13</div></div>
-        </div>
+      <div class="semana">
+        <h3>Semana 2</h3>
+        <div class="archivos">Archivo: Modelado Entidad-Relación.png</div>
       </div>
-    </section>
 
-    <!-- SEMANAS INDIVIDUALES -->
-    <section id="semana" class="section">
-      <div class="panel">
-        <h2 id="week-title">Semana</h2>
-        <div class="file-section">
-          <h3>Gestión de Archivos</h3>
-          <input type="file" id="file-input" class="file-input" multiple />
-          <ul id="file-list" class="file-list"></ul>
-        </div>
-        <button onclick="backToTasks()">← Volver a Tareas</button>
+      <div class="semana">
+        <h3>Semana 3</h3>
+        <div class="archivos">Archivo: Normalización de Tablas.docx</div>
       </div>
-    </section>
+
+      <div class="semana">
+        <h3>Semana 4</h3>
+        <div class="archivos">Archivo: Ejercicios SQL Básico.pdf</div>
+      </div>
+
+      <div class="semana">
+        <h3>Semana 5</h3>
+        <div class="archivos">Archivo: Consultas Avanzadas.sql</div>
+      </div>
+
+      <div class="semana">
+        <h3>Semana 6</h3>
+        <div class="archivos">Archivo: Proyecto Parcial.pdf</div>
+      </div>
+
+      <div class="semana">
+        <h3>Semana 7</h3>
+        <div class="archivos">Archivo: Exposición de Casos.pptx</div>
+      </div>
+
+      <div class="semana">
+        <h3>Semana 8</h3>
+        <div class="archivos">Archivo: Evaluación Parcial.pdf</div>
+      </div>
+
+      <div class="semana">
+        <h3>Semana 9</h3>
+        <div class="archivos">Archivo: Modelos Relacionales.pdf</div>
+      </div>
+
+      <div class="semana">
+        <h3>Semana 10</h3>
+        <div class="archivos">Archivo: Optimización de Consultas.sql</div>
+      </div>
+
+      <div class="semana">
+        <h3>Semana 11</h3>
+        <div class="archivos">Archivo: Diseño de Índices.pdf</div>
+      </div>
+
+      <div class="semana">
+        <h3>Semana 12</h3>
+        <div class="archivos">Archivo: Integración de Datos.docx</div>
+      </div>
+
+      <div class="semana">
+        <h3>Semana 13</h3>
+        <div class="archivos">Archivo: Seguridad en Bases de Datos.pdf</div>
+      </div>
+
+      <div class="semana">
+        <h3>Semana 14</h3>
+        <div class="archivos">Archivo: Proyecto Final - Parte 1.pdf</div>
+      </div>
+
+      <div class="semana">
+        <h3>Semana 15</h3>
+        <div class="archivos">Archivo: Proyecto Final - Parte 2.pdf</div>
+      </div>
+
+      <div class="semana">
+        <h3>Semana 16</h3>
+        <div class="archivos">Archivo: Presentación Final.pptx</div>
+      </div>
+    </div>
   </main>
 
-  <!-- Librería Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script>
-  /* ---------------- CONFIG: pega aquí tus datos ---------------- */
-  const SUPABASE_URL = "https://ojubyvygeuuqmagxawsl.supabase.co";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qdWJ5dnlnZXV1cW1hZ3hhd3NsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkzNzk0NjIsImV4cCI6MjA3NDk1NTQ2Mn0.jS7UOdQKEc2NLtxA3Vybn1iu7SfW7Up2YZ3E-RAiLZ0";
-  const BUCKET = "semanas";
-  /* ------------------------------------------------------------- */
-
-  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-  let currentWeek = null;
-  const filesByWeek = {}; // fallback local
-
-  function showSection(evt, id) {
-    if (evt) evt.preventDefault();
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    const el = document.getElementById(id);
-    if (el) el.classList.add('active');
-    document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
-    const nav = document.getElementById('nav-' + id);
-    if (nav) nav.setAttribute('aria-current','page');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function openWeek(num){
-    currentWeek = num;
-    const title = document.getElementById("week-title");
-    if (title) title.textContent = "Semana " + num;
-    showSection(null,"semana");
-    loadFiles().catch(err=>{
-      console.warn('loadFiles error (fallback):', err);
-      renderFiles(); 
-    });
-  }
-
-  function backToTasks(){
-    showSection(null,"tareas");
-  }
-
-  const fileInput = document.getElementById("file-input");
-  if (fileInput) {
-    fileInput.addEventListener("change", async function(e){
-      if (!currentWeek) { alert('Selecciona primero una semana.'); e.target.value=''; return; }
-      const files = Array.from(e.target.files || []);
-      if (files.length === 0) return;
-      try {
-        await Promise.all(files.map(f => uploadFileToSupabase(f)));
-        e.target.value = "";
-        await loadFiles();
-      } catch (err) {
-        console.error('Error subiendo a Supabase, fallback local:', err);
-        if (!filesByWeek[currentWeek]) filesByWeek[currentWeek] = [];
-        files.forEach(file => {
-          const url = URL.createObjectURL(file);
-          filesByWeek[currentWeek].push({ name: file.name, url });
-        });
-        e.target.value = "";
-        renderFiles();
-      }
-    });
-  }
-
-  async function uploadFileToSupabase(file) {
-    if (!currentWeek) throw new Error('Semana no seleccionada');
-    const folder = `semana${currentWeek}`;
-    const safeName = file.name.replace(/\s+/g, '_');
-    const path = `${folder}/${Date.now()}_${safeName}`;
-    const { data, error } = await _supabase.storage.from(BUCKET).upload(path, file, { upsert: false });
-    if (error) throw error;
-    return data;
-  }
-
-  async function loadFiles() {
-    const list = document.getElementById("file-list");
-    if (!list) return;
-    list.innerHTML = "<li>Cargando...</li>";
-    if (!currentWeek) { list.innerHTML = "<li>Selecciona una semana</li>"; return; }
-    try {
-      const folder = `semana${currentWeek}`;
-      const { data, error } = await _supabase.storage.from(BUCKET).list(folder, { limit: 100 });
-      if (error) {
-        console.error('Supabase list error:', error);
-        list.innerHTML = `<li>Error al listar archivos: ${error.message || error.code}</li>`;
-        return;
-      }
-      list.innerHTML = "";
-      if (!data || data.length === 0) {
-        list.innerHTML = "<li>No hay archivos.</li>";
-        return;
-      }
-      for (const item of data) {
-        const { data: urlData } = _supabase.storage.from(BUCKET).getPublicUrl(`${folder}/${item.name}`);
-        const publicUrl = urlData?.publicUrl || '#';
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = publicUrl;
-        a.textContent = item.name;
-        a.target = "_blank";
-        const btn = document.createElement('button');
-        btn.textContent = 'Borrar';
-        btn.addEventListener('click', async () => {
-          if (!confirm(`¿Eliminar "${item.name}"?`)) return;
-          const { error: delErr } = await _supabase.storage.from(BUCKET).remove([`${folder}/${item.name}`]);
-          if (delErr) {
-            alert('Error al borrar: ' + (delErr.message || delErr));
-            console.error('delete error', delErr);
-            return;
-          }
-          await loadFiles();
-        });
-        li.appendChild(a);
-        li.appendChild(btn);
-        list.appendChild(li);
-      }
-    } catch (err) {
-      console.error('loadFiles catch', err);
-      list.innerHTML = "<li>Error al comunicarse con Supabase</li>";
-    }
-  }
-
-  function renderFiles(){
-    const list = document.getElementById("file-list");
-    if (!list) return;
-    list.innerHTML = "";
-    const arr = filesByWeek[currentWeek] || [];
-    if (arr.length === 0) { list.innerHTML = "<li>No hay archivos.</li>"; return; }
-    arr.forEach((f, idx) => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.href = f.url;
-      a.textContent = f.name;
-      a.target = "_blank";
-      const btn = document.createElement('button');
-      btn.textContent = 'Borrar';
-      btn.addEventListener('click', () => {
-        filesByWeek[currentWeek].splice(idx,1);
-        renderFiles();
-      });
-      li.appendChild(a);
-      li.appendChild(btn);
-      list.appendChild(li);
-    });
-  }
-  </script>
+  <footer>
+    &copy; 2025 | Kevin Macha Bruno - Universidad Peruana de Ciencias Aplicadas
+  </footer>
 </body>
 </html>
