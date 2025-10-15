@@ -1,178 +1,292 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Base de Datos - Kevin Macha Bruno</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BASE DE DATOS 2 - Kevin Alfredo Macha Bruno</title>
+
+  <!-- Google Font + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    body {
-      background-color: #000;
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      margin: 0;
-      padding: 0;
+    :root{
+      --bg:#0f1110;
+      --panel:#161616;
+      --accent:#00ff88;
+      --muted:#c8e6c4;
+      --text:#e9efe8;
+      --card-border: rgba(0,255,136,0.12);
     }
 
-    header {
-      background: #111;
-      padding: 20px 0;
-      box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Poppins", Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.5;
     }
 
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 10px;
-      color: #00ffff;
+    /* HEADER */
+    header{
+      display:grid;
+      grid-template-columns: auto 1fr auto;
+      align-items:center;
+      gap:20px;
+      padding:18px 26px;
+      background:#0b0b0b;
     }
 
-    h2 {
-      color: #ccc;
-      margin-top: 0;
-      font-weight: normal;
+    .header-left img{
+      height:72px; width:auto;
+      display:block;
+      border-radius:8px;
     }
 
-    main {
-      padding: 30px 0;
+    .header-center{
+      text-align:center;
+    }
+    .header-center h1{
+      margin:0;
+      font-size:24px;
+      text-transform:uppercase;
+      color:var(--text);
+      letter-spacing:1px;
+    }
+    .header-center .uni{
+      margin-top:6px;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .header-center .name{
+      margin-top:4px;
+      font-size:14px;
+      font-weight:700;
+      color:var(--accent);
     }
 
-    .semanas {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      width: 90%;
-      margin: 0 auto;
+    nav.header-nav{
+      display:flex;
+      gap:12px;
+      justify-self:end;
+    }
+    nav.header-nav a{
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:600;
+      padding:8px 12px;
+      border-radius:8px;
+      transition: all .16s ease;
+    }
+    nav.header-nav a[aria-current="page"]{
+      background: rgba(0,255,136,0.08);
+      color:var(--text);
+    }
+    nav.header-nav a:hover{
+      transform:translateY(-3px);
+      color:var(--text);
+      background: rgba(0,255,136,0.06);
     }
 
-    .semana {
-      background: #111;
-      border: 1px solid #333;
-      border-radius: 15px;
-      padding: 20px;
-      transition: all 0.3s ease;
+    main{
+      max-width:1100px;
+      margin:28px auto;
+      padding:0 18px 60px;
     }
 
-    .semana:hover {
-      background: #222;
-      transform: translateY(-5px);
-      box-shadow: 0 0 10px #00ffff33;
+    .panel{
+      background:var(--panel);
+      border-radius:12px;
+      padding:22px;
+      box-shadow: 0 10px 32px rgba(0,0,0,0.6);
+      border:1px solid var(--card-border);
     }
 
-    .semana h3 {
-      color: #00ffff;
-      margin-bottom: 10px;
+    h2{margin:0 0 14px 0;color:var(--accent);font-size:20px}
+    .welcome p{color:#dfeee2;margin:12px 0}
+
+    /* Grid fijo 2 columnas para tarjetas de semana */
+    .tasks-grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: repeat(2, 1fr); /* EXACTAMENTE 2 por fila */
+      gap:18px;
     }
 
-    .archivos {
-      background: #222;
-      border-radius: 10px;
-      padding: 10px;
-      font-size: 0.95rem;
-      color: #ddd;
+    .task-card{
+      background:var(--panel);
+      border-radius:12px;
+      padding:22px;
+      text-align:center;
+      border:2px solid var(--card-border);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+      transition: transform .18s ease, box-shadow .18s ease;
+      cursor:pointer;
+    }
+    .task-card:hover{
+      transform: translateY(-6px);
+      box-shadow: 0 16px 36px rgba(0,255,136,0.12);
+    }
+    .task-card .icon{font-size:28px;color:var(--accent);margin-bottom:12px}
+    .task-card .num{font-size:26px;font-weight:700;color:var(--text)}
+    .task-card .label{margin-top:6px;font-weight:600;color:var(--muted)}
+
+    /* Semana detalle (sin botones de subir/borrar) */
+    .file-section{margin-top:20px}
+    .file-section h3{color:var(--accent);font-size:18px;margin-bottom:10px}
+    .file-list{list-style:none;padding:0;margin:0}
+    .file-list li{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      background:#222;
+      padding:10px 12px;
+      border-radius:6px;
+      margin-bottom:8px;
+    }
+    .file-list a{color:var(--accent);text-decoration:none;font-weight:600}
+
+    /* SECTIONS with transition */
+    .section{
+      display:none;
+      opacity:0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .section.active{
+      display:block;
+      opacity:1;
+      transform: translateY(0);
     }
 
-    footer {
-      background: #111;
-      padding: 15px;
-      margin-top: 40px;
-      font-size: 0.85rem;
-      color: #aaa;
+    /* Responsive: en pantallas muy pequeñas apila 2 col -> 1 col */
+    @media (max-width:520px){
+      .tasks-grid{grid-template-columns:1fr}
+      header{flex-direction:column;align-items:center}
+      .header-left img{height:60px}
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Base de Datos - Universidad Peruana de Ciencias Aplicadas</h1>
-    <h2>Kevin Alfredo Macha Bruno</h2>
+    <div class="header-left">
+      <!-- deja espacio para que pongas tu logo con el mismo nombre de archivo upla.PNG -->
+      <img src="upla.PNG" alt="Logo Universidad">
+    </div>
+
+    <div class="header-center">
+      <h1>BASE DE DATOS 2</h1>
+      <div class="uni">Universidad Peruana Los Andes</div>
+      <div class="name">Kevin Alfredo Macha Bruno</div>
+    </div>
+
+    <nav class="header-nav">
+      <a href="#" id="nav-inicio" aria-current="page" onclick="showSection(event,'inicio')">Inicio</a>
+      <a href="#" id="nav-tareas" onclick="showSection(event,'tareas')">Tareas</a>
+    </nav>
   </header>
 
   <main>
-    <h2>Semanas del Curso</h2>
-    <div class="semanas">
-      <div class="semana">
-        <h3>Semana 1</h3>
-        <div class="archivos">Archivo: Introducción a la Base de Datos.pdf</div>
+    <!-- INICIO -->
+    <section id="inicio" class="section active">
+      <div class="panel">
+        <h2>Bienvenido</h2>
+        <div class="welcome">
+          <p>Hola — este es el portal del curso <strong>Base de Datos 2</strong>. Aquí verás las semanas y los recursos del curso.</p>
+          <p>Puedes navegar con los botones del encabezado: <strong>Inicio</strong> y <strong>Tareas</strong>.</p>
+        </div>
       </div>
+    </section>
 
-      <div class="semana">
-        <h3>Semana 2</h3>
-        <div class="archivos">Archivo: Modelado Entidad-Relación.png</div>
+    <!-- TAREAS -->
+    <section id="tareas" class="section">
+      <div class="panel">
+        <h2>Tareas - Semanas</h2>
+        <div class="tasks-grid" id="weeksGrid">
+          <!-- Las 16 tarjetas se generan con JS abajo -->
+        </div>
       </div>
+    </section>
 
-      <div class="semana">
-        <h3>Semana 3</h3>
-        <div class="archivos">Archivo: Normalización de Tablas.docx</div>
+    <!-- SEMANA DETALLE -->
+    <section id="semana" class="section">
+      <div class="panel">
+        <h2 id="week-title">Semana</h2>
+        <div class="file-section">
+          <h3>Archivos</h3>
+          <ul id="file-list" class="file-list">
+            <!-- Aquí aparecerán los nombres/links (si decides agregarlos) -->
+            <li style="color:var(--muted)">No hay archivos configurados para esta vista (sin base de datos).</li>
+          </ul>
+        </div>
+        <div style="margin-top:16px;">
+          <button onclick="backToTasks()" style="background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:8px;color:var(--muted);cursor:pointer;">← Volver a Tareas</button>
+        </div>
       </div>
-
-      <div class="semana">
-        <h3>Semana 4</h3>
-        <div class="archivos">Archivo: Ejercicios SQL Básico.pdf</div>
-      </div>
-
-      <div class="semana">
-        <h3>Semana 5</h3>
-        <div class="archivos">Archivo: Consultas Avanzadas.sql</div>
-      </div>
-
-      <div class="semana">
-        <h3>Semana 6</h3>
-        <div class="archivos">Archivo: Proyecto Parcial.pdf</div>
-      </div>
-
-      <div class="semana">
-        <h3>Semana 7</h3>
-        <div class="archivos">Archivo: Exposición de Casos.pptx</div>
-      </div>
-
-      <div class="semana">
-        <h3>Semana 8</h3>
-        <div class="archivos">Archivo: Evaluación Parcial.pdf</div>
-      </div>
-
-      <div class="semana">
-        <h3>Semana 9</h3>
-        <div class="archivos">Archivo: Modelos Relacionales.pdf</div>
-      </div>
-
-      <div class="semana">
-        <h3>Semana 10</h3>
-        <div class="archivos">Archivo: Optimización de Consultas.sql</div>
-      </div>
-
-      <div class="semana">
-        <h3>Semana 11</h3>
-        <div class="archivos">Archivo: Diseño de Índices.pdf</div>
-      </div>
-
-      <div class="semana">
-        <h3>Semana 12</h3>
-        <div class="archivos">Archivo: Integración de Datos.docx</div>
-      </div>
-
-      <div class="semana">
-        <h3>Semana 13</h3>
-        <div class="archivos">Archivo: Seguridad en Bases de Datos.pdf</div>
-      </div>
-
-      <div class="semana">
-        <h3>Semana 14</h3>
-        <div class="archivos">Archivo: Proyecto Final - Parte 1.pdf</div>
-      </div>
-
-      <div class="semana">
-        <h3>Semana 15</h3>
-        <div class="archivos">Archivo: Proyecto Final - Parte 2.pdf</div>
-      </div>
-
-      <div class="semana">
-        <h3>Semana 16</h3>
-        <div class="archivos">Archivo: Presentación Final.pptx</div>
-      </div>
-    </div>
+    </section>
   </main>
 
-  <footer>
-    &copy; 2025 | Kevin Macha Bruno - Universidad Peruana de Ciencias Aplicadas
-  </footer>
+  <script>
+    /* ---------------------------
+       Restaurado: navegación y UI
+       --------------------------- */
+    const WEEKS = 16; // semanas 1..16
+    const weeksGrid = document.getElementById('weeksGrid');
+
+    // Generar tarjetas (2 por fila por CSS grid)
+    for (let i = 1; i <= WEEKS; i++) {
+      const card = document.createElement('div');
+      card.className = 'task-card';
+      card.innerHTML = `
+        <div class="icon"><i class="fas fa-folder-open"></i></div>
+        <div class="num">${String(i).padStart(2,'0')}</div>
+        <div class="label">Semana ${i}</div>
+      `;
+      card.onclick = () => openWeek(i);
+      weeksGrid.appendChild(card);
+    }
+
+    function showSection(evt, id) {
+      if (evt) evt.preventDefault();
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      // marcar en nav
+      document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
+      if (document.getElementById('nav-' + id)) {
+        document.getElementById('nav-' + id).setAttribute('aria-current','page');
+      } else {
+        // si no existe nav id, reset manual:
+        document.getElementById('nav-inicio').removeAttribute('aria-current');
+        document.getElementById('nav-tareas').removeAttribute('aria-current');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openWeek(num){
+      document.getElementById('week-title').textContent = 'Semana ' + num;
+      // En la versión sin base de datos, aquí mostramos un placeholder.
+      const list = document.getElementById('file-list');
+      list.innerHTML = ''; // vaciar
+      // Si quieres listar archivos manualmente aquí, puedes insertar <li> con links.
+      // Por ahora mostramos el texto de ejemplo (no hay storage):
+      const li = document.createElement('li');
+      li.textContent = 'Aquí se mostrarían los archivos de la semana (sin base de datos).';
+      li.style.color = 'var(--muted)';
+      list.appendChild(li);
+
+      showSection(null,'semana');
+    }
+
+    function backToTasks(){
+      showSection(null,'tareas');
+    }
+
+    // Nota: si en el futuro quieres que las semanas muestren archivos reales
+    // alojados en tu repo de GitHub (solo lectura), puedo añadir la
+    // integración con la API de GitHub en 1 línea y sin tocar el diseño.
+    // Por ahora, de acuerdo a tu pedido, NO hay integración/DB.
+  </script>
 </body>
 </html>
