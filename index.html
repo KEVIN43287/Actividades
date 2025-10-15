@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BASE DE DATOS 2 - Kevin Alfredo Macha Bruno</title>
+  <title>BASE DE DATOS 2 - Inicio</title>
 
   <!-- Google Font + Font Awesome -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
       --bg:#0f1110;
       --panel:#161616;
       --accent:#00ff88;
-      --muted:#c8e6c4;
+      --muted:#b9e6c4;
       --text:#e9efe8;
       --card-border: rgba(0,255,136,0.12);
     }
@@ -50,10 +50,9 @@
     }
     .header-center h1{
       margin:0;
-      font-size:24px;
+      font-size:22px;
       text-transform:uppercase;
       color:var(--text);
-      letter-spacing:1px;
     }
     .header-center .uni{
       margin-top:6px;
@@ -63,7 +62,7 @@
     .header-center .name{
       margin-top:4px;
       font-size:14px;
-      font-weight:700;
+      font-weight:600;
       color:var(--accent);
     }
 
@@ -107,53 +106,69 @@
     h2{margin:0 0 14px 0;color:var(--accent);font-size:20px}
     .welcome p{color:#dfeee2;margin:12px 0}
 
-    /* Grid fijo 2 columnas para tarjetas de semana */
     .tasks-grid{
       margin-top:18px;
       display:grid;
-      grid-template-columns: repeat(2, 1fr); /* EXACTAMENTE 2 por fila */
+      grid-template-columns: repeat(2, 1fr);
       gap:18px;
     }
 
     .task-card{
-      background:var(--panel);
-      border-radius:12px;
-      padding:22px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
       text-align:center;
+      padding:22px;
+      border-radius:12px;
       border:2px solid var(--card-border);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-      transition: transform .18s ease, box-shadow .18s ease;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.6);
+      text-decoration:none;
+      color:var(--text);
       cursor:pointer;
     }
     .task-card:hover{
-      transform: translateY(-6px);
-      box-shadow: 0 16px 36px rgba(0,255,136,0.12);
+      transform: translateY(-8px);
+      box-shadow: 0 18px 46px rgba(0,255,136,0.08);
+      border-color: rgba(0,255,136,0.28);
     }
-    .task-card .icon{font-size:28px;color:var(--accent);margin-bottom:12px}
-    .task-card .num{font-size:26px;font-weight:700;color:var(--text)}
-    .task-card .label{margin-top:6px;font-weight:600;color:var(--muted)}
+    .task-icon{font-size:28px;color:var(--accent)}
+    .task-num{font-size:28px;font-weight:700;color:var(--text)}
+    .task-label{font-weight:600;color:var(--text)}
 
-    /* Semana detalle (sin botones de subir/borrar) */
+    /* FILE MANAGER */
     .file-section{margin-top:20px}
     .file-section h3{color:var(--accent);font-size:18px;margin-bottom:10px}
+    .file-input{margin-bottom:12px}
     .file-list{list-style:none;padding:0;margin:0}
     .file-list li{
       display:flex;
+      justify-content:space-between;
       align-items:center;
-      gap:12px;
       background:#222;
-      padding:10px 12px;
+      padding:8px 12px;
       border-radius:6px;
-      margin-bottom:8px;
+      margin-bottom:6px;
     }
-    .file-list a{color:var(--accent);text-decoration:none;font-weight:600}
+    .file-list a{color:var(--accent);text-decoration:none}
+    .file-list button{
+      background:#ff4444;
+      color:white;
+      border:none;
+      border-radius:6px;
+      padding:4px 8px;
+      cursor:pointer;
+    }
 
     /* SECTIONS with transition */
     .section{
       display:none;
       opacity:0;
       transform: translateY(10px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
     .section.active{
       display:block;
@@ -161,19 +176,17 @@
       transform: translateY(0);
     }
 
-    /* Responsive: en pantallas muy pequeñas apila 2 col -> 1 col */
     @media (max-width:520px){
-      .tasks-grid{grid-template-columns:1fr}
-      header{flex-direction:column;align-items:center}
-      .header-left img{height:60px}
+      .tasks-grid{ grid-template-columns:1fr; }
+      header{ grid-template-columns: 1fr; row-gap:12px; text-align:center; }
+      nav.header-nav{ justify-self:center; }
     }
   </style>
 </head>
 <body>
   <header>
     <div class="header-left">
-      <!-- deja espacio para que pongas tu logo con el mismo nombre de archivo upla.PNG -->
-      <img src="upla.PNG" alt="Logo Universidad">
+      <img src="upla.PNG" alt="Logo">
     </div>
 
     <div class="header-center">
@@ -194,8 +207,7 @@
       <div class="panel">
         <h2>Bienvenido</h2>
         <div class="welcome">
-          <p>Hola — este es el portal del curso <strong>Base de Datos 2</strong>. Aquí verás las semanas y los recursos del curso.</p>
-          <p>Puedes navegar con los botones del encabezado: <strong>Inicio</strong> y <strong>Tareas</strong>.</p>
+          <p>Bienvenido al portal de <strong>Base de Datos 2</strong>. Aquí accederás a las tareas semanales del curso.</p>
         </div>
       </div>
     </section>
@@ -204,89 +216,91 @@
     <section id="tareas" class="section">
       <div class="panel">
         <h2>Tareas - Semanas</h2>
-        <div class="tasks-grid" id="weeksGrid">
-          <!-- Las 16 tarjetas se generan con JS abajo -->
+        <div class="tasks-grid">
+          <!-- 13 SEMANAS -->
+          <div class="task-card" onclick="openWeek(1)"><div class="task-icon"><i class="fas fa-database"></i></div><div class="task-num">01</div><div class="task-label">Semana 1</div></div>
+          <div class="task-card" onclick="openWeek(2)"><div class="task-icon"><i class="fas fa-code"></i></div><div class="task-num">02</div><div class="task-label">Semana 2</div></div>
+          <div class="task-card" onclick="openWeek(3)"><div class="task-icon"><i class="fas fa-table"></i></div><div class="task-num">03</div><div class="task-label">Semana 3</div></div>
+          <div class="task-card" onclick="openWeek(4)"><div class="task-icon"><i class="fas fa-cogs"></i></div><div class="task-num">04</div><div class="task-label">Semana 4</div></div>
+          <div class="task-card" onclick="openWeek(5)"><div class="task-icon"><i class="fas fa-project-diagram"></i></div><div class="task-num">05</div><div class="task-label">Semana 5</div></div>
+          <div class="task-card" onclick="openWeek(6)"><div class="task-icon"><i class="fas fa-server"></i></div><div class="task-num">06</div><div class="task-label">Semana 6</div></div>
+          <div class="task-card" onclick="openWeek(7)"><div class="task-icon"><i class="fas fa-chart-line"></i></div><div class="task-num">07</div><div class="task-label">Semana 7</div></div>
+          <div class="task-card" onclick="openWeek(8)"><div class="task-icon"><i class="fas fa-key"></i></div><div class="task-num">08</div><div class="task-label">Semana 8</div></div>
+          <div class="task-card" onclick="openWeek(9)"><div class="task-icon"><i class="fas fa-lock"></i></div><div class="task-num">09</div><div class="task-label">Semana 9</div></div>
+          <div class="task-card" onclick="openWeek(10)"><div class="task-icon"><i class="fas fa-sitemap"></i></div><div class="task-num">10</div><div class="task-label">Semana 10</div></div>
+          <div class="task-card" onclick="openWeek(11)"><div class="task-icon"><i class="fas fa-laptop-code"></i></div><div class="task-num">11</div><div class="task-label">Semana 11</div></div>
+          <div class="task-card" onclick="openWeek(12)"><div class="task-icon"><i class="fas fa-database"></i></div><div class="task-num">12</div><div class="task-label">Semana 12</div></div>
+          <div class="task-card" onclick="openWeek(13)"><div class="task-icon"><i class="fas fa-check-circle"></i></div><div class="task-num">13</div><div class="task-label">Semana 13</div></div>
         </div>
       </div>
     </section>
 
-    <!-- SEMANA DETALLE -->
+    <!-- SEMANAS INDIVIDUALES -->
     <section id="semana" class="section">
       <div class="panel">
         <h2 id="week-title">Semana</h2>
         <div class="file-section">
-          <h3>Archivos</h3>
-          <ul id="file-list" class="file-list">
-            <!-- Aquí aparecerán los nombres/links (si decides agregarlos) -->
-            <li style="color:var(--muted)">No hay archivos configurados para esta vista (sin base de datos).</li>
-          </ul>
+          <h3>Gestión de Archivos</h3>
+          <input type="file" id="file-input" class="file-input" multiple />
+          <ul id="file-list" class="file-list"></ul>
         </div>
-        <div style="margin-top:16px;">
-          <button onclick="backToTasks()" style="background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:8px;color:var(--muted);cursor:pointer;">← Volver a Tareas</button>
-        </div>
+        <button onclick="backToTasks()">← Volver a Tareas</button>
       </div>
     </section>
   </main>
 
   <script>
-    /* ---------------------------
-       Restaurado: navegación y UI
-       --------------------------- */
-    const WEEKS = 16; // semanas 1..16
-    const weeksGrid = document.getElementById('weeksGrid');
-
-    // Generar tarjetas (2 por fila por CSS grid)
-    for (let i = 1; i <= WEEKS; i++) {
-      const card = document.createElement('div');
-      card.className = 'task-card';
-      card.innerHTML = `
-        <div class="icon"><i class="fas fa-folder-open"></i></div>
-        <div class="num">${String(i).padStart(2,'0')}</div>
-        <div class="label">Semana ${i}</div>
-      `;
-      card.onclick = () => openWeek(i);
-      weeksGrid.appendChild(card);
-    }
+    let currentWeek = null;
+    const filesByWeek = {};
 
     function showSection(evt, id) {
       if (evt) evt.preventDefault();
       document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
-      // marcar en nav
       document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
-      if (document.getElementById('nav-' + id)) {
+      if(document.getElementById('nav-' + id)) {
         document.getElementById('nav-' + id).setAttribute('aria-current','page');
-      } else {
-        // si no existe nav id, reset manual:
-        document.getElementById('nav-inicio').removeAttribute('aria-current');
-        document.getElementById('nav-tareas').removeAttribute('aria-current');
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function openWeek(num){
-      document.getElementById('week-title').textContent = 'Semana ' + num;
-      // En la versión sin base de datos, aquí mostramos un placeholder.
-      const list = document.getElementById('file-list');
-      list.innerHTML = ''; // vaciar
-      // Si quieres listar archivos manualmente aquí, puedes insertar <li> con links.
-      // Por ahora mostramos el texto de ejemplo (no hay storage):
-      const li = document.createElement('li');
-      li.textContent = 'Aquí se mostrarían los archivos de la semana (sin base de datos).';
-      li.style.color = 'var(--muted)';
-      list.appendChild(li);
-
-      showSection(null,'semana');
+      currentWeek = num;
+      document.getElementById("week-title").textContent = "Semana " + num;
+      showSection(null,"semana");
+      renderFiles();
     }
 
     function backToTasks(){
-      showSection(null,'tareas');
+      showSection(null,"tareas");
     }
 
-    // Nota: si en el futuro quieres que las semanas muestren archivos reales
-    // alojados en tu repo de GitHub (solo lectura), puedo añadir la
-    // integración con la API de GitHub en 1 línea y sin tocar el diseño.
-    // Por ahora, de acuerdo a tu pedido, NO hay integración/DB.
+    document.getElementById("file-input").addEventListener("change", function(e){
+      if(!currentWeek) return;
+      if(!filesByWeek[currentWeek]) filesByWeek[currentWeek] = [];
+      [...e.target.files].forEach(file=>{
+        const url = URL.createObjectURL(file);
+        filesByWeek[currentWeek].push({name:file.name, url:url});
+      });
+      e.target.value = "";
+      renderFiles();
+    });
+
+    function renderFiles(){
+      const list = document.getElementById("file-list");
+      list.innerHTML = "";
+      (filesByWeek[currentWeek]||[]).forEach((f,idx)=>{
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="${f.url}" target="_blank">${f.name}</a>
+                        <button onclick="deleteFile(${idx})">Borrar</button>`;
+        list.appendChild(li);
+      });
+    }
+
+    function deleteFile(idx){
+      filesByWeek[currentWeek].splice(idx,1);
+      renderFiles();
+    }
   </script>
 </body>
 </html>
