@@ -1,173 +1,272 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Base de Datos II - UPLA</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BASE DE DATOS 2 - Kevin Alfredo Macha Bruno</title>
+
+  <!-- Google Font + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg:#0f1110;
+      --panel:#161616;
+      --accent:#00ff88;
+      --muted:#c8e6c4;
+      --text:#e9efe8;
+      --card-border: rgba(0,255,136,0.12);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Poppins", Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.5;
+    }
+
+    /* HEADER */
+    header{
+      display:grid;
+      grid-template-columns: auto 1fr auto;
+      align-items:center;
+      gap:20px;
+      padding:18px 26px;
+      background:#0b0b0b;
+    }
+
+    .header-left img{
+      height:72px; width:auto;
+      display:block;
+      border-radius:8px;
+    }
+
+    .header-center{
+      text-align:center;
+    }
+    .header-center h1{
+      margin:0;
+      font-size:24px;
+      text-transform:uppercase;
+      color:var(--text);
+      letter-spacing:1px;
+    }
+    .header-center .uni{
+      margin-top:6px;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .header-center .name{
+      margin-top:4px;
+      font-size:14px;
+      font-weight:700;
+      color:var(--accent);
+    }
+
+    nav.header-nav{
+      display:flex;
+      gap:12px;
+      justify-self:end;
+    }
+    nav.header-nav a{
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:600;
+      padding:8px 12px;
+      border-radius:8px;
+      transition: all .16s ease;
+    }
+    nav.header-nav a[aria-current="page"]{
+      background: rgba(0,255,136,0.08);
+      color:var(--text);
+    }
+    nav.header-nav a:hover{
+      transform:translateY(-3px);
+      color:var(--text);
+      background: rgba(0,255,136,0.06);
+    }
+
+    main{
+      max-width:1100px;
+      margin:28px auto;
+      padding:0 18px 60px;
+    }
+
+    .panel{
+      background:var(--panel);
+      border-radius:12px;
+      padding:22px;
+      box-shadow: 0 10px 32px rgba(0,0,0,0.6);
+      border:1px solid var(--card-border);
+    }
+
+    h2{margin:0 0 14px 0;color:var(--accent);font-size:20px}
+    .welcome p{color:#dfeee2;margin:12px 0}
+
+    .tasks-grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:18px;
+    }
+
+    .task-card{
+      background:var(--panel);
+      border-radius:12px;
+      padding:22px;
+      text-align:center;
+      border:2px solid var(--card-border);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+      transition: transform .18s ease, box-shadow .18s ease;
+      cursor:pointer;
+    }
+    .task-card:hover{
+      transform: translateY(-6px);
+      box-shadow: 0 16px 36px rgba(0,255,136,0.12);
+    }
+    .task-card .icon{font-size:28px;color:var(--accent);margin-bottom:12px}
+    .task-card .num{font-size:26px;font-weight:700;color:var(--text)}
+    .task-card .label{margin-top:6px;font-weight:600;color:var(--muted)}
+
+    .file-section{margin-top:20px}
+    .file-section h3{color:var(--accent);font-size:18px;margin-bottom:10px}
+    .file-list{list-style:none;padding:0;margin:0}
+    .file-list li{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      background:#222;
+      padding:10px 12px;
+      border-radius:6px;
+      margin-bottom:8px;
+    }
+    .file-list a{color:var(--accent);text-decoration:none;font-weight:600}
+
+    .section{display:none;opacity:0;transform: translateY(10px);transition: opacity 0.4s ease, transform 0.4s ease;}
+    .section.active{display:block;opacity:1;transform: translateY(0);}
+
+    @media (max-width:520px){
+      .tasks-grid{grid-template-columns:1fr}
+      header{flex-direction:column;align-items:center}
+      .header-left img{height:60px}
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <img src="img/logo-upla.png" alt="Logo UPLA" class="logo">
-        <h1>Curso: Base de Datos II</h1>
-        <h2>Facultad de Ingeniería - UPLA</h2>
-    </header>
+  <header>
+    <div class="header-left">
+      <img src="upla.PNG" alt="Logo Universidad">
+    </div>
 
-    <main>
-        <h3>Bienvenido</h3>
-        <p>Selecciona la sección que deseas visitar:</p>
+    <div class="header-center">
+      <h1>BASE DE DATOS 2</h1>
+      <div class="uni">Universidad Peruana Los Andes</div>
+      <div class="name">Kevin Alfredo Macha Bruno</div>
+    </div>
 
-        <div class="botones">
-            <a href="tareas.html" class="btn">Ver Tareas</a>
+    <nav class="header-nav">
+      <a href="#" id="nav-inicio" aria-current="page" onclick="showSection(event,'inicio')">Inicio</a>
+      <a href="#" id="nav-tareas" onclick="showSection(event,'tareas')">Tareas</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="inicio" class="section active">
+      <div class="panel">
+        <h2>Bienvenido</h2>
+        <div class="welcome">
+          <p>Hola, este es el portal del curso <strong>Base de Datos 2</strong>. Aquí verás las semanas y los recursos del curso.</p>
+          <p>Puedes navegar con los botones del encabezado: <strong>Inicio</strong> y <strong>Tareas</strong>.</p>
         </div>
-    </main>
+      </div>
+    </section>
 
-    <footer>
-        <p>© 2025 Universidad Peruana Los Andes</p>
-    </footer>
+    <section id="tareas" class="section">
+      <div class="panel">
+        <h2>Tareas - Semanas</h2>
+        <div class="tasks-grid" id="weeksGrid"></div>
+      </div>
+    </section>
+
+    <section id="semana" class="section">
+      <div class="panel">
+        <h2 id="week-title">Semana</h2>
+        <div class="file-section">
+          <h3>Archivos</h3>
+          <ul id="file-list" class="file-list"></ul>
+        </div>
+        <div style="margin-top:16px;">
+          <button onclick="backToTasks()" style="background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:8px;color:var(--muted);cursor:pointer;">← Volver a Tareas</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const weeksGrid = document.getElementById('weeksGrid');
+    const fileList = document.getElementById('file-list');
+    const weekTitle = document.getElementById('week-title');
+
+    const WEEKS = 16;
+    for (let i = 1; i <= WEEKS; i++) {
+      const card = document.createElement('div');
+      card.className = 'task-card';
+      card.innerHTML = `
+        <div class="icon"><i class="fas fa-folder-open"></i></div>
+        <div class="num">${String(i).padStart(2,'0')}</div>
+        <div class="label">Semana ${i}</div>
+      `;
+      card.onclick = () => openWeek(i);
+      weeksGrid.appendChild(card);
+    }
+
+    function showSection(evt, id) {
+      if (evt) evt.preventDefault();
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
+      if (document.getElementById('nav-' + id)) {
+        document.getElementById('nav-' + id).setAttribute('aria-current','page');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openWeek(num){
+      weekTitle.textContent = 'Semana ' + num;
+      fileList.innerHTML = '';
+
+      // MOSTRAR ARCHIVOS (ajusta nombres según tus archivos reales)
+      const files = {
+        1: ["archivos/semana1/tarea1.pdf", "archivos/semana1/diapositiva1.pptx"],
+        2: ["archivos/semana2/tarea2.pdf"],
+        3: ["archivos/semana3/guia3.docx"],
+        16: ["archivos/semana16/informe_final.pdf"]
+      };
+
+      if (files[num]) {
+        files[num].forEach(f => {
+          const name = f.split('/').pop();
+          const li = document.createElement('li');
+          li.innerHTML = <a href="${f}" target="_blank">${name}</a>;
+          fileList.appendChild(li);
+        });
+      } else {
+        const li = document.createElement('li');
+        li.textContent = 'No hay archivos disponibles para esta semana.';
+        li.style.color = 'var(--muted)';
+        fileList.appendChild(li);
+      }
+
+      showSection(null,'semana');
+    }
+
+    function backToTasks(){
+      showSection(null,'tareas');
+    }
+  </script>
 </body>
 </html>
-
-
-<!-- ====================== tareas.html ====================== -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tareas - Base de Datos II</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <img src="img/logo-upla.png" alt="Logo UPLA" class="logo">
-        <h1>Tareas del Curso - Base de Datos II</h1>
-    </header>
-
-    <main>
-        <h2>Selecciona una semana</h2>
-        <ul class="lista-semanas">
-            <li><a href="semanas/semana1.html">Semana 1</a></li>
-            <li><a href="semanas/semana2.html">Semana 2</a></li>
-            <li><a href="semanas/semana3.html">Semana 3</a></li>
-            <li><a href="semanas/semana4.html">Semana 4</a></li>
-            <li><a href="semanas/semana5.html">Semana 5</a></li>
-            <li><a href="semanas/semana6.html">Semana 6</a></li>
-            <li><a href="semanas/semana7.html">Semana 7</a></li>
-            <li><a href="semanas/semana8.html">Semana 8</a></li>
-            <li><a href="semanas/semana9.html">Semana 9</a></li>
-            <li><a href="semanas/semana10.html">Semana 10</a></li>
-            <li><a href="semanas/semana11.html">Semana 11</a></li>
-            <li><a href="semanas/semana12.html">Semana 12</a></li>
-            <li><a href="semanas/semana13.html">Semana 13</a></li>
-            <li><a href="semanas/semana14.html">Semana 14</a></li>
-            <li><a href="semanas/semana15.html">Semana 15</a></li>
-            <li><a href="semanas/semana16.html">Semana 16</a></li>
-        </ul>
-    </main>
-
-    <footer>
-        <a href="index.html" class="btn-volver">Volver al inicio</a>
-    </footer>
-</body>
-</html>
-
-
-<!-- ====================== semanas/semana1.html ====================== -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semana 1 - Base de Datos II</title>
-    <link rel="Semana1" href="../style.css">
-</head>
-<body>
-    <header>
-        <img src="../img/logo-upla.png" alt="Logo UPLA" class="logo">
-        <h1>Semana 1</h1>
-    </header>
-
-    <main>
-        <h2>Material de la Semana 1</h2>
-        <ul class="archivos">
-            <li><a href="../archivos/semana1/tarea1.pdf" target="_blank">Tarea 1 (PDF)</a></li>
-            <li><a href="../archivos/semana1/diapositiva1.pptx" target="_blank">Diapositiva 1 (PPTX)</a></li>
-        </ul>
-    </main>
-
-    <footer>
-        <a href="../tareas.html" class="btn-volver">Volver a semanas</a>
-    </footer>
-</body>
-</html>
-
-
-<!-- ====================== style.css ====================== -->
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
-
-header {
-    background-color: #003366;
-    color: white;
-    padding: 20px;
-}
-
-.logo {
-    width: 100px;
-}
-
-h1, h2 {
-    margin: 10px 0;
-}
-
-main {
-    padding: 20px;
-}
-
-.botones, .lista-semanas {
-    margin-top: 20px;
-}
-
-.btn, .btn-volver {
-    background-color: #0055a5;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 8px;
-    display: inline-block;
-}
-
-.btn:hover, .btn-volver:hover {
-    background-color: #0077cc;
-}
-
-.lista-semanas {
-    list-style: none;
-    padding: 0;
-}
-
-.lista-semanas li {
-    margin: 10px 0;
-}
-
-.archivos {
-    list-style: none;
-    padding: 0;
-}
-
-.archivos li {
-    margin: 10px 0;
-}
-
-footer {
-    background-color: #003366;
-    color: white;
-    padding: 15px;
-    margin-top: 30px;
-}
