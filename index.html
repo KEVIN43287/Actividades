@@ -1,121 +1,242 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BASE DE DATOS II - KEVIN</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BASE DE DATOS 2 - Inicio</title>
 
-  <!-- Fuente y Estilos -->
+  <!-- Google Font + Font Awesome -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      background-color: #0d0d0d;
-      color: #ffffff;
-      text-align: center;
+    :root{
+      --bg:#0f1110;
+      --panel:#161616;
+      --accent:#00ff88;
+      --muted:#b9e6c4;
+      --text:#e9efe8;
+      --card-border: rgba(0,255,136,0.12);
     }
 
-    header {
-      background-color: #111;
-      padding: 20px 10px;
-      border-bottom: 2px solid #00ff88;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Poppins", Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.5;
     }
 
-    h1 {
-      margin: 5px 0;
-      font-size: 26px;
-      color: #00ff88;
+    header{
+      display:grid;
+      grid-template-columns: auto 1fr auto;
+      align-items:center;
+      gap:20px;
+      padding:18px 26px;
+      background:#0b0b0b;
     }
 
-    h2 {
-      margin: 10px 0;
-      font-size: 18px;
-      color: #b9e6c4;
+    .header-left img{
+      height:72px; width:auto;
+      display:block;
+      border-radius:8px;
     }
 
-    nav {
-      margin-top: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
+    .header-center{text-align:center;}
+    .header-center h1{
+      margin:0;
+      font-size:22px;
+      text-transform:uppercase;
+      color:var(--text);
+    }
+    .header-center .uni{margin-top:6px;font-size:13px;color:var(--muted);}
+    .header-center .name{margin-top:4px;font-size:14px;font-weight:600;color:var(--accent);}
+
+    nav.header-nav{
+      display:flex;
+      gap:12px;
+      justify-self:end;
+    }
+    nav.header-nav a{
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:600;
+      padding:8px 12px;
+      border-radius:8px;
+      transition: all .16s ease;
+    }
+    nav.header-nav a[aria-current="page"]{
+      background: rgba(0,255,136,0.08);
+      color:var(--text);
+    }
+    nav.header-nav a:hover{
+      transform:translateY(-3px);
+      color:var(--text);
+      background: rgba(0,255,136,0.06);
     }
 
-    nav a {
-      text-decoration: none;
-      color: #00ff88;
-      background-color: #1a1a1a;
-      border: 1px solid #00ff88;
-      padding: 10px 18px;
-      border-radius: 8px;
-      transition: 0.3s;
-      font-weight: 600;
-      display: inline-block;
-      min-width: 110px;
+    main{
+      max-width:1100px;
+      margin:28px auto;
+      padding:0 18px 60px;
     }
 
-    nav a:hover {
-      background-color: #00ff88;
-      color: #0d0d0d;
-      transform: translateY(-3px);
+    .panel{
+      background:var(--panel);
+      border-radius:12px;
+      padding:22px;
+      box-shadow: 0 10px 32px rgba(0,0,0,0.6);
+      border:1px solid var(--card-border);
     }
 
-    nav a.desactivado {
-      color: #555;
-      border: 1px solid #333;
-      background-color: #1a1a1a;
-      cursor: not-allowed;
+    h2{margin:0 0 14px 0;color:var(--accent);font-size:20px}
+
+    .tasks-grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:18px;
     }
 
-    .contenido {
-      margin-top: 50px;
+    .task-card{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      text-align:center;
+      padding:22px;
+      border-radius:12px;
+      border:2px solid var(--card-border);
+      background: var(--panel);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.6);
+      text-decoration:none;
+      color:var(--text);
     }
+    .task-card:hover{
+      transform: translateY(-8px);
+      box-shadow: 0 18px 46px rgba(0,255,136,0.08);
+      border-color: rgba(0,255,136,0.28);
+    }
+    .task-icon{font-size:28px;color:var(--accent)}
+    .task-num{font-size:28px;font-weight:700;color:var(--text)}
+    .task-label{font-weight:600;color:var(--text)}
 
-    footer {
-      margin-top: 60px;
-      padding: 15px;
-      background-color: #111;
-      border-top: 1px solid #00ff88;
-      color: #b9e6c4;
-      font-size: 14px;
+    @media (max-width:600px){
+      .tasks-grid{grid-template-columns: repeat(2, 1fr);}
     }
   </style>
 </head>
-
 <body>
   <header>
-    <h1>BASE DE DATOS II</h1>
-    <h2>Universidad Nacional de Huancavelica</h2>
-    <h2>Alumno: Kevin Alfredo Macha Bruno</h2>
+    <div class="header-left">
+      <img src="upla.PNG" alt="Logo">
+    </div>
+
+    <div class="header-center">
+      <h1>BASE DE DATOS 2</h1>
+      <div class="uni">Universidad Peruana Los Andes</div>
+      <div class="name">Kevin Alfredo Macha Bruno</div>
+    </div>
+
+    <nav class="header-nav">
+      <a href="#" aria-current="page">Inicio</a>
+      <a href="#tareas">Tareas</a>
+    </nav>
   </header>
 
-  <div class="contenido">
-    <h2>Selecciona una Semana:</h2>
-    <nav>
-      <a href="https://github.com/KEVIN43287/Actividades/tree/main/Semana1" target="_blank">Semana 1</a>
-      <a href="https://github.com/KEVIN43287/Actividades/tree/main/Semana2" target="_blank">Semana 2</a>
-      <a href="https://github.com/KEVIN43287/Actividades/tree/main/Semana3" target="_blank">Semana 3</a>
-      <a href="https://github.com/KEVIN43287/Actividades/tree/main/Semana4" target="_blank">Semana 4</a>
-      <a class="desactivado">Semana 5</a>
-      <a class="desactivado">Semana 6</a>
-      <a class="desactivado">Semana 7</a>
-      <a class="desactivado">Semana 8</a>
-      <a class="desactivado">Semana 9</a>
-      <a class="desactivado">Semana 10</a>
-      <a class="desactivado">Semana 11</a>
-      <a class="desactivado">Semana 12</a>
-      <a class="desactivado">Semana 13</a>
-      <a class="desactivado">Semana 14</a>
-      <a class="desactivado">Semana 15</a>
-      <a class="desactivado">Semana 16</a>
-    </nav>
-  </div>
+  <main>
+    <section id="tareas" class="panel">
+      <h2>Tareas - Semanas</h2>
+      <div class="tasks-grid">
+        <!-- Enlaces hasta la semana 4 -->
+        <a class="task-card" href="https://github.com/KEVIN43287/Actividades/tree/main/Semana1" target="_blank">
+          <div class="task-icon"><i class="fas fa-database"></i></div>
+          <div class="task-num">01</div>
+          <div class="task-label">Semana 1</div>
+        </a>
+        <a class="task-card" href="https://github.com/KEVIN43287/Actividades/tree/main/Semana2" target="_blank">
+          <div class="task-icon"><i class="fas fa-code"></i></div>
+          <div class="task-num">02</div>
+          <div class="task-label">Semana 2</div>
+        </a>
+        <a class="task-card" href="https://github.com/KEVIN43287/Actividades/tree/main/Semana3" target="_blank">
+          <div class="task-icon"><i class="fas fa-table"></i></div>
+          <div class="task-num">03</div>
+          <div class="task-label">Semana 3</div>
+        </a>
+        <a class="task-card" href="https://github.com/KEVIN43287/Actividades/tree/main/Semana4" target="_blank">
+          <div class="task-icon"><i class="fas fa-cogs"></i></div>
+          <div class="task-num">04</div>
+          <div class="task-label">Semana 4</div>
+        </a>
 
-  <footer>
-    © 2025 - Proyecto de BASE DE DATOS II | Kevin 43287
-  </footer>
+        <!-- Semanas 5 a 16 sin enlace -->
+        <a class="task-card" href="#" onclick="alert('Semana 5 próximamente');">
+          <div class="task-icon"><i class="fas fa-project-diagram"></i></div>
+          <div class="task-num">05</div>
+          <div class="task-label">Semana 5</div>
+        </a>
+        <a class="task-card" href="#" onclick="alert('Semana 6 próximamente');">
+          <div class="task-icon"><i class="fas fa-server"></i></div>
+          <div class="task-num">06</div>
+          <div class="task-label">Semana 6</div>
+        </a>
+        <a class="task-card" href="#" onclick="alert('Semana 7 próximamente');">
+          <div class="task-icon"><i class="fas fa-chart-line"></i></div>
+          <div class="task-num">07</div>
+          <div class="task-label">Semana 7</div>
+        </a>
+        <a class="task-card" href="#" onclick="alert('Semana 8 próximamente');">
+          <div class="task-icon"><i class="fas fa-key"></i></div>
+          <div class="task-num">08</div>
+          <div class="task-label">Semana 8</div>
+        </a>
+        <a class="task-card" href="#" onclick="alert('Semana 9 próximamente');">
+          <div class="task-icon"><i class="fas fa-lock"></i></div>
+          <div class="task-num">09</div>
+          <div class="task-label">Semana 9</div>
+        </a>
+        <a class="task-card" href="#" onclick="alert('Semana 10 próximamente');">
+          <div class="task-icon"><i class="fas fa-sitemap"></i></div>
+          <div class="task-num">10</div>
+          <div class="task-label">Semana 10</div>
+        </a>
+        <a class="task-card" href="#" onclick="alert('Semana 11 próximamente');">
+          <div class="task-icon"><i class="fas fa-laptop-code"></i></div>
+          <div class="task-num">11</div>
+          <div class="task-label">Semana 11</div>
+        </a>
+        <a class="task-card" href="#" onclick="alert('Semana 12 próximamente');">
+          <div class="task-icon"><i class="fas fa-database"></i></div>
+          <div class="task-num">12</div>
+          <div class="task-label">Semana 12</div>
+        </a>
+        <a class="task-card" href="#" onclick="alert('Semana 13 próximamente');">
+          <div class="task-icon"><i class="fas fa-check-circle"></i></div>
+          <div class="task-num">13</div>
+          <div class="task-label">Semana 13</div>
+        </a>
+        <a class="task-card" href="#" onclick="alert('Semana 14 próximamente');">
+          <div class="task-icon"><i class="fas fa-folder-open"></i></div>
+          <div class="task-num">14</div>
+          <div class="task-label">Semana 14</div>
+        </a>
+        <a class="task-card" href="#" onclick="alert('Semana 15 próximamente');">
+          <div class="task-icon"><i class="fas fa-clipboard"></i></div>
+          <div class="task-num">15</div>
+          <div class="task-label">Semana 15</div>
+        </a>
+        <a class="task-card" href="#" onclick="alert('Semana 16 próximamente');">
+          <div class="task-icon"><i class="fas fa-star"></i></div>
+          <div class="task-num">16</div>
+          <div class="task-label">Semana 16</div>
+        </a>
+      </div>
+    </section>
+  </main>
 </body>
 </html>
