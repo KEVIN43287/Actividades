@@ -45,43 +45,18 @@
       border-radius:8px;
     }
 
-    .header-center{
-      text-align:center;
-    }
-    .header-center h1{
-      margin:0;
-      font-size:22px;
-      text-transform:uppercase;
-      color:var(--text);
-    }
-    .header-center .uni{
-      margin-top:6px;
-      font-size:13px;
-      color:var(--muted);
-    }
-    .header-center .name{
-      margin-top:4px;
-      font-size:14px;
-      font-weight:600;
-      color:var(--accent);
-    }
+    .header-center{text-align:center;}
+    .header-center h1{margin:0;font-size:22px;text-transform:uppercase;color:var(--text);}
+    .header-center .uni{margin-top:6px;font-size:13px;color:var(--muted);}
+    .header-center .name{margin-top:4px;font-size:14px;font-weight:600;color:var(--accent);}
 
-    nav.header-nav{
-      display:flex;
-      gap:12px;
-      justify-self:end;
-    }
+    nav.header-nav{display:flex;gap:12px;justify-self:end;}
     nav.header-nav a{
-      color:var(--accent);
-      text-decoration:none;
-      font-weight:600;
-      padding:8px 12px;
-      border-radius:8px;
-      transition: all .16s ease;
+      color:var(--accent);text-decoration:none;font-weight:600;
+      padding:8px 12px;border-radius:8px;transition: all .16s ease;
     }
     nav.header-nav a[aria-current="page"]{
-      background: rgba(0,255,136,0.08);
-      color:var(--text);
+      background: rgba(0,255,136,0.08);color:var(--text);
     }
     nav.header-nav a:hover{
       transform:translateY(-3px);
@@ -114,72 +89,53 @@
     }
 
     .task-card{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      text-align:center;
-      padding:22px;
-      border-radius:12px;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:8px;text-align:center;padding:22px;border-radius:12px;
       border:2px solid var(--card-border);
       background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
       transition: transform .18s ease, box-shadow .18s ease, border-color .18s;
       box-shadow: 0 8px 22px rgba(0,0,0,0.6);
-      text-decoration:none;
-      color:var(--text);
-      cursor:pointer;
+      text-decoration:none;color:var(--text);cursor:pointer;
     }
     .task-card:hover{
       transform: translateY(-8px);
       box-shadow: 0 18px 46px rgba(0,255,136,0.08);
       border-color: rgba(0,255,136,0.28);
     }
+
     .task-icon{font-size:28px;color:var(--accent)}
     .task-num{font-size:28px;font-weight:700;color:var(--text)}
     .task-label{font-weight:600;color:var(--text)}
 
-    /* FILE MANAGER */
-    .file-section{margin-top:20px}
-    .file-section h3{color:var(--accent);font-size:18px;margin-bottom:10px}
-    .file-input{margin-bottom:12px}
-    .file-list{list-style:none;padding:0;margin:0}
-    .file-list li{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      background:#222;
-      padding:8px 12px;
-      border-radius:6px;
-      margin-bottom:6px;
-    }
-    .file-list a{color:var(--accent);text-decoration:none}
-    .file-list button{
-      background:#ff4444;
-      color:white;
-      border:none;
-      border-radius:6px;
-      padding:4px 8px;
-      cursor:pointer;
+    /* FILE VIEWER */
+    .file-viewer a{
+      color:var(--accent);
+      text-decoration:none;
+      display:block;
+      padding:8px 0;
     }
 
-    /* SECTIONS with transition */
-    .section{
-      display:none;
-      opacity:0;
-      transform: translateY(10px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
+    .repo-button{
+      background:var(--accent);
+      color:#000;
+      border:none;
+      padding:8px 14px;
+      border-radius:8px;
+      font-weight:600;
+      cursor:pointer;
+      margin-top:10px;
+      transition: background 0.2s ease;
     }
-    .section.active{
-      display:block;
-      opacity:1;
-      transform: translateY(0);
-    }
+    .repo-button:hover{background:#00dd77;}
+
+    /* SECTIONS */
+    .section{display:none;opacity:0;transform:translateY(10px);transition:opacity 0.5s ease,transform 0.5s ease;}
+    .section.active{display:block;opacity:1;transform:translateY(0);}
 
     @media (max-width:520px){
-      .tasks-grid{ grid-template-columns:1fr; }
-      header{ grid-template-columns: 1fr; row-gap:12px; text-align:center; }
-      nav.header-nav{ justify-self:center; }
+      .tasks-grid{grid-template-columns:1fr;}
+      header{grid-template-columns:1fr;row-gap:12px;text-align:center;}
+      nav.header-nav{justify-self:center;}
     }
   </style>
 </head>
@@ -208,6 +164,7 @@
         <h2>Bienvenido</h2>
         <div class="welcome">
           <p>Bienvenido al portal de <strong>Base de Datos 2</strong>. Aquí accederás a las tareas semanales del curso.</p>
+          <p>Selecciona una semana para visualizar los materiales o acceder al repositorio.</p>
         </div>
       </div>
     </section>
@@ -216,89 +173,84 @@
     <section id="tareas" class="section">
       <div class="panel">
         <h2>Tareas - Semanas</h2>
-        <div class="tasks-grid">
-          <div class="task-card" onclick="openWeek(1)"><div class="task-icon"><i class="fas fa-database"></i></div><div class="task-num">01</div><div class="task-label">Semana 1</div></div>
-          <div class="task-card" onclick="openWeek(2)"><div class="task-icon"><i class="fas fa-code"></i></div><div class="task-num">02</div><div class="task-label">Semana 2</div></div>
-          <div class="task-card" onclick="openWeek(3)"><div class="task-icon"><i class="fas fa-table"></i></div><div class="task-num">03</div><div class="task-label">Semana 3</div></div>
-          <div class="task-card" onclick="openWeek(4)"><div class="task-icon"><i class="fas fa-cogs"></i></div><div class="task-num">04</div><div class="task-label">Semana 4</div></div>
-          <div class="task-card" onclick="openWeek(5)"><div class="task-icon"><i class="fas fa-project-diagram"></i></div><div class="task-num">05</div><div class="task-label">Semana 5</div></div>
-          <div class="task-card" onclick="openWeek(6)"><div class="task-icon"><i class="fas fa-server"></i></div><div class="task-num">06</div><div class="task-label">Semana 6</div></div>
-          <div class="task-card" onclick="openWeek(7)"><div class="task-icon"><i class="fas fa-chart-line"></i></div><div class="task-num">07</div><div class="task-label">Semana 7</div></div>
-          <div class="task-card" onclick="openWeek(8)"><div class="task-icon"><i class="fas fa-key"></i></div><div class="task-num">08</div><div class="task-label">Semana 8</div></div>
-          <div class="task-card" onclick="openWeek(9)"><div class="task-icon"><i class="fas fa-lock"></i></div><div class="task-num">09</div><div class="task-label">Semana 9</div></div>
-          <div class="task-card" onclick="openWeek(10)"><div class="task-icon"><i class="fas fa-sitemap"></i></div><div class="task-num">10</div><div class="task-label">Semana 10</div></div>
-          <div class="task-card" onclick="openWeek(11)"><div class="task-icon"><i class="fas fa-laptop-code"></i></div><div class="task-num">11</div><div class="task-label">Semana 11</div></div>
-          <div class="task-card" onclick="openWeek(12)"><div class="task-icon"><i class="fas fa-database"></i></div><div class="task-num">12</div><div class="task-label">Semana 12</div></div>
-          <div class="task-card" onclick="openWeek(13)"><div class="task-icon"><i class="fas fa-check-circle"></i></div><div class="task-num">13</div><div class="task-label">Semana 13</div></div>
-        </div>
+        <div class="tasks-grid" id="taskGrid"></div>
       </div>
     </section>
 
-    <!-- SEMANAS -->
+    <!-- SEMANA -->
     <section id="semana" class="section">
       <div class="panel">
         <h2 id="week-title">Semana</h2>
-        <div class="file-section">
-          <h3>Gestión de Archivos</h3>
-          <input type="file" id="file-input" class="file-input" multiple />
-          <ul id="file-list" class="file-list"></ul>
+        <div class="file-viewer" id="file-viewer">
+          <p>Cargando archivos...</p>
         </div>
+        <button class="repo-button" id="repo-button" onclick="openRepo()">Ir al Repositorio</button>
+        <br><br>
         <button onclick="backToTasks()">← Volver a Tareas</button>
       </div>
     </section>
   </main>
 
   <script>
+    const repoBase = "https://github.com/KEVIN43287/Actividades";
+    const totalSemanas = 16;
     let currentWeek = null;
-    const filesByWeek = {};
 
-    function showSection(evt, id) {
-      if (evt) evt.preventDefault();
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    const taskGrid = document.getElementById("taskGrid");
+    for(let i=1;i<=totalSemanas;i++){
+      const div=document.createElement("div");
+      div.className="task-card";
+      div.onclick=()=>openWeek(i);
+      div.innerHTML=`<div class="task-icon"><i class="fas fa-folder-open"></i></div>
+                     <div class="task-num">${String(i).padStart(2,'0')}</div>
+                     <div class="task-label">Semana ${i}</div>`;
+      taskGrid.appendChild(div);
+    }
+
+    function showSection(evt, id){
+      if(evt) evt.preventDefault();
+      document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
-      document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
-      if(document.getElementById('nav-' + id)) {
-        document.getElementById('nav-' + id).setAttribute('aria-current','page');
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.querySelectorAll('nav.header-nav a').forEach(a=>a.removeAttribute('aria-current'));
+      if(document.getElementById('nav-'+id))
+        document.getElementById('nav-'+id).setAttribute('aria-current','page');
+      window.scrollTo({top:0,behavior:'smooth'});
     }
 
     function openWeek(num){
       currentWeek = num;
       document.getElementById("week-title").textContent = "Semana " + num;
       showSection(null,"semana");
-      renderFiles();
+      loadFiles(num);
     }
 
     function backToTasks(){
       showSection(null,"tareas");
     }
 
-    document.getElementById("file-input").addEventListener("change", function(e){
-      if(!currentWeek) return;
-      if(!filesByWeek[currentWeek]) filesByWeek[currentWeek] = [];
-      [...e.target.files].forEach(file=>{
-        const url = URL.createObjectURL(file);
-        filesByWeek[currentWeek].push({name:file.name, url:url});
-      });
-      e.target.value = "";
-      renderFiles();
-    });
-
-    function renderFiles(){
-      const list = document.getElementById("file-list");
-      list.innerHTML = "";
-      (filesByWeek[currentWeek]||[]).forEach((f,idx)=>{
-        const li = document.createElement("li");
-        li.innerHTML = `<a href="${f.url}" target="_blank">${f.name}</a>
-                        <button onclick="deleteFile(${idx})">Borrar</button>`;
-        list.appendChild(li);
-      });
+    function openRepo(){
+      if(currentWeek)
+        window.open(`${repoBase}/tree/main/semana${currentWeek}`,'_blank');
     }
 
-    function deleteFile(idx){
-      filesByWeek[currentWeek].splice(idx,1);
-      renderFiles();
+    function loadFiles(num){
+      const viewer=document.getElementById("file-viewer");
+      const baseUrl = `semana${num}/`;
+      fetch(baseUrl)
+        .then(r=>r.text())
+        .then(html=>{
+          const files = [...html.matchAll(/href="([^"]+)"/g)]
+            .map(m=>m[1])
+            .filter(f=>!f.startsWith("?") && !f.startsWith("/") && f!="../");
+          if(files.length===0){
+            viewer.innerHTML="<p>No hay archivos disponibles para esta semana.</p>";
+          }else{
+            viewer.innerHTML = files.map(f=>`<a href="${baseUrl}${f}" target="_blank">${f}</a>`).join("");
+          }
+        })
+        .catch(()=>{
+          viewer.innerHTML="<p>No se pudieron cargar los archivos de esta semana.</p>";
+        });
     }
   </script>
 </body>
