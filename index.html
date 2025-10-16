@@ -10,75 +10,45 @@
 
   <style>
     :root{
-      --bg:#0f1110;
-      --panel:#161616;
-      --accent:#00ff88;
-      --muted:#b9e6c4;
-      --text:#e9efe8;
-      --card-border: rgba(0,255,136,0.12);
+      --bg:#0f1110;--panel:#161616;--accent:#00ff88;--muted:#b9e6c4;
+      --text:#e9efe8;--card-border: rgba(0,255,136,0.12);
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:"Poppins", Arial, sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      line-height:1.5;
-    }
+    *{box-sizing:border-box}html,body{height:100%}
+    body{margin:0;font-family:"Poppins",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;}
 
-    header{
-      display:grid;
-      grid-template-columns: auto 1fr auto;
-      align-items:center;
-      gap:20px;
-      padding:18px 26px;
-      background:#0b0b0b;
-    }
-    .header-left img{height:72px;border-radius:8px}
-    .header-center{text-align:center}
-    .header-center h1{margin:0;font-size:22px;text-transform:uppercase;color:var(--text)}
-    .header-center .uni{margin-top:6px;font-size:13px;color:var(--muted)}
-    .header-center .name{margin-top:4px;font-size:14px;font-weight:600;color:var(--accent)}
-    nav.header-nav{display:flex;gap:12px;justify-self:end}
-    nav.header-nav a{color:var(--accent);text-decoration:none;font-weight:600;padding:8px 12px;border-radius:8px;transition: all .16s ease;}
-    nav.header-nav a[aria-current="page"]{background: rgba(0,255,136,0.08);color:var(--text);}
-    nav.header-nav a:hover{transform:translateY(-3px);color:var(--text);background: rgba(0,255,136,0.06);}
+    header{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:20px;padding:18px 26px;background:#0b0b0b;}
+    .header-left img{height:72px;border-radius:8px;}
+    .header-center{text-align:center;}
+    .header-center h1{margin:0;font-size:22px;text-transform:uppercase;color:var(--text);}
+    .uni{margin-top:6px;font-size:13px;color:var(--muted);}
+    .name{margin-top:4px;font-size:14px;font-weight:600;color:var(--accent);}
+    nav.header-nav{display:flex;gap:12px;justify-self:end;}
+    nav.header-nav a{color:var(--accent);text-decoration:none;font-weight:600;padding:8px 12px;border-radius:8px;transition:all .16s ease;}
+    nav.header-nav a[aria-current="page"]{background:rgba(0,255,136,0.08);color:var(--text);}
+    nav.header-nav a:hover{transform:translateY(-3px);color:var(--text);background:rgba(0,255,136,0.06);}
 
     main{max-width:1100px;margin:28px auto;padding:0 18px 60px;}
-
-    .panel{
-      background:var(--panel);
-      border-radius:12px;
-      padding:22px;
-      box-shadow:0 10px 32px rgba(0,0,0,0.6);
-      border:1px solid var(--card-border);
-    }
-
-    h2{margin:0 0 14px 0;color:var(--accent);font-size:20px}
+    .panel{background:var(--panel);border-radius:12px;padding:22px;box-shadow:0 10px 32px rgba(0,0,0,0.6);border:1px solid var(--card-border);}
+    h2{margin:0 0 14px;color:var(--accent);font-size:20px;}
     .tasks-grid{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;}
-    .task-card{
-      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
-      text-align:center;padding:22px;border-radius:12px;border:2px solid var(--card-border);
-      background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.00));
-      transition:transform .18s ease, box-shadow .18s ease,border-color .18s;
-      box-shadow:0 8px 22px rgba(0,0,0,0.6);color:var(--text);cursor:pointer;
-    }
+    .task-card{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:22px;border-radius:12px;border:2px solid var(--card-border);background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0));transition:transform .18s,box-shadow .18s,border-color .18s;box-shadow:0 8px 22px rgba(0,0,0,0.6);text-decoration:none;color:var(--text);cursor:pointer;}
     .task-card:hover{transform:translateY(-8px);box-shadow:0 18px 46px rgba(0,255,136,0.08);border-color:rgba(0,255,136,0.28);}
-    .task-icon{font-size:28px;color:var(--accent)}
-    .task-num{font-size:28px;font-weight:700;color:var(--text)}
-    .task-label{font-weight:600;color:var(--text)}
-
-    .section{display:none;opacity:0;transform:translateY(10px);transition:opacity 0.5s,transform 0.5s;}
+    .task-icon{font-size:28px;color:var(--accent);}
+    .task-num{font-size:28px;font-weight:700;color:var(--text);}
+    .task-label{font-weight:600;color:var(--text);}
+    .section{display:none;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s;}
     .section.active{display:block;opacity:1;transform:translateY(0);}
-
-    .pdf-viewer{width:100%;height:480px;margin-top:12px;border:1px solid var(--card-border);border-radius:8px;}
-    .repo-btn{margin-top:12px;display:inline-block;padding:10px 16px;background:var(--accent);color:#000;border-radius:8px;text-decoration:none;font-weight:600;}
+    .file-list a{display:block;color:var(--muted);margin:4px 0;text-decoration:none;}
+    .file-list a:hover{color:var(--accent);}
+    .repo-btn{margin-top:14px;display:inline-block;padding:8px 14px;background:var(--accent);color:#000;border-radius:8px;text-decoration:none;font-weight:600;}
+    @media (max-width:520px){.tasks-grid{grid-template-columns:1fr;}header{grid-template-columns:1fr;row-gap:12px;text-align:center;}nav.header-nav{justify-self:center;}}
   </style>
 </head>
 <body>
   <header>
-    <div class="header-left"><img src="upla.PNG" alt="Logo"></div>
+    <div class="header-left">
+      <img src="upla.PNG" alt="Logo">
+    </div>
     <div class="header-center">
       <h1>BASE DE DATOS 2</h1>
       <div class="uni">Universidad Peruana Los Andes</div>
@@ -91,6 +61,7 @@
   </header>
 
   <main>
+    <!-- INICIO -->
     <section id="inicio" class="section active">
       <div class="panel">
         <h2>Bienvenido</h2>
@@ -98,6 +69,7 @@
       </div>
     </section>
 
+    <!-- TAREAS -->
     <section id="tareas" class="section">
       <div class="panel">
         <h2>Tareas - Semanas</h2>
@@ -105,73 +77,70 @@
       </div>
     </section>
 
-    <section id="semana" class="section">
+    <!-- CONTENIDO DE SEMANA -->
+    <section id="semana-view" class="section">
       <div class="panel">
-        <h2 id="weekTitle">Semana</h2>
-        <div id="pdfList"></div>
-        <a id="repoLink" class="repo-btn" target="_blank">Ir al repositorio</a>
+        <h2 id="semana-title"></h2>
+        <div id="file-container" class="file-list"></div>
+        <a id="repo-link" class="repo-btn" target="_blank">Ir al repositorio</a>
       </div>
     </section>
   </main>
 
   <script>
-    const semanas = {
-      "Semana1": [
-        "Manual_de_como_subir_pagina_web_a_Githlub.pdf",
-        "guia_para_crear_cuenta_en_GibHub.pdf"
-      ],
-      "Semana2": [
-        "Ejemplo_1.pdf",
-        "Guia_para_instalar_msql_server.pdf"
-      ],
-      "Semana3": [
-        "Informe_Comparativa_Arquitecturas.pdf"
-      ]
-    };
+    const weeksContainer = document.getElementById('weeks');
+    const repoUser = "KEVIN43287";
+    const repoName = "Actividades";
 
-    // Generar las tarjetas de semanas
-    const weeksContainer = document.getElementById("weeks");
-    for (let i=1; i<=16; i++) {
-      const div = document.createElement("div");
-      div.className="task-card";
-      div.innerHTML = `<div class="task-icon"><i class="fas fa-folder-open"></i></div>
-                       <div class="task-num">${String(i).padStart(2,"0")}</div>
-                       <div class="task-label">Semana ${i}</div>`;
-      div.onclick=()=>openWeek(i);
-      weeksContainer.appendChild(div);
+    // Crear tarjetas de semanas
+    for (let i = 1; i <= 16; i++) {
+      const card = document.createElement('div');
+      card.className = 'task-card';
+      card.innerHTML = `
+        <div class="task-icon"><i class="fas fa-database"></i></div>
+        <div class="task-num">${String(i).padStart(2,'0')}</div>
+        <div class="task-label">Semana ${i}</div>
+      `;
+      card.onclick = () => loadWeek(i);
+      weeksContainer.appendChild(card);
     }
 
+    // Mostrar secciones
     function showSection(evt,id){
       if(evt) evt.preventDefault();
       document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       document.querySelectorAll('nav.header-nav a').forEach(a=>a.removeAttribute('aria-current'));
-      if(document.getElementById('nav-'+id)){
-        document.getElementById('nav-'+id).setAttribute('aria-current','page');
-      }
+      if(document.getElementById('nav-'+id)) document.getElementById('nav-'+id).setAttribute('aria-current','page');
       window.scrollTo({top:0,behavior:'smooth'});
     }
 
-    function openWeek(num){
-      const weekName = "Semana"+num;
-      const pdfList = document.getElementById("pdfList");
-      pdfList.innerHTML="";
-      document.getElementById("weekTitle").textContent = "Semana " + num;
-      const files = semanas[weekName];
+    // Cargar archivos de una semana desde la API de GitHub
+    async function loadWeek(num){
+      const weekName = Semana${num};
+      showSection(null,'semana-view');
+      document.getElementById('semana-title').textContent = Archivos - ${weekName};
+      const fileContainer = document.getElementById('file-container');
+      const repoLink = document.getElementById('repo-link');
+      repoLink.href = https://github.com/${repoUser}/${repoName}/tree/main/${weekName};
+      fileContainer.innerHTML = "Cargando archivos...";
 
-      if(files && files.length>0){
-        files.forEach(f=>{
-          const viewer = document.createElement("iframe");
-          viewer.className="pdf-viewer";
-          viewer.src=https://KEVIN43287.github.io/Actividades/${weekName}/${f};
-          pdfList.appendChild(viewer);
-        });
-      } else {
-        pdfList.innerHTML="<p>No hay archivos para esta semana.</p>";
+      try {
+        const res = await fetch(https://api.github.com/repos/${repoUser}/${repoName}/contents/${weekName});
+        if (!res.ok) throw new Error("No se pudo acceder a los archivos");
+        const data = await res.json();
+        if (Array.isArray(data) && data.length) {
+          fileContainer.innerHTML = data.map(f=>`
+            <a href="${f.html_url}" target="_blank">
+              <i class="fa-solid fa-file"></i> ${f.name}
+            </a>
+          `).join('');
+        } else {
+          fileContainer.innerHTML = "No hay archivos en esta semana.";
+        }
+      } catch (err) {
+        fileContainer.innerHTML = "Error al cargar los archivos.";
       }
-
-      document.getElementById("repoLink").href=https://github.com/KEVIN43287/Actividades/tree/main/${weekName};
-      showSection(null,"semana");
     }
   </script>
 </body>
