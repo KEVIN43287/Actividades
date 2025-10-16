@@ -55,8 +55,9 @@
       <div class="name">Kevin Alfredo Macha Bruno</div>
     </div>
     <nav class="header-nav">
-      <a id="nav-inicio">Inicio</a>
-      <a id="nav-tareas">Tareas</a>
+      <!-- Aseguramos href="#" en los enlaces para que sean clicables siempre -->
+      <a id="nav-inicio" href="#">Inicio</a>
+      <a id="nav-tareas" href="#">Tareas</a>
     </nav>
   </header>
 
@@ -108,7 +109,6 @@
     const REPO = "Actividades";
     const BASE_PAGES = https://${USER}.github.io/${REPO};
 
-    // archivos que me diste (nombres exactos; ya codificados espacios)
     const filesByWeek = {
       1: [
         "Semana1/Manual%20de%20como%20subir%20pagina%20web%20a%20Githlub.pdf",
@@ -121,55 +121,78 @@
       3: [
         "Semana3/Informe_%20Comparativa_Arquitecturas.pdf"
       ]
-      // 4..13: vacío por ahora
     };
 
-    // estado
     let currentWeek = 0;
 
-    // helper: mostrar sección
-    function showSectionId(id) {
+    // Utilitarios
+    function hideAllSections(){
       document.querySelectorAll('main > section').forEach(s => s.style.display = 'none');
-      const el = document.getElementById(id);
-      if (el) el.style.display = 'block';
-
-      // marcar nav activo
+    }
+    function setNavActive(id){
       document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
       if (id === 'inicio') document.getElementById('nav-inicio').setAttribute('aria-current','page');
       if (id === 'tareas') document.getElementById('nav-tareas').setAttribute('aria-current','page');
     }
 
-    // arrancar: asignar listeners de nav y tarjetas
-    (function init(){
-      // nav
-      document.getElementById('nav-inicio').addEventListener('click', (e)=>{ e.preventDefault(); showSectionId('inicio'); });
-      document.getElementById('nav-tareas').addEventListener('click', (e)=>{ e.preventDefault(); showSectionId('tareas'); });
-
-      // tarjetas semanas: cada .card con data-week
-      document.querySelectorAll('.card').forEach(card=>{
-        const w = card.getAttribute('data-week');
-        card.addEventListener('click', ()=> openWeek(Number(w)));
+    // Ejecutar cuando DOM esté listo para asegurar que los elementos existan
+    document.addEventListener('DOMContentLoaded', function(){
+      // listeners nav
+      document.getElementById('nav-inicio').addEventListener('click', function(e){
+        e.preventDefault();
+        hideAllSections();
+        document.getElementById('inicio').style.display = 'block';
+        setNavActive('inicio');
+        window.scrollTo({top:0,behavior:'smooth'});
       });
 
-      document.getElementById('backBtn').addEventListener('click', ()=> showSectionId('tareas'));
+      document.getElementById('nav-tareas').addEventListener('click', function(e){
+        e.preventDefault();
+        hideAllSections();
+        document.getElementById('tareas').style.display = 'block';
+        setNavActive('tareas');
+        window.scrollTo({top:0,behavior:'smooth'});
+      });
 
-      // openRepo button
-      document.getElementById('openRepoBtn').addEventListener('click', ()=>{
+      // tarjetas semanas
+      document.querySelectorAll('.card').forEach(card=>{
+        card.addEventListener('click', function(){
+          const w = card.getAttribute('data-week');
+          if (!w) return;
+          openWeek(Number(w));
+        });
+      });
+
+      // back button
+      document.getElementById('backBtn').addEventListener('click', function(){
+        hideAllSections();
+        document.getElementById('tareas').style.display = 'block';
+        setNavActive('tareas');
+      });
+
+      // open repo button
+      document.getElementById('openRepoBtn').addEventListener('click', function(){
         if (!currentWeek) return;
         const repoUrl = https://github.com/${USER}/${REPO}/tree/main/Semana${currentWeek};
-        window.open(repoUrl, '_blank');
+        window.open(repoUrl,'_blank');
       });
 
-      // mostrar por defecto la sección "tareas"
-      showSectionId('tareas');
-    })();
+      // Mostrar "tareas" por defecto (como querías antes)
+      hideAllSections();
+      document.getElementById('tareas').style.display = 'block';
+      setNavActive('tareas');
+    });
 
-    // abrir semana: listar archivos y preparar visor
-    function openWeek(n) {
+    // Abrir semana
+    function openWeek(n){
       currentWeek = n;
+      hideAllSections();
+      document.getElementById('semana').style.display = 'block';
+      setNavActive(null);
       document.getElementById('weekTitle').textContent = Semana ${n};
+
       const fileList = document.getElementById('fileList');
-      fileList.innerHTML = ''; // limpiar
+      fileList.innerHTML = '';
       const viewer = document.getElementById('viewer');
       viewer.style.display = 'none';
       viewer.src = '';
@@ -190,21 +213,20 @@
           fileList.appendChild(a);
         });
       }
-
-      showSectionId('semana');
+      window.scrollTo({top:0,behavior:'smooth'});
     }
 
-    // cargar archivo en iframe via GitHub Pages (estable)
-    function viewFile(path) {
+    // Ver archivo en iframe usando GitHub Pages (si está publicado)
+    function viewFile(path){
       const url = ${BASE_PAGES}/${path};
       const viewer = document.getElementById('viewer');
       const ext = path.split('.').pop().toLowerCase();
 
-      if (['pdf','png','jpg','jpeg','gif','svg','html','htm','txt','md'].includes(ext)) {
+      if (['pdf','png','jpg','jpeg','gif','svg','html','htm','txt','md'].includes(ext)){
         viewer.src = url;
         viewer.style.display = 'block';
         viewer.scrollIntoView({behavior:'smooth'});
-      } else if (['docx','xlsx','pptx','doc','xls','ppt'].includes(ext)) {
+      } else if (['docx','xlsx','pptx','doc','xls','ppt'].includes(ext)){
         const google = https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true;
         viewer.src = google;
         viewer.style.display = 'block';
