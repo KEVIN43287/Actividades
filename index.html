@@ -1,146 +1,114 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Base de Datos II - Actividades</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BASE DE DATOS 2 - Actividades</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #000;
-      color: #fff;
-      text-align: center;
+    :root{
+      --bg:#0b0b0b;
+      --panel:#0f1110;
+      --accent:#00ff88;
+      --muted:#c8e6c9;
+      --text:#e9efe8;
+      --border: rgba(0,255,136,0.08);
     }
-
-    header {
-      background-color: #111;
-      padding: 20px 0;
-      border-bottom: 2px solid #444;
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Poppins",Arial,sans-serif;background:var(--bg);color:var(--text)}
+    header{
+      background:#0c0c0c;color:var(--text);
+      display:flex;align-items:center;justify-content:space-between;padding:20px 28px;
+      gap:16px;
     }
-
-    header img {
-      width: 60px;
-      vertical-align: middle;
-      margin-right: 10px;
-    }
-
-    header h1 {
-      display: inline-block;
-      font-size: 1.8em;
-      margin: 0;
-      color: #00c3ff;
-    }
-
-    nav.header-nav {
-      margin-top: 10px;
-    }
-
-    nav.header-nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    nav.header-nav a:hover {
-      color: #00c3ff;
-    }
-
-    section {
-      display: none;
-      padding: 30px;
-    }
-
-    section.active {
-      display: block;
-    }
-
-    .weeks {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 30px;
-    }
-
-    .week-btn {
-      background-color: #00c3ff;
-      color: #000;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: transform 0.2s;
-    }
-
-    .week-btn:hover {
-      transform: scale(1.1);
-      background-color: #00a8e0;
-    }
-
-    #file-viewer iframe {
-      width: 90%;
-      height: 500px;
-      border: none;
-      margin-top: 15px;
-    }
-
-    .repo-btn, .back-btn {
-      margin-top: 25px;
-      background-color: #00c3ff;
-      color: #000;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-right: 10px;
-    }
-
-    .repo-btn:hover, .back-btn:hover {
-      background-color: #00a8e0;
-    }
+    .header-left img{height:64px;width:auto;border-radius:6px}
+    .header-center{text-align:center;flex:1}
+    .header-center h1{margin:0;font-size:24px;color:var(--accent);text-transform:uppercase}
+    .header-center .uni{margin-top:6px;color:var(--muted);font-size:13px}
+    .header-center .name{margin-top:4px;color:var(--accent);font-weight:700}
+    nav.header-nav{display:flex;gap:12px}
+    nav.header-nav a{color:var(--accent);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600}
+    nav.header-nav a[aria-current="page"]{background:var(--border);color:var(--text)}
+    main{max-width:1100px;margin:26px auto;padding:18px}
+    .panel{background:var(--panel);padding:20px;border-radius:10px;border:1px solid var(--border)}
+    h2{margin:0 0 12px;color:var(--accent)}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
+    .card{background:#0b0b0b;border:1px solid var(--border);padding:18px;border-radius:10px;text-align:center;cursor:pointer}
+    .card h3{margin:0;color:var(--accent);font-size:18px}
+    .card p{margin:8px 0 0 0;color:var(--muted);font-size:13px}
+    .file-list{margin-top:14px;text-align:left}
+    .file-list a{display:block;color:var(--accent);text-decoration:none;padding:8px 0}
+    .file-list a:hover{text-decoration:underline;color:#fff}
+    .controls{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+    .btn {background:var(--accent);border:none;padding:8px 12px;border-radius:8px;font-weight:700;color:#000;cursor:pointer}
+    .btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--border)}
+    iframe#viewer{width:100%;height:540px;border-radius:8px;border:1px solid var(--border);margin-top:12px;display:none;background:#000}
+    @media(max-width:600px){.grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
   <header>
-    <img src="logo.png" alt="Logo" />
-    <h1>BASE DE DATOS II - ACTIVIDADES</h1>
+    <div class="header-left"><img src="upla.PNG" alt="Logo UPLA"></div>
+    <div class="header-center">
+      <h1>BASE DE DATOS 2</h1>
+      <div class="uni">Universidad Peruana Los Andes</div>
+      <div class="name">Kevin Alfredo Macha Bruno</div>
+    </div>
     <nav class="header-nav">
-      <a id="nav-inicio" href="#">Inicio</a>
-      <a id="nav-tareas" href="#">Tareas</a>
+      <a href="#" id="nav-inicio" aria-current="page">Inicio</a>
+      <a href="#" id="nav-tareas">Tareas</a>
     </nav>
   </header>
 
-  <section id="inicio" class="section active">
-    <h2>Bienvenido, Kevin</h2>
-    <p>Selecciona <strong>Tareas</strong> para ver tus semanas y actividades.</p>
-  </section>
+  <main>
+    <!-- INICIO -->
+    <section id="inicio" class="panel">
+      <h2>Bienvenido</h2>
+      <p class="note">Hola, Kevin — este es el portal de Base de Datos II. Haz clic en <strong>Tareas</strong> para ver las semanas y sus archivos.</p>
+    </section>
 
-  <section id="tareas" class="section">
-    <h2>Selecciona la Semana</h2>
-    <div class="weeks">
-      <button class="week-btn" onclick="openWeek(1)">Semana 1</button>
-      <button class="week-btn" onclick="openWeek(2)">Semana 2</button>
-      <button class="week-btn" onclick="openWeek(3)">Semana 3</button>
-    </div>
-  </section>
+    <!-- TAREAS -->
+    <section id="tareas" class="panel" style="display:none">
+      <h2>Tareas - Semanas</h2>
+      <div class="grid" id="weeksGrid">
+        <!-- 13 semanas (2 por fila) -->
+        <div class="card" onclick="openWeek(1)"><h3>Semana 1</h3><p>Manual y guía</p></div>
+        <div class="card" onclick="openWeek(2)"><h3>Semana 2</h3><p>Ejemplo y guía MySQL</p></div>
+        <div class="card" onclick="openWeek(3)"><h3>Semana 3</h3><p>Informe comparativa</p></div>
+        <div class="card" onclick="openWeek(4)"><h3>Semana 4</h3><p>-</p></div>
+        <div class="card" onclick="openWeek(5)"><h3>Semana 5</h3><p>-</p></div>
+        <div class="card" onclick="openWeek(6)"><h3>Semana 6</h3><p>-</p></div>
+        <div class="card" onclick="openWeek(7)"><h3>Semana 7</h3><p>-</p></div>
+        <div class="card" onclick="openWeek(8)"><h3>Semana 8</h3><p>-</p></div>
+        <div class="card" onclick="openWeek(9)"><h3>Semana 9</h3><p>-</p></div>
+        <div class="card" onclick="openWeek(10)"><h3>Semana 10</h3><p>-</p></div>
+        <div class="card" onclick="openWeek(11)"><h3>Semana 11</h3><p>-</p></div>
+        <div class="card" onclick="openWeek(12)"><h3>Semana 12</h3><p>-</p></div>
+        <div class="card" onclick="openWeek(13)"><h3>Semana 13</h3><p>-</p></div>
+      </div>
+    </section>
 
-  <section id="semana" class="section">
-    <h2 id="week-title"></h2>
-    <div id="file-viewer"></div>
-    <button class="repo-btn" onclick="openRepo()">Ir al repositorio</button>
-    <button class="back-btn" onclick="backToTasks()">Volver a Tareas</button>
-  </section>
+    <!-- SEMANA (visor) -->
+    <section id="semana" class="panel" style="display:none">
+      <h2 id="weekTitle">Semana</h2>
+      <div id="fileList" class="file-list">Selecciona un archivo para visualizarlo aquí.</div>
+
+      <iframe id="viewer" sandbox="allow-same-origin allow-scripts allow-forms"></iframe>
+
+      <div class="controls">
+        <button class="btn" id="openRepoBtn">Ir al repositorio</button>
+        <button class="btn ghost" onclick="backToTasks()">Volver a Tareas</button>
+      </div>
+    </section>
+  </main>
 
   <script>
-    const baseRepo = "https://kevin43287.github.io/Actividades";
-    let currentWeek = 0;
-
-    const files = {
+    // --- CONFIG (NO toques) ---
+    const USER = "KEVIN43287";
+    const REPO = "Actividades";
+    const BASE_PAGES = https://${USER}.github.io/${REPO}; // GitHub Pages base
+    // Archivos que me proporcionaste (nombres exactos)
+    const filesByWeek = {
       1: [
         "Semana1/Manual%20de%20como%20subir%20pagina%20web%20a%20Githlub.pdf",
         "Semana1/guia%20para%20crear%20cuenta%20en%20GibHub.pdf"
@@ -152,54 +120,92 @@
       3: [
         "Semana3/Informe_%20Comparativa_Arquitecturas.pdf"
       ]
+      // semanas 4..13: sin archivos (vacío)
     };
+    let currentWeek = 0;
 
-    // Mostrar secciones
-    function showSection(evt, id) {
-      if (evt) evt.preventDefault();
-
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-      const section = document.getElementById(id);
-      if (section) section.classList.add('active');
-
+    // Navegación simple: muestra secciones
+    function showSection(id){
+      document.querySelectorAll('main > section').forEach(s => s.style.display = 'none');
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'block';
+      // actualizar nav visual
       document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
-      const navLink = document.getElementById('nav-' + id);
-      if (navLink) navLink.setAttribute('aria-current', 'page');
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (id === 'inicio') document.getElementById('nav-inicio').setAttribute('aria-current','page');
+      if (id === 'tareas') document.getElementById('nav-tareas').setAttribute('aria-current','page');
+      window.scrollTo({top:0,behavior:'smooth'});
     }
 
-    // Abrir semana
-    function openWeek(num) {
-      currentWeek = num;
-      document.getElementById('week-title').textContent = "Semana " + num;
-      const viewer = document.getElementById('file-viewer');
-      viewer.innerHTML = "";
+    // Abrir semana: lista archivos y permite verlos
+    function openWeek(n){
+      currentWeek = n;
+      document.getElementById('weekTitle').textContent = 'Semana ' + n;
+      const fileList = document.getElementById('fileList');
+      fileList.innerHTML = '';
+      document.getElementById('viewer').style.display = 'none';
+      document.getElementById('viewer').src = '';
 
-      (files[num] || []).forEach(file => {
-        const iframe = document.createElement('iframe');
-        iframe.src = ${baseRepo}/${file};
-        viewer.appendChild(iframe);
-      });
+      const arr = filesByWeek[n] || [];
+      if (arr.length === 0) {
+        fileList.innerHTML = "<p class='note'>No hay archivos cargados para esta semana.</p>";
+      } else {
+        arr.forEach((path, idx) => {
+          // Mostrar nombre legible (decodificar)
+          const name = decodeURIComponent(path.split('/').pop());
+          const a = document.createElement('a');
+          a.href = '#';
+          a.textContent = name;
+          a.onclick = (e) => { e.preventDefault(); viewFile(path); };
+          fileList.appendChild(a);
+        });
+      }
 
-      showSection(null, "semana");
+      // configurar botón repo para abrir carpeta en GitHub (vista código)
+      const repoBtn = document.getElementById('openRepoBtn');
+      repoBtn.onclick = () => {
+        const folder = https://github.com/${USER}/${REPO}/tree/main/Semana${n};
+        window.open(folder, '_blank');
+      };
+
+      showSection('semana');
     }
 
-    // Ir al repositorio
-    function openRepo() {
-      if (currentWeek) {
-        window.open(${baseRepo}/Semana${currentWeek}, '_blank');
+    // Mostrar archivo en iframe usando GitHub Pages raw URL (no API)
+    function viewFile(path){
+      // Try to load via GitHub Pages URL (works if files are published)
+      const url = ${BASE_PAGES}/${path};
+      const viewer = document.getElementById('viewer');
+
+      // decide cómo mostrar según extensión
+      const ext = path.split('.').pop().toLowerCase();
+      if (['pdf','png','jpg','jpeg','gif','svg','html','htm','txt','md'].includes(ext)) {
+        viewer.src = url;
+        viewer.style.display = 'block';
+        viewer.scrollIntoView({behavior:'smooth'});
+      } else if (['docx','xlsx','pptx','doc','xls','ppt'].includes(ext)) {
+        // usar Google Viewer para docs (si GitHub Pages permite acceso público)
+        const g = https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true;
+        viewer.src = g;
+        viewer.style.display = 'block';
+        viewer.scrollIntoView({behavior:'smooth'});
+      } else {
+        // fallback
+        viewer.src = url;
+        viewer.style.display = 'block';
+        viewer.scrollIntoView({behavior:'smooth'});
       }
     }
 
-    // Volver a tareas
-    function backToTasks() {
-      showSection(null, "tareas");
+    function backToTasks(){
+      showSection('tareas');
     }
 
-    // Navegación superior
-    document.getElementById("nav-inicio").addEventListener("click", e => showSection(e, "inicio"));
-    document.getElementById("nav-tareas").addEventListener("click", e => showSection(e, "tareas"));
+    // Enlaces del header
+    document.getElementById('nav-inicio').addEventListener('click', (e)=>{ e.preventDefault(); showSection('inicio'); });
+    document.getElementById('nav-tareas').addEventListener('click', (e)=>{ e.preventDefault(); showSection('tareas'); });
+
+    // Al iniciar, mostramos Tareas (como querías antes)
+    showSection('tareas');
   </script>
 </body>
 </html>
