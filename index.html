@@ -1,227 +1,171 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BASE DE DATOS II - Actividades</title>
-
-  <!-- Estilo: mantenido como solicitaste (negro + acentos verde) -->
-  <style>
-    :root{
-      --bg:#0f1110;
-      --panel:#161616;
-      --accent:#00ff88;
-      --muted:#c8e6c9;
-      --text:#e9efe8;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:"Poppins", Arial, sans-serif;background:var(--bg);color:var(--text)}
-    header{display:flex;align-items:center;justify-content:space-between;padding:18px 26px;background:#0b0b0b}
-    .header-left img{height:56px;border-radius:6px}
-    .header-center{text-align:center}
-    .header-center h1{margin:0;font-size:20px;color:var(--accent);text-transform:uppercase}
-    .header-center .sub{margin-top:6px;color:var(--muted);font-size:13px}
-    nav a{color:var(--accent);text-decoration:none;font-weight:600;margin-left:12px}
-    main{max-width:1100px;margin:28px auto;padding:18px}
-    .panel{background:var(--panel);padding:18px;border-radius:10px;border:1px solid rgba(0,255,136,0.06)}
-    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
-    .card{background:#111;padding:14px;border-radius:10px;border:1px solid rgba(0,255,136,0.06)}
-    .card h3{margin:0 0 6px 0;color:var(--accent)}
-    .list-files{margin-top:8px;text-align:left}
-    .list-files a{display:block;color:var(--accent);text-decoration:none;padding:6px 0}
-    .list-files a:hover{color:var(--text);text-decoration:underline}
-    .btn {background:var(--accent);color:#000;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700}
-    .btn.secondary{background:#ffd27a;color:#000}
-    iframe{width:100%;height:640px;border:1px solid rgba(0,255,136,0.06);border-radius:8px;margin-top:12px;background:#000;display:none}
-    .note{color:var(--muted);font-size:13px;margin-top:8px}
-    @media(max-width:700px){.grid{grid-template-columns:1fr}iframe{height:420px}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BASE DE DATOS II - Actividades</title>
+<style>
+  body {
+    margin: 0;
+    background-color: #000;
+    color: #e0ffe0;
+    font-family: "Poppins", sans-serif;
+  }
+  header {
+    background-color: #0c0c0c;
+    color: #00ff99;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 2px solid #00ff99;
+  }
+  header h1 {
+    margin: 0;
+  }
+  header p {
+    margin: 4px 0;
+    color: #b3ffcc;
+  }
+  main {
+    padding: 20px;
+    text-align: center;
+  }
+  .weeks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+  button {
+    background-color: #00ff99;
+    border: none;
+    color: #000;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #aaffcc;
+  }
+  a {
+    color: #00ff99;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  iframe {
+    width: 100%;
+    height: 600px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 10px;
+    display: none;
+  }
+</style>
 </head>
 <body>
   <header>
-    <div class="header-left">
-      <img src="upla.PNG" alt="Logo UPLA" onerror="this.style.display='none'">
-    </div>
-
-    <div class="header-center">
-      <h1>BASE DE DATOS II</h1>
-      <div class="sub">Universidad Peruana Los Andes — Kevin Alfredo Macha Bruno</div>
-    </div>
-
-    <nav>
-      <a href="#" onclick="show('inicio')">Inicio</a>
-      <a href="#" onclick="show('tareas')">Tareas</a>
-    </nav>
+    <h1>BASE DE DATOS II</h1>
+    <p>Universidad Peruana Los Andes - Kevin Alfredo Macha Bruno</p>
   </header>
 
   <main>
-    <section id="inicio" class="panel">
-      <h2>Bienvenido</h2>
-      <p class="note">Selecciona una semana para ver las actividades. El visor abre PDFs, imágenes, HTML y Office dentro de la misma página.</p>
-    </section>
+    <h2>Selecciona una Semana</h2>
+    <div class="weeks" id="weeks"></div>
 
-    <section id="tareas" class="panel" style="display:none">
-      <h2>Semanas</h2>
-      <div class="grid" id="weeksGrid"></div>
-    </section>
-
-    <section id="semana" class="panel" style="display:none">
-      <h2 id="weekTitle">Semana</h2>
-      <div id="filesArea" class="list-files">Cargando...</div>
-
-      <!-- visor integrado (se usa para PDF, imágenes, HTML, Google Viewer para Office) -->
-      <iframe id="viewer" src="" sandbox="allow-scripts allow-same-origin"></iframe>
-
-      <div style="margin-top:12px">
-        <button id="openRepoBtn" class="btn">Ir al repositorio</button>
-        <button onclick="show('tareas')" class="btn secondary">← Volver a Semanas</button>
+    <div id="viewerSection" style="display:none;">
+      <h2 id="weekTitle"></h2>
+      <div id="fileList"></div>
+      <iframe id="viewer"></iframe>
+      <div style="margin-top:12px;">
+        <button id="repoBtn">Ir al repositorio</button>
+        <button onclick="backToWeeks()">Volver</button>
       </div>
-    </section>
+    </div>
   </main>
 
   <script>
-    // --- CONFIG (no cambies si tu repo es KEVIN43287/Actividades en main) ---
     const USER = "KEVIN43287";
     const REPO = "Actividades";
-    const BRANCH = "main";
     const TOTAL_WEEKS = 16;
-    // ---------------------------------------------------------------------
+    const weeksDiv = document.getElementById("weeks");
+    const viewerSection = document.getElementById("viewerSection");
+    const fileList = document.getElementById("fileList");
+    const viewer = document.getElementById("viewer");
+    const weekTitle = document.getElementById("weekTitle");
+    const repoBtn = document.getElementById("repoBtn");
 
-    const weeksGrid = document.getElementById('weeksGrid');
-    const filesArea = document.getElementById('filesArea');
-    const viewer = document.getElementById('viewer');
-    const weekTitle = document.getElementById('weekTitle');
-    const openRepoBtn = document.getElementById('openRepoBtn');
-
-    // RENDER: tarjetas de semanas (igual visual que tu diseño)
+    // Crear botones de semanas
     for (let i = 1; i <= TOTAL_WEEKS; i++) {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `<h3>Semana ${i}</h3>
-        <div class="note">Haz clic para listar archivos</div>
-        <div style="margin-top:10px">
-          <button class="btn" onclick="openWeek(${i})">Abrir Semana ${i}</button>
-        </div>`;
-      weeksGrid.appendChild(card);
+      const btn = document.createElement("button");
+      btn.textContent = `Semana ${i}`;
+      btn.onclick = () => openWeek(i);
+      weeksDiv.appendChild(btn);
     }
 
-    function show(sectionId){
-      document.querySelectorAll('main > section').forEach(s => s.style.display = 'none');
-      document.getElementById(sectionId).style.display = 'block';
-      window.scrollTo({top:0,behavior:'smooth'});
+    function backToWeeks() {
+      viewerSection.style.display = "none";
+      weeksDiv.style.display = "grid";
     }
 
-    // Abre la vista de la semana: lista archivos con GitHub API (respeta "Semana1" exacto)
-    async function openWeek(n){
-      show('semana');
+    function openWeek(n) {
+      const folder = `Semana${n}`;
+      const folderURL = `https://${USER}.github.io/${REPO}/${folder}/`;
+      repoBtn.onclick = () => window.open(`https://github.com/${USER}/${REPO}/tree/main/${folder}`, "_blank");
+
       weekTitle.textContent = `Semana ${n}`;
-      filesArea.innerHTML = 'Comprobando carpeta en el repositorio...';
-      viewer.style.display = 'none';
-      viewer.src = '';
+      fileList.innerHTML = "Cargando archivos...";
+      weeksDiv.style.display = "none";
+      viewerSection.style.display = "block";
+      viewer.style.display = "none";
 
-      const folderPath = `Semana${n}`; // <-- usa exactamente "Semana1", "Semana2", ...
-      const apiUrl = `https://api.github.com/repos/${USER}/${REPO}/contents/${encodeURIComponent(folderPath)}?ref=${BRANCH}`;
+      fetch(folderURL)
+        .then(r => r.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, "text/html");
+          const links = [...doc.querySelectorAll("a")];
+          const files = links
+            .map(a => a.getAttribute("href"))
+            .filter(h => h && !h.includes(".gitkeep") && !h.startsWith("?") && !h.startsWith("/"));
 
-      try {
-        const res = await fetch(apiUrl);
-        if (res.status === 404) {
-          filesArea.innerHTML = `<p class="note">No se encontró la carpeta <strong>${folderPath}</strong>. Revisa que exista y que la rama sea '${BRANCH}'.</p>`;
-          openRepoBtn.onclick = () => window.open(`https://github.com/${USER}/${REPO}/tree/${BRANCH}`, '_blank');
-          return;
-        }
-        if (!res.ok) {
-          filesArea.innerHTML = `<p class="note">Error al consultar GitHub API (status ${res.status}).</p>`;
-          return;
-        }
-
-        const items = await res.json(); // lista de archivos y carpetas
-        if (!Array.isArray(items) || items.length === 0) {
-          filesArea.innerHTML = `<p class="note">La carpeta existe pero está vacía.</p>`;
-          openRepoBtn.onclick = () => window.open(`https://github.com/${USER}/${REPO}/tree/${BRANCH}/${folderPath}`, '_blank');
-          return;
-        }
-
-        // Filtrar .gitkeep y archivos no deseados
-        const files = items.filter(it => it.type === 'file' && it.name.toLowerCase() !== '.gitkeep' && it.name !== '.nojekyll');
-
-        if (files.length === 0) {
-          filesArea.innerHTML = `<p class="note">No hay archivos visibles (solo había .gitkeep u otros no visualizables).</p>`;
-          openRepoBtn.onclick = () => window.open(`https://github.com/${USER}/${REPO}/tree/${BRANCH}/${folderPath}`, '_blank');
-          return;
-        }
-
-        // Ordena: index.html primero
-        files.sort((a,b) => (a.name.toLowerCase() === 'index.html' ? -1 : a.name.localeCompare(b.name)));
-
-        // Construir lista visible
-        filesArea.innerHTML = '';
-        let firstViewable = null;
-        files.forEach(it => {
-          const name = it.name;
-          const raw = it.download_url || `https://raw.githubusercontent.com/${USER}/${REPO}/${BRANCH}/${it.path}`;
-          const a = document.createElement('a');
-          a.href = '#';
-          a.textContent = name;
-          a.style.display = 'block';
-          a.style.margin = '6px 0';
-          a.style.color = 'var(--accent)';
-          a.onclick = (e) => { e.preventDefault(); viewFile(name, raw, folderPath); };
-          filesArea.appendChild(a);
-
-          const ext = name.split('.').pop().toLowerCase();
-          if (!firstViewable && ['pdf','html','htm','png','jpg','jpeg','gif','svg','txt','md','docx','xlsx','pptx'].includes(ext)) {
-            firstViewable = { name, raw };
+          if (files.length === 0) {
+            fileList.innerHTML = `<p>No hay archivos en esta semana.</p>`;
+            return;
           }
+
+          fileList.innerHTML = "";
+          files.forEach(name => {
+            const link = document.createElement("a");
+            link.href = "#";
+            link.textContent = name;
+            link.onclick = (e) => {
+              e.preventDefault();
+              viewFile(folder, name);
+            };
+            fileList.appendChild(link);
+            fileList.appendChild(document.createElement("br"));
+          });
+        })
+        .catch(() => {
+          fileList.innerHTML = `<p>Error al cargar los archivos. Asegúrate de que la carpeta "${folder}" esté publicada.</p>`;
         });
-
-        // Si hay algo viewable, mostrar el primero automáticamente
-        if (firstViewable) viewFile(firstViewable.name, firstViewable.raw, folderPath);
-
-        openRepoBtn.onclick = () => window.open(`https://github.com/${USER}/${REPO}/tree/${BRANCH}/${folderPath}`, '_blank');
-
-      } catch (err) {
-        console.error(err);
-        filesArea.innerHTML = `<p class="note">Error de red o CORS al llamar la API. Revisa tu conexión o intenta recargar.</p>`;
-      }
     }
 
-    // Mostrar archivo en iframe o en Google Viewer si es Office
-    function viewFile(name, rawUrl, folderPath){
-      const ext = name.split('.').pop().toLowerCase();
+    function viewFile(folder, name) {
+      const url = `https://${USER}.github.io/${REPO}/${folder}/${name}`;
+      const ext = name.split(".").pop().toLowerCase();
 
-      if (ext === 'html' || ext === 'htm') {
-        // Preferir GitHub Pages si existe
-        const pageUrl = `https://${USER}.github.io/${REPO}/${folderPath}/${encodeURIComponent(name)}`;
-        viewer.src = pageUrl;
-        viewer.style.display = 'block';
-        viewer.scrollIntoView({behavior:'smooth'});
-        return;
+      if (["pdf", "png", "jpg", "jpeg", "gif", "svg", "html", "htm"].includes(ext)) {
+        viewer.src = url;
+      } else if (["docx", "pptx", "xlsx"].includes(ext)) {
+        viewer.src = `https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`;
+      } else {
+        viewer.src = url;
       }
-
-      if (['pdf','png','jpg','jpeg','gif','svg','txt','md'].includes(ext)) {
-        viewer.src = rawUrl;
-        viewer.style.display = 'block';
-        viewer.scrollIntoView({behavior:'smooth'});
-        return;
-      }
-
-      if (['docx','xlsx','pptx','doc','xls','ppt'].includes(ext)) {
-        const google = `https://docs.google.com/gview?url=${encodeURIComponent(rawUrl)}&embedded=true`;
-        viewer.src = google;
-        viewer.style.display = 'block';
-        viewer.scrollIntoView({behavior:'smooth'});
-        return;
-      }
-
-      // fallback
-      viewer.src = rawUrl;
-      viewer.style.display = 'block';
-      viewer.scrollIntoView({behavior:'smooth'});
+      viewer.style.display = "block";
     }
-
-    // Mostrar la sección "tareas" al inicio
-    show('tareas');
-
   </script>
 </body>
 </html>
