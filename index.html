@@ -3,104 +3,117 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BASE DE DATOS 2 - Actividades</title>
+  <title>BASE DE DATOS 2 - Inicio</title>
 
+  <!-- Google Font + Font Awesome -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root {
-      --bg:#0f1110;
-      --panel:#161616;
-      --accent:#00ff88;
-      --muted:#b9e6c4;
-      --text:#e9efe8;
-      --card-border: rgba(0,255,136,0.12);
+      --bg: #0f1110;
+      --panel: #161616;
+      --accent: #00ff88;
+      --muted: #b9e6c4;
+      --text: #e9efe8;
+      --card-border: rgba(0, 255, 136, 0.12);
     }
-    *{box-sizing:border-box}
-    body {
-      margin:0;
-      font-family:"Poppins", Arial, sans-serif;
-      background:var(--bg);
-      color:var(--text);
-    }
-    header {
-      display:grid;
-      grid-template-columns:auto 1fr auto;
-      align-items:center;
-      gap:20px;
-      padding:18px 26px;
-      background:#0b0b0b;
-    }
-    .header-left img {height:72px;border-radius:8px;}
-    .header-center {text-align:center;}
-    .header-center h1{margin:0;font-size:22px;color:var(--text);}
-    .header-center .uni{font-size:13px;color:var(--muted);}
-    .header-center .name{font-size:14px;font-weight:600;color:var(--accent);}
-    nav.header-nav{display:flex;gap:12px;}
-    nav.header-nav a{
-      color:var(--accent);
-      text-decoration:none;
-      font-weight:600;
-      padding:8px 12px;
-      border-radius:8px;
-    }
-    nav.header-nav a[aria-current="page"]{
-      background:rgba(0,255,136,0.08);
-      color:var(--text);
-    }
-    main {max-width:1000px;margin:28px auto;padding:0 18px;}
-    .panel {
-      background:var(--panel);
-      border-radius:12px;
-      padding:22px;
-      border:1px solid var(--card-border);
-    }
-    h2{color:var(--accent);}
-    .tasks-grid {
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:18px;
-      margin-top:20px;
-    }
-    .task-card {
-      background:#111;
-      border:1px solid var(--card-border);
-      border-radius:12px;
-      padding:18px;
-      text-align:center;
-      cursor:pointer;
-      transition:.3s;
-    }
-    .task-card:hover {
-      border-color:var(--accent);
-      transform:translateY(-5px);
-    }
-    .task-icon{font-size:28px;color:var(--accent);}
-    .task-num{font-size:24px;font-weight:700;}
-    .task-label{font-weight:600;}
 
-    .section {display:none;}
-    .section.active{display:block;}
-    iframe {
-      width:100%;
-      height:500px;
-      border:none;
-      margin-top:15px;
-      border-radius:8px;
-      background:#000;
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; font-family: "Poppins", Arial, sans-serif; background: var(--bg); color: var(--text); }
+
+    header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 20px;
+      padding: 18px 26px;
+      background: #0b0b0b;
     }
+
+    .header-left img { height: 72px; width: auto; border-radius: 8px; }
+
+    .header-center { text-align: center; }
+    .header-center h1 { margin: 0; font-size: 22px; text-transform: uppercase; color: var(--text); }
+    .header-center .uni { margin-top: 6px; font-size: 13px; color: var(--muted); }
+    .header-center .name { margin-top: 4px; font-size: 14px; font-weight: 600; color: var(--accent); }
+
+    nav.header-nav { display: flex; gap: 12px; justify-self: end; }
+    nav.header-nav a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all .16s ease;
+    }
+    nav.header-nav a[aria-current="page"] {
+      background: rgba(0,255,136,0.08);
+      color: var(--text);
+    }
+    nav.header-nav a:hover {
+      transform: translateY(-3px);
+      color: var(--text);
+      background: rgba(0,255,136,0.06);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 28px auto;
+      padding: 0 18px 60px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: 0 10px 32px rgba(0,0,0,0.6);
+      border: 1px solid var(--card-border);
+    }
+
+    h2 { margin: 0 0 14px 0; color: var(--accent); font-size: 20px; }
+    .tasks-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 18px; }
+    .task-card {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 22px; border-radius: 12px; text-decoration: none; color: var(--text);
+      border: 2px solid var(--card-border); transition: transform .18s ease;
+      cursor: pointer; background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+    }
+    .task-card:hover { transform: translateY(-8px); border-color: rgba(0,255,136,0.28); }
+    .task-icon { font-size: 28px; color: var(--accent); }
+
+    iframe {
+      width: 100%; height: 600px;
+      border: none;
+      margin-top: 16px;
+      border-radius: 8px;
+      background: #222;
+    }
+
     button {
-      margin-top:14px;
-      background:var(--accent);
-      border:none;
-      border-radius:8px;
-      padding:8px 12px;
-      font-weight:600;
-      cursor:pointer;
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      color: #000;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    button:hover { opacity: 0.9; }
+
+    .section { display: none; opacity: 0; transform: translateY(10px); transition: opacity .5s ease, transform .5s ease; }
+    .section.active { display: block; opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 520px) {
+      .tasks-grid { grid-template-columns: 1fr; }
+      header { grid-template-columns: 1fr; text-align: center; row-gap: 12px; }
+      nav.header-nav { justify-self: center; }
     }
   </style>
 </head>
+
 <body>
   <header>
     <div class="header-left"><img src="upla.PNG" alt="Logo"></div>
@@ -110,8 +123,8 @@
       <div class="name">Kevin Alfredo Macha Bruno</div>
     </div>
     <nav class="header-nav">
-      <a href="#" aria-current="page" onclick="showSection(event,'inicio')">Inicio</a>
-      <a href="#" onclick="showSection(event,'tareas')">Tareas</a>
+      <a href="#" id="nav-inicio" aria-current="page" onclick="showSection(event,'inicio')">Inicio</a>
+      <a href="#" id="nav-tareas" onclick="showSection(event,'tareas')">Tareas</a>
     </nav>
   </header>
 
@@ -119,62 +132,83 @@
     <section id="inicio" class="section active">
       <div class="panel">
         <h2>Bienvenido</h2>
-        <p>Bienvenido al portal de <strong>Base de Datos 2</strong>. Aquí podrás ver las tareas de cada semana y acceder directamente al repositorio correspondiente.</p>
+        <p>Bienvenido al portal de <strong>Base de Datos 2</strong>. Aquí accederás a las tareas semanales del curso.</p>
       </div>
     </section>
 
     <section id="tareas" class="section">
       <div class="panel">
-        <h2>Tareas por Semana</h2>
-        <div class="tasks-grid" id="tasks-grid"></div>
+        <h2>Tareas - Semanas</h2>
+        <div class="tasks-grid">
+          <div class="task-card" onclick="openWeek(1)"><div class="task-icon"><i class="fas fa-database"></i></div>Semana 1</div>
+          <div class="task-card" onclick="openWeek(2)"><div class="task-icon"><i class="fas fa-code"></i></div>Semana 2</div>
+          <div class="task-card" onclick="openWeek(3)"><div class="task-icon"><i class="fas fa-table"></i></div>Semana 3</div>
+        </div>
       </div>
     </section>
 
     <section id="semana" class="section">
       <div class="panel">
         <h2 id="week-title">Semana</h2>
-        <iframe id="week-frame"></iframe>
-        <button id="repo-btn">Ir al repositorio</button>
-        <br><br>
+        <div id="file-viewer"></div>
+        <button id="repo-button" onclick="openRepo()">Ir al Repositorio</button>
         <button onclick="backToTasks()">← Volver a Tareas</button>
       </div>
     </section>
   </main>
 
   <script>
-    const totalSemanas = 13; // Ajusta según tus carpetas
-    const repoBase = "https://github.com/KEVIN43287/Actividades/tree/main/";
-    const pageBase = "https://kevin43287.github.io/Actividades/";
+    const baseRepo = "https://kevin43287.github.io/Actividades";
+    let currentWeek = 0;
 
-    const grid = document.getElementById("tasks-grid");
-    for(let i=1;i<=totalSemanas;i++){
-      const card=document.createElement("div");
-      card.className="task-card";
-      card.innerHTML=`<div class="task-icon"><i class="fas fa-folder"></i></div>
-                      <div class="task-num">${i.toString().padStart(2,'0')}</div>
-                      <div class="task-label">Semana ${i}</div>`;
-      card.onclick=()=>openWeek(i);
-      grid.appendChild(card);
+    const files = {
+      1: [
+        "Semana1/Manual%20de%20como%20subir%20pagina%20web%20a%20Githlub.pdf",
+        "Semana1/guia%20para%20crear%20cuenta%20en%20GibHub.pdf"
+      ],
+      2: [
+        "Semana2/EjemplO_1pdf.pdf",
+        "Semana2/Guia_para_instalar_msql_server.pdf"
+      ],
+      3: [
+        "Semana3/Informe_%20Comparativa_Arquitecturas.pdf"
+      ]
+    };
+
+    function showSection(evt, id) {
+      if (evt) evt.preventDefault();
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
+      const navLink = document.getElementById('nav-' + id);
+      if (navLink) navLink.setAttribute('aria-current', 'page');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function showSection(evt,id){
-      if(evt) evt.preventDefault();
-      document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-      document.querySelectorAll("nav a").forEach(a=>a.removeAttribute("aria-current"));
-      if(evt) evt.target.setAttribute("aria-current","page");
+    function openWeek(num) {
+      currentWeek = num;
+      document.getElementById('week-title').textContent = "Semana " + num;
+      const viewer = document.getElementById('file-viewer');
+      viewer.innerHTML = "";
+
+      (files[num] || []).forEach(file => {
+        const iframe = document.createElement('iframe');
+        iframe.src = ${baseRepo}/${file};
+        viewer.appendChild(iframe);
+      });
+
+      showSection(null, "semana");
     }
 
-    function openWeek(num){
-      document.getElementById("week-title").textContent=Semana ${num};
-      const frame=document.getElementById("week-frame");
-      frame.src=${pageBase}Semana${num}/;
-      const repoBtn=document.getElementById("repo-btn");
-      repoBtn.onclick=()=>window.open(${repoBase}Semana${num},"_blank");
-      showSection(null,"semana");
+    function openRepo() {
+      if (currentWeek) {
+        window.open(${baseRepo}/Semana${currentWeek}, '_blank');
+      }
     }
 
-    function backToTasks(){showSection(null,"tareas");}
+    function backToTasks() {
+      showSection(null, "tareas");
+    }
   </script>
 </body>
 </html>
