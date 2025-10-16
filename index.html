@@ -17,7 +17,6 @@
       --text:#e9efe8;
       --card-border: rgba(0,255,136,0.12);
     }
-
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
@@ -36,114 +35,58 @@
       padding:18px 26px;
       background:#0b0b0b;
     }
+    .header-left img{height:72px;border-radius:8px}
+    .header-center{text-align:center}
+    .header-center h1{margin:0;font-size:22px;text-transform:uppercase;color:var(--text)}
+    .header-center .uni{margin-top:6px;font-size:13px;color:var(--muted)}
+    .header-center .name{margin-top:4px;font-size:14px;font-weight:600;color:var(--accent)}
+    nav.header-nav{display:flex;gap:12px;justify-self:end}
+    nav.header-nav a{color:var(--accent);text-decoration:none;font-weight:600;padding:8px 12px;border-radius:8px;transition: all .16s ease;}
+    nav.header-nav a[aria-current="page"]{background: rgba(0,255,136,0.08);color:var(--text);}
+    nav.header-nav a:hover{transform:translateY(-3px);color:var(--text);background: rgba(0,255,136,0.06);}
 
-    .header-left img{
-      height:72px; width:auto;
-      display:block;
-      border-radius:8px;
-    }
-
-    .header-center{text-align:center;}
-    .header-center h1{margin:0;font-size:22px;text-transform:uppercase;color:var(--text);}
-    .header-center .uni{margin-top:6px;font-size:13px;color:var(--muted);}
-    .header-center .name{margin-top:4px;font-size:14px;font-weight:600;color:var(--accent);}
-
-    nav.header-nav{
-      display:flex;gap:12px;justify-self:end;
-    }
-    nav.header-nav a{
-      color:var(--accent);
-      text-decoration:none;
-      font-weight:600;
-      padding:8px 12px;
-      border-radius:8px;
-      transition: all .16s ease;
-    }
-    nav.header-nav a[aria-current="page"]{
-      background: rgba(0,255,136,0.08);
-      color:var(--text);
-    }
-    nav.header-nav a:hover{
-      transform:translateY(-3px);
-      color:var(--text);
-      background: rgba(0,255,136,0.06);
-    }
-
-    main{
-      max-width:1100px;
-      margin:28px auto;
-      padding:0 18px 60px;
-    }
+    main{max-width:1100px;margin:28px auto;padding:0 18px 60px;}
 
     .panel{
       background:var(--panel);
       border-radius:12px;
       padding:22px;
-      box-shadow: 0 10px 32px rgba(0,0,0,0.6);
+      box-shadow:0 10px 32px rgba(0,0,0,0.6);
       border:1px solid var(--card-border);
     }
 
     h2{margin:0 0 14px 0;color:var(--accent);font-size:20px}
-    .welcome p{color:#dfeee2;margin:12px 0}
-
-    .tasks-grid{
-      margin-top:18px;
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap:18px;
-    }
-
+    .tasks-grid{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;}
     .task-card{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      text-align:center;
-      padding:22px;
-      border-radius:12px;
-      border:2px solid var(--card-border);
-      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.6);
-      text-decoration:none;
-      color:var(--text);
-      cursor:pointer;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+      text-align:center;padding:22px;border-radius:12px;border:2px solid var(--card-border);
+      background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.00));
+      transition:transform .18s ease, box-shadow .18s ease,border-color .18s;
+      box-shadow:0 8px 22px rgba(0,0,0,0.6);color:var(--text);cursor:pointer;
     }
-    .task-card:hover{
-      transform: translateY(-8px);
-      box-shadow: 0 18px 46px rgba(0,255,136,0.08);
-      border-color: rgba(0,255,136,0.28);
-    }
+    .task-card:hover{transform:translateY(-8px);box-shadow:0 18px 46px rgba(0,255,136,0.08);border-color:rgba(0,255,136,0.28);}
     .task-icon{font-size:28px;color:var(--accent)}
     .task-num{font-size:28px;font-weight:700;color:var(--text)}
     .task-label{font-weight:600;color:var(--text)}
 
-    .section{display:none;}
-    .section.active{display:block;}
+    .section{display:none;opacity:0;transform:translateY(10px);transition:opacity 0.5s,transform 0.5s;}
+    .section.active{display:block;opacity:1;transform:translateY(0);}
 
-    @media (max-width:520px){
-      .tasks-grid{ grid-template-columns:1fr; }
-      header{ grid-template-columns: 1fr; row-gap:12px; text-align:center; }
-      nav.header-nav{ justify-self:center; }
-    }
+    .pdf-viewer{width:100%;height:480px;margin-top:12px;border:1px solid var(--card-border);border-radius:8px;}
+    .repo-btn{margin-top:12px;display:inline-block;padding:10px 16px;background:var(--accent);color:#000;border-radius:8px;text-decoration:none;font-weight:600;}
   </style>
 </head>
 <body>
   <header>
-    <div class="header-left">
-      <img src="upla.PNG" alt="Logo">
-    </div>
-
+    <div class="header-left"><img src="upla.PNG" alt="Logo"></div>
     <div class="header-center">
       <h1>BASE DE DATOS 2</h1>
       <div class="uni">Universidad Peruana Los Andes</div>
       <div class="name">Kevin Alfredo Macha Bruno</div>
     </div>
-
     <nav class="header-nav">
-      <a href="#" id="nav-inicio" aria-current="page">Inicio</a>
-      <a href="#" id="nav-tareas">Tareas</a>
+      <a href="#" id="nav-inicio" aria-current="page" onclick="showSection(event,'inicio')">Inicio</a>
+      <a href="#" id="nav-tareas" onclick="showSection(event,'tareas')">Tareas</a>
     </nav>
   </header>
 
@@ -151,48 +94,85 @@
     <section id="inicio" class="section active">
       <div class="panel">
         <h2>Bienvenido</h2>
-        <div class="welcome">
-          <p>Bienvenido al portal de <strong>Base de Datos 2</strong>. Aquí accederás a las tareas semanales del curso.</p>
-        </div>
+        <p>Bienvenido al portal de <strong>Base de Datos 2</strong>. Aquí accederás a las tareas semanales del curso.</p>
       </div>
     </section>
 
     <section id="tareas" class="section">
       <div class="panel">
         <h2>Tareas - Semanas</h2>
-        <div class="tasks-grid">
-          <!-- SEMANAS 1 - 16 -->
-          <div class="task-card"><div class="task-icon"><i class="fas fa-database"></i></div><div class="task-num">01</div><div class="task-label">Semana 1</div></div>
-          <div class="task-card"><div class="task-icon"><i class="fas fa-code"></i></div><div class="task-num">02</div><div class="task-label">Semana 2</div></div>
-          <div class="task-card"><div class="task-icon"><i class="fas fa-table"></i></div><div class="task-num">03</div><div class="task-label">Semana 3</div></div>
-          <!-- resto igual -->
-        </div>
+        <div class="tasks-grid" id="weeks"></div>
+      </div>
+    </section>
+
+    <section id="semana" class="section">
+      <div class="panel">
+        <h2 id="weekTitle">Semana</h2>
+        <div id="pdfList"></div>
+        <a id="repoLink" class="repo-btn" target="_blank">Ir al repositorio</a>
       </div>
     </section>
   </main>
 
   <script>
-    // NAVIGATION FUNCTIONALITY (FIXED)
-    const navInicio = document.getElementById('nav-inicio');
-    const navTareas = document.getElementById('nav-tareas');
-    const seccionInicio = document.getElementById('inicio');
-    const seccionTareas = document.getElementById('tareas');
+    const semanas = {
+      "Semana1": [
+        "Manual_de_como_subir_pagina_web_a_Githlub.pdf",
+        "guia_para_crear_cuenta_en_GibHub.pdf"
+      ],
+      "Semana2": [
+        "Ejemplo_1.pdf",
+        "Guia_para_instalar_msql_server.pdf"
+      ],
+      "Semana3": [
+        "Informe_Comparativa_Arquitecturas.pdf"
+      ]
+    };
 
-    navInicio.addEventListener('click', (e)=>{
-      e.preventDefault();
-      seccionInicio.classList.add('active');
-      seccionTareas.classList.remove('active');
-      navInicio.setAttribute('aria-current','page');
-      navTareas.removeAttribute('aria-current');
-    });
+    // Generar las tarjetas de semanas
+    const weeksContainer = document.getElementById("weeks");
+    for (let i=1; i<=16; i++) {
+      const div = document.createElement("div");
+      div.className="task-card";
+      div.innerHTML = `<div class="task-icon"><i class="fas fa-folder-open"></i></div>
+                       <div class="task-num">${String(i).padStart(2,"0")}</div>
+                       <div class="task-label">Semana ${i}</div>`;
+      div.onclick=()=>openWeek(i);
+      weeksContainer.appendChild(div);
+    }
 
-    navTareas.addEventListener('click', (e)=>{
-      e.preventDefault();
-      seccionTareas.classList.add('active');
-      seccionInicio.classList.remove('active');
-      navTareas.setAttribute('aria-current','page');
-      navInicio.removeAttribute('aria-current');
-    });
+    function showSection(evt,id){
+      if(evt) evt.preventDefault();
+      document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('nav.header-nav a').forEach(a=>a.removeAttribute('aria-current'));
+      if(document.getElementById('nav-'+id)){
+        document.getElementById('nav-'+id).setAttribute('aria-current','page');
+      }
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+
+    function openWeek(num){
+      const weekName = "Semana"+num;
+      const pdfList = document.getElementById("pdfList");
+      pdfList.innerHTML="";
+      document.getElementById("weekTitle").textContent = "Semana " + num;
+      const files = semanas[weekName];
+
+      if(files && files.length>0){
+        files.forEach(f=>{
+          const viewer = document.createElement("iframe");
+          viewer.className="pdf-viewer";
+          viewer.src=https://KEVIN43287.github.io/Actividades/${weekName}/${f};
+          pdfList.appendChild(viewer);
+        });
+      } else {
+        pdfList.innerHTML="<p>No hay archivos para esta semana.</p>";
+      }
+
+      document.getElementById("repoLink").href=https://github.com/KEVIN43287/Actividades/tree/main/${weekName};
+      showSection(null,"semana");
+    }
   </script>
 </body>
 </html>
