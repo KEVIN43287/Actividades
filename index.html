@@ -1,293 +1,210 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Base de Datos 2 - Actividades</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BASE DE DATOS 2 - Inicio</title>
+
+  <!-- Fuentes y estilos -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    :root {
-      --bg: #0b0b0b;
-      --panel: #0f1110;
-      --accent: #00ff88;
-      --muted: #c8e6c9;
-      --text: #e9efe8;
-      --border: rgba(0,255,136,0.08);
+    :root{
+      --bg:#0f1110;
+      --panel:#161616;
+      --accent:#00ff88;
+      --muted:#b9e6c4;
+      --text:#e9efe8;
+      --card-border: rgba(0,255,136,0.12);
     }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      background: var(--bg);
-      color: var(--text);
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Poppins", Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.5;
     }
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #0c0c0c;
-      padding: 20px 28px;
-      color: var(--text);
+
+    header{
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      align-items:center;
+      gap:20px;
+      padding:18px 26px;
+      background:#0b0b0b;
     }
-    header img {
-      height: 64px;
-      border-radius: 6px;
+    .header-left img{height:72px;border-radius:8px;}
+    .header-center{text-align:center;}
+    .header-center h1{margin:0;font-size:22px;color:var(--text);}
+    .uni{font-size:13px;color:var(--muted);}
+    .name{font-size:14px;font-weight:600;color:var(--accent);}
+    nav.header-nav{display:flex;gap:12px;justify-self:end;}
+    nav.header-nav a{
+      color:var(--accent);text-decoration:none;font-weight:600;
+      padding:8px 12px;border-radius:8px;transition:all .16s ease;
     }
-    .header-center {
-      text-align: center;
-      flex: 1;
+    nav.header-nav a[aria-current="page"]{
+      background:rgba(0,255,136,0.08);color:var(--text);
     }
-    .header-center h1 {
-      margin: 0;
-      font-size: 24px;
-      color: var(--accent);
-      text-transform: uppercase;
+    nav.header-nav a:hover{
+      transform:translateY(-3px);
+      background:rgba(0,255,136,0.06);
     }
-    .header-center .uni {
-      font-size: 13px;
-      color: var(--muted);
+
+    main{max-width:1100px;margin:28px auto;padding:0 18px 60px;}
+    .panel{
+      background:var(--panel);
+      border-radius:12px;
+      padding:22px;
+      border:1px solid var(--card-border);
+      box-shadow:0 10px 32px rgba(0,0,0,0.6);
     }
-    .header-center .name {
-      font-weight: 700;
-      color: var(--accent);
-      margin-top: 4px;
+
+    h2{color:var(--accent);margin-bottom:14px;}
+    .tasks-grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:18px;
     }
-    nav {
-      display: flex;
-      gap: 12px;
+    .task-card{
+      text-align:center;
+      padding:22px;
+      border-radius:12px;
+      border:2px solid var(--card-border);
+      transition:transform .18s, box-shadow .18s;
+      background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0));
+      cursor:pointer;
     }
-    nav a {
-      color: var(--accent);
-      text-decoration: none;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
+    .task-card:hover{
+      transform:translateY(-8px);
+      border-color:rgba(0,255,136,0.3);
     }
-    nav a:hover {
-      background: var(--border);
-      color: var(--text);
+    .task-icon{font-size:28px;color:var(--accent)}
+    .task-num{font-size:24px;font-weight:700}
+    .task-label{font-weight:600}
+
+    iframe{
+      width:100%;
+      height:600px;
+      border:none;
+      margin-top:10px;
+      border-radius:8px;
     }
-    main {
-      max-width: 1100px;
-      margin: 26px auto;
-      padding: 18px;
+
+    button{
+      background:var(--accent);
+      color:#000;
+      border:none;
+      padding:8px 14px;
+      border-radius:6px;
+      font-weight:600;
+      cursor:pointer;
+      margin-top:14px;
     }
-    .panel {
-      background: var(--panel);
-      padding: 20px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-    }
-    h2 {
-      color: var(--accent);
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      margin-top: 16px;
-    }
-    .card {
-      background: #0b0b0b;
-      border: 1px solid var(--border);
-      padding: 18px;
-      border-radius: 10px;
-      text-align: center;
-      cursor: pointer;
-    }
-    .card h3 {
-      margin: 0;
-      color: var(--accent);
-      font-size: 18px;
-    }
-    .card p {
-      margin: 8px 0 0 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .file-list {
-      margin-top: 14px;
-      text-align: left;
-    }
-    .file-list a {
-      display: block;
-      color: var(--accent);
-      text-decoration: none;
-      padding: 8px 0;
-    }
-    .file-list a:hover {
-      text-decoration: underline;
-      color: #fff;
-    }
-    .controls {
-      margin-top: 14px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .btn {
-      background: var(--accent);
-      border: none;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-weight: 700;
-      color: #000;
-      cursor: pointer;
-    }
-    .btn.ghost {
-      background: transparent;
-      color: var(--accent);
-      border: 1px solid var(--border);
-    }
-    iframe {
-      width: 100%;
-      height: 540px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      margin-top: 12px;
-      display: none;
-      background: #000;
-    }
-    @media(max-width: 600px) {
-      .grid { grid-template-columns: 1fr; }
-    }
+
+    .section{display:none;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s;}
+    .section.active{display:block;opacity:1;transform:translateY(0);}
   </style>
 </head>
 <body>
   <header>
-    <img src="upla.PNG" alt="Logo UPLA">
+    <div class="header-left"><img src="upla.PNG" alt="Logo"></div>
     <div class="header-center">
       <h1>BASE DE DATOS 2</h1>
       <div class="uni">Universidad Peruana Los Andes</div>
       <div class="name">Kevin Alfredo Macha Bruno</div>
     </div>
-    <nav>
-      <a id="inicioBtn">Inicio</a>
-      <a id="tareasBtn">Tareas</a>
+    <nav class="header-nav">
+      <a href="#" id="nav-inicio" aria-current="page" onclick="showSection(event,'inicio')">Inicio</a>
+      <a href="#" id="nav-tareas" onclick="showSection(event,'tareas')">Tareas</a>
     </nav>
   </header>
 
   <main>
-    <section id="inicio" class="panel">
-      <h2>Bienvenido</h2>
-      <p>Haz clic en <strong>Tareas</strong> para ver las semanas y sus archivos.</p>
-    </section>
-
-    <section id="tareas" class="panel" style="display:none">
-      <h2>Tareas - Semanas</h2>
-      <div class="grid" id="weeksGrid">
-        <div class="card" data-week="1"><h3>Semana 1</h3><p>Manual y guía</p></div>
-        <div class="card" data-week="2"><h3>Semana 2</h3><p>Ejemplo y guía MySQL</p></div>
-        <div class="card" data-week="3"><h3>Semana 3</h3><p>Informe comparativa</p></div>
+    <section id="inicio" class="section active">
+      <div class="panel">
+        <h2>Bienvenido</h2>
+        <p>Bienvenido al portal de <strong>Base de Datos 2</strong>. Aquí accederás a las tareas semanales del curso.</p>
       </div>
     </section>
 
-    <section id="semana" class="panel" style="display:none">
-      <h2 id="weekTitle">Semana</h2>
-      <div id="fileList" class="file-list">Selecciona un archivo para visualizarlo aquí.</div>
-      <iframe id="viewer"></iframe>
-      <div class="controls">
-        <button class="btn" id="openRepoBtn">Ir al repositorio</button>
-        <button class="btn ghost" id="backBtn">Volver a Tareas</button>
+    <section id="tareas" class="section">
+      <div class="panel">
+        <h2>Tareas - Semanas</h2>
+        <div class="tasks-grid">
+          <div class="task-card" onclick="openWeek(1)"><div class="task-icon"><i class="fas fa-database"></i></div><div class="task-num">01</div><div class="task-label">Semana 1</div></div>
+          <div class="task-card" onclick="openWeek(2)"><div class="task-icon"><i class="fas fa-code"></i></div><div class="task-num">02</div><div class="task-label">Semana 2</div></div>
+          <div class="task-card" onclick="openWeek(3)"><div class="task-icon"><i class="fas fa-table"></i></div><div class="task-num">03</div><div class="task-label">Semana 3</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="semana" class="section">
+      <div class="panel">
+        <h2 id="week-title">Semana</h2>
+        <div id="file-viewer"></div>
+        <button id="repo-btn">Ir al Repositorio</button>
+        <button onclick="backToTasks()">← Volver</button>
       </div>
     </section>
   </main>
 
   <script>
-    const USER = "KEVIN43287";
-    const REPO = "Actividades";
-    const BASE_PAGES = https://${USER}.github.io/${REPO};
-    const filesByWeek = {
-      1: [
-        "Semana1/Manual%20de%20como%20subir%20pagina%20web%20a%20Githlub.pdf",
-        "Semana1/guia%20para%20crear%20cuenta%20en%20GibHub.pdf"
-      ],
-      2: [
-        "Semana2/EjemplO_1pdf.pdf",
-        "Semana2/Guia_para_instalar_msql_server.pdf"
-      ],
-      3: [
-        "Semana3/Informe_%20Comparativa_Arquitecturas.pdf"
-      ]
-    };
+    const baseRepo = "https://kevin43287.github.io/Actividades";
+    let currentWeek = null;
 
-    const inicio = document.getElementById('inicio');
-    const tareas = document.getElementById('tareas');
-    const semana = document.getElementById('semana');
-    const inicioBtn = document.getElementById('inicioBtn');
-    const tareasBtn = document.getElementById('tareasBtn');
-    const fileList = document.getElementById('fileList');
-    const viewer = document.getElementById('viewer');
-    const weekTitle = document.getElementById('weekTitle');
-    const openRepoBtn = document.getElementById('openRepoBtn');
-    const backBtn = document.getElementById('backBtn');
-    let currentWeek = 0;
+    function showSection(evt,id){
+      if(evt) evt.preventDefault();
+      document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('nav a').forEach(a=>a.removeAttribute('aria-current'));
+      if(document.getElementById('nav-'+id)) document.getElementById('nav-'+id).setAttribute('aria-current','page');
+    }
 
-    inicioBtn.onclick = () => {
-      inicio.style.display = 'block';
-      tareas.style.display = 'none';
-      semana.style.display = 'none';
-    };
-    tareasBtn.onclick = () => {
-      inicio.style.display = 'none';
-      tareas.style.display = 'block';
-      semana.style.display = 'none';
-    };
-    document.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('click', () => {
-        currentWeek = card.getAttribute('data-week');
-        openWeek(currentWeek);
-      });
-    });
-    backBtn.onclick = () => {
-      inicio.style.display = 'none';
-      tareas.style.display = 'block';
-      semana.style.display = 'none';
-    };
-    openRepoBtn.onclick = () => {
-      if (!currentWeek) return;
-      const url = https://github.com/${USER}/${REPO}/tree/main/Semana${currentWeek};
-      window.open(url, '_blank');
-    };
+    function openWeek(num){
+      currentWeek = num;
+      document.getElementById("week-title").textContent = "Semana " + num;
+      showSection(null,"semana");
 
-    function openWeek(n) {
-      inicio.style.display = 'none';
-      tareas.style.display = 'none';
-      semana.style.display = 'block';
-      weekTitle.textContent = Semana ${n};
-      fileList.innerHTML = '';
-      viewer.style.display = 'none';
-      const arr = filesByWeek[n] || [];
-      if (arr.length === 0) {
-        fileList.innerHTML = '<p>No hay archivos disponibles.</p>';
-      } else {
-        arr.forEach(path => {
-          const name = decodeURIComponent(path.split('/').pop());
-          const a = document.createElement('a');
-          a.href = '#';
-          a.textContent = name;
-          a.onclick = e => {
-            e.preventDefault();
-            viewFile(path);
-          };
-          fileList.appendChild(a);
+      const viewer = document.getElementById("file-viewer");
+      viewer.innerHTML = "";
+
+      // Archivos por semana
+      const files = {
+        1: [
+          "Semana1/Manual_de_como_subir_pagina_web_a_Githlub.pdf",
+          "Semana1/Guia_para_crear_cuenta_en_GibHub.pdf"
+        ],
+        2: [
+          "Semana2/Ejemplo_1.pdf",
+          "Semana2/Guia_para_instalar_msql_server.pdf"
+        ],
+        3: [
+          "Semana3/Informe_Comparativa_Arquitecturas.pdf"
+        ]
+      };
+
+      if(files[num]){
+        files[num].forEach(file=>{
+          const iframe = document.createElement("iframe");
+          iframe.src = ${baseRepo}/${file};
+          viewer.appendChild(iframe);
         });
+      } else {
+        viewer.innerHTML = "<p>No hay archivos para esta semana.</p>";
       }
+
+      document.getElementById("repo-btn").onclick = ()=>{
+        window.open(https://github.com/KEVIN43287/Actividades/tree/main/Semana${num},'_blank');
+      };
     }
 
-    function viewFile(path) {
-      const url = ${BASE_PAGES}/${path};
-      const ext = path.split('.').pop().toLowerCase();
-      viewer.style.display = 'block';
-      if (['pdf','png','jpg','jpeg','gif'].includes(ext)) {
-        viewer.src = url;
-      } else if (['docx','xlsx','pptx'].includes(ext)) {
-        viewer.src = https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true;
-      } else {
-        viewer.src = url;
-      }
-    }
+    function backToTasks(){ showSection(null,"tareas"); }
   </script>
 </body>
 </html>
