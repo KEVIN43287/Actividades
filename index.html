@@ -1,184 +1,264 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BASE DE DATOS 2</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BASE DE DATOS 2 - Kevin Alfredo Macha Bruno</title>
+
+  <!-- Font + icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
+    :root {
+      --bg: #0f1110;
+      --panel: #161616;
+      --accent: #00ff88;
+      --muted: #c8e6c9;
+      --text: #e9efe8;
+      --card-border: rgba(0,255,136,0.12);
+    }
+    * { box-sizing: border-box; }
     body {
-      background-color: #000;
-      color: #00ff90;
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      text-align: center;
+      font-family: "Poppins", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing:antialiased;
     }
 
+    /* HEADER: logo left, title center, nav right */
     header {
-      background-color: #0d0d0d;
-      padding: 20px 0;
-      box-shadow: 0 2px 15px rgba(0, 255, 150, 0.2);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 18px;
+      padding: 18px 30px;
+      background: #0b0b0b;
+      border-bottom: 1px solid rgba(255,255,255,0.02);
+    }
+    .header-left img { height:72px; width:auto; display:block; border-radius:8px; }
+    .header-center { text-align:center; }
+    .header-center h1 { margin:0; font-size:24px; text-transform:uppercase; color:var(--text); letter-spacing:1px; }
+    .header-center .uni { margin-top:6px; font-size:13px; color:var(--muted); }
+    .header-center .name { margin-top:4px; font-size:14px; font-weight:700; color:var(--accent); }
+
+    nav.header-nav { display:flex; gap:12px; justify-self:end; }
+    nav.header-nav a {
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:600;
+      padding:8px 12px;
+      border-radius:8px;
+      transition: all .16s ease;
+    }
+    nav.header-nav a[aria-current="page"] {
+      background: rgba(0,255,136,0.08);
+      color:var(--text);
+    }
+    nav.header-nav a:hover {
+      transform: translateY(-3px);
+      color:var(--text);
+      background: rgba(0,255,136,0.06);
     }
 
-    header img {
-      width: 50px;
-      vertical-align: middle;
-      margin-right: 10px;
+    /* MAIN */
+    main { max-width:1100px; margin:28px auto; padding:0 18px 60px; }
+    .panel {
+      background: var(--panel);
+      border-radius:12px;
+      padding:22px;
+      box-shadow: 0 10px 32px rgba(0,0,0,0.6);
+      border:1px solid var(--card-border);
     }
 
-    nav {
-      margin-top: 10px;
-    }
+    h2 { margin:0 0 14px 0; color:var(--accent); font-size:20px; }
+    .welcome p { color:#dfeee2; margin:12px 0; }
 
-    nav a {
-      color: #00ff90;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
+    /* GRID 2 columnas para semanas */
+    .tasks-grid {
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: repeat(2, 1fr); /* EXACTAMENTE 2 por fila */
+      gap:18px;
     }
-
-    nav a:hover {
-      color: #ffffff;
+    .task-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      border-radius:12px;
+      padding:22px;
+      text-align:center;
+      border:2px solid var(--card-border);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+      transition: transform .16s ease, box-shadow .16s ease;
+      cursor:pointer;
     }
+    .task-card:hover { transform: translateY(-6px); box-shadow: 0 16px 36px rgba(0,255,136,0.12); border-color: rgba(0,255,136,0.28); }
+    .task-card .icon { font-size:26px; color:var(--accent); margin-bottom:10px; }
+    .task-card .num { font-size:26px; font-weight:700; color:var(--text); }
+    .task-card .label { margin-top:6px; font-weight:600; color:var(--muted); }
 
-    main {
-      padding: 40px 20px;
+    .file-section { margin-top:20px; }
+    .file-list { list-style:none; padding:0; margin:0; }
+    .file-list li { display:flex; align-items:center; gap:12px; background:#222; padding:10px 12px; border-radius:6px; margin-bottom:8px; }
+    .file-list a { color:var(--accent); text-decoration:none; font-weight:600; }
+
+    .section { display:none; opacity:0; transform: translateY(10px); transition: opacity .35s ease, transform .35s ease; }
+    .section.active { display:block; opacity:1; transform: translateY(0); }
+
+    .btn { background:transparent; border:1px solid rgba(255,255,255,0.1); color:var(--muted); padding:8px 12px; border-radius:8px; cursor:pointer; margin-right:8px; }
+    .btn:hover { background: rgba(0,255,136,0.06); color:var(--text); }
+
+    @media (max-width:520px) {
+      .tasks-grid { grid-template-columns: 1fr; }
+      header { grid-template-columns: 1fr; row-gap:12px; text-align:center; }
+      nav.header-nav { justify-self:center; }
+      .header-left img { height:60px; }
     }
-
-    .card {
-      background-color: #111;
-      border: 1px solid #00ff90;
-      border-radius: 10px;
-      margin: 20px auto;
-      padding: 20px;
-      max-width: 700px;
-      box-shadow: 0 0 15px rgba(0, 255, 150, 0.3);
-    }
-
-    button {
-      background-color: #00ff90;
-      color: #000;
-      border: none;
-      padding: 10px 20px;
-      margin: 10px;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #00cc73;
-    }
-
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    li {
-      background-color: #222;
-      margin: 8px 0;
-      padding: 10px;
-      border-radius: 6px;
-    }
-
-    a.file-link {
-      color: #00ff90;
-      text-decoration: none;
-    }
-
-    a.file-link:hover {
-      text-decoration: underline;
-    }
-
   </style>
 </head>
 <body>
   <header>
-    <img src="upla.PNG" alt="Logo UPLA" />
-    <h1>BASE DE DATOS 2</h1>
-    <p>Universidad Peruana Los Andes</p>
-    <p><strong>Kevin Alfredo Macha Bruno</strong></p>
-    <nav>
-      <a href="#" onclick="showInicio()">Inicio</a>
-      <a href="#" onclick="showTareas()">Tareas</a>
+    <div class="header-left">
+      <!-- deja tu logo aquí -->
+      <img src="upla.PNG" alt="Logo UPLA">
+    </div>
+
+    <div class="header-center">
+      <h1>BASE DE DATOS 2</h1>
+      <div class="uni">Universidad Peruana Los Andes</div>
+      <div class="name">Kevin Alfredo Macha Bruno</div>
+    </div>
+
+    <nav class="header-nav">
+      <a href="#" id="nav-inicio" aria-current="page" onclick="showSection(event,'inicio')">Inicio</a>
+      <a href="#" id="nav-tareas" onclick="showSection(event,'tareas')">Tareas</a>
     </nav>
   </header>
 
-  <main id="contenido"></main>
+  <main>
+    <!-- Inicio -->
+    <section id="inicio" class="section active">
+      <div class="panel">
+        <h2>Bienvenido</h2>
+        <div class="welcome">
+          <p>Hola, este es el portal del curso <strong>Base de Datos 2</strong>. Aquí verás las semanas y los recursos del curso.</p>
+          <p>Para ver las tareas presiona <strong>Tareas</strong> en el menú.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tareas -->
+    <section id="tareas" class="section">
+      <div class="panel">
+        <h2>Tareas - Semanas</h2>
+        <div id="weeksGrid" class="tasks-grid"></div>
+      </div>
+    </section>
+
+    <!-- Vista de Semana individual -->
+    <section id="semana" class="section">
+      <div class="panel">
+        <h2 id="week-title">Semana</h2>
+        <div class="file-section">
+          <h3>Archivos</h3>
+          <ul id="file-list" class="file-list">
+            <li style="color:var(--muted)">No hay archivos configurados.</li>
+          </ul>
+        </div>
+
+        <div style="margin-top:16px;">
+          <button class="btn" id="open-repo-btn" onclick="">Ver contenido en GitHub</button>
+          <button class="btn" onclick="backToTasks()">← Volver a Tareas</button>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <script>
-    const repoUser = "KEVIN43287";
-    const repoName = "Actividades";
+    // ---------- CONFIG (NO TOCAR si ya está en GitHub) ----------
+    const repoUser = "KEVIN43287"; // tu usuario
+    const repoName = "Actividades"; // tu repo
+    const WEEKS = 16;
 
-    function showInicio() {
-      document.getElementById("contenido").innerHTML = `
-        <div class="card">
-          <h2>Bienvenido a tu repositorio de actividades</h2>
-          <p>Aquí encontrarás las semanas con sus respectivos archivos del curso <b>Base de Datos 2</b>.</p>
-        </div>
+    // ---------- GENERAR TARJETAS DE SEMANA ----------
+    const weeksGrid = document.getElementById('weeksGrid');
+    for (let i = 1; i <= WEEKS; i++) {
+      const div = document.createElement('div');
+      div.className = 'task-card';
+      div.innerHTML = `
+        <div class="icon"><i class="fas fa-folder-open"></i></div>
+        <div class="num">${String(i).padStart(2,'0')}</div>
+        <div class="label">Semana ${i}</div>
       `;
+      div.onclick = () => openWeek(i);
+      weeksGrid.appendChild(div);
     }
 
-    function showTareas() {
-      let semanas = "";
-      for (let i = 1; i <= 16; i++) {
-        semanas += <button onclick="openWeek(${i})">Semana ${i}</button>;
-      }
-      document.getElementById("contenido").innerHTML = `
-        <div class="card">
-          <h2>Semanas del curso</h2>
-          ${semanas}
-        </div>
-      `;
+    // ---------- NAVEGACION ----------
+    function showSection(evt, id) {
+      if (evt) evt.preventDefault();
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      const el = document.getElementById(id);
+      if (el) el.classList.add('active');
+
+      // marcar nav actual
+      document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
+      const navEl = document.getElementById('nav-' + id);
+      if (navEl) navEl.setAttribute('aria-current','page');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    function backToTasks() {
+      showSection(null,'tareas');
+    }
+
+    // ---------- CARGA ARCHIVOS DESDE GITHUB ----------
     async function openWeek(num) {
-      const weekPath = semanas/semana${num};
-      const apiUrl = \https://api.github.com/repos/${repoUser}/${repoName}/contents/${weekPath}\;
+      document.getElementById('week-title').textContent = 'Semana ' + num;
+      const list = document.getElementById('file-list');
+      list.innerHTML = '<li style="color:var(--muted)">Cargando archivos...</li>';
 
-      document.getElementById("contenido").innerHTML = `
-        <div class="card">
-          <h2>Semana ${num}</h2>
-          <p>Cargando archivos...</p>
-        </div>
-      `;
+      // Setear botón de abrir repo (apunta a la carpeta de la semana)
+      const repoBtn = document.getElementById('open-repo-btn');
+      repoBtn.onclick = () => {
+        window.open(https://github.com/${repoUser}/${repoName}/tree/main/semanas/semana${num}, '_blank');
+      };
 
+      // Llamada GitHub API para listar contenido de la carpeta
+      const url = https://api.github.com/repos/${repoUser}/${repoName}/contents/semanas/semana${num};
       try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error("No se encontraron archivos.");
+        const res = await fetch(url);
+        if (res.status === 404) {
+          list.innerHTML = '<li style="color:var(--muted)">No hay archivos en esta semana (carpeta no encontrada).</li>';
+          showSection(null,'semana');
+          return;
+        }
+        if (!res.ok) throw new Error('Error al leer GitHub API');
 
-        const data = await response.json();
-        let fileList = "<ul>";
-        data.forEach(file => {
-          if (file.type === "file" && !file.name.endsWith(".gitkeep")) {
-            fileList += \<li><a class="file-link" href="\${file.html_url}" target="_blank">\${file.name}</a></li>\;
-          }
-        });
-        fileList += "</ul>";
-
-        document.getElementById("contenido").innerHTML = `
-          <div class="card">
-            <h2>Semana ${num}</h2>
-            <h3>Archivos</h3>
-            ${fileList || "<p>No hay archivos en esta semana.</p>"}
-            <button onclick="window.open('https://github.com/${repoUser}/${repoName}/tree/main/${weekPath}', '_blank')">Ver contenido en GitHub</button>
-            <button onclick="showTareas()">← Volver a Tareas</button>
-          </div>
-        `;
+        const data = await res.json();
+        // data es array de objetos {name, path, html_url, type,...}
+        const files = (Array.isArray(data) ? data.filter(f => f.type === 'file' && !f.name.startsWith('.')) : []);
+        if (files.length === 0) {
+          list.innerHTML = '<li style="color:var(--muted)">No hay archivos en esta semana.</li>';
+        } else {
+          list.innerHTML = '';
+          files.forEach(f => {
+            const li = document.createElement('li');
+            li.innerHTML = <i class="fas fa-file"></i> <a class="file-link" href="${f.html_url}" target="_blank" rel="noopener">${f.name}</a>;
+            list.appendChild(li);
+          });
+        }
       } catch (err) {
-        document.getElementById("contenido").innerHTML = `
-          <div class="card">
-            <h2>Semana ${num}</h2>
-            <p>Error al cargar archivos: ${err.message}</p>
-            <button onclick="showTareas()">← Volver a Tareas</button>
-          </div>
-        `;
+        list.innerHTML = <li style="color:tomato">Error al cargar archivos. Revisa la estructura del repo o espera unos segundos.</li>;
+        console.error(err);
       }
+
+      showSection(null,'semana');
     }
 
-    // Muestra la pantalla de inicio al cargar
-    showInicio();
+    // Inicial: mostrar inicio
+    showSection(null,'inicio');
   </script>
 </body>
 </html>
