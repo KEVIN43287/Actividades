@@ -27,7 +27,7 @@
     .header-center .uni{margin-top:6px;color:var(--muted);font-size:13px}
     .header-center .name{margin-top:4px;color:var(--accent);font-weight:700}
     nav.header-nav{display:flex;gap:12px}
-    nav.header-nav a{color:var(--accent);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600}
+    nav.header-nav a{color:var(--accent);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;cursor:pointer}
     nav.header-nav a[aria-current="page"]{background:var(--border);color:var(--text)}
     main{max-width:1100px;margin:26px auto;padding:18px}
     .panel{background:var(--panel);padding:20px;border-radius:10px;border:1px solid var(--border)}
@@ -48,15 +48,15 @@
 </head>
 <body>
   <header>
-    <div class="header-left"><img src="upla.PNG" alt="Logo UPLA"></div>
+    <div class="header-left"><img src="upla.PNG" alt="Logo UPLA" id="logo"></div>
     <div class="header-center">
       <h1>BASE DE DATOS 2</h1>
       <div class="uni">Universidad Peruana Los Andes</div>
       <div class="name">Kevin Alfredo Macha Bruno</div>
     </div>
     <nav class="header-nav">
-      <a href="#" id="nav-inicio" aria-current="page">Inicio</a>
-      <a href="#" id="nav-tareas">Tareas</a>
+      <a id="nav-inicio">Inicio</a>
+      <a id="nav-tareas">Tareas</a>
     </nav>
   </header>
 
@@ -71,24 +71,24 @@
     <section id="tareas" class="panel" style="display:none">
       <h2>Tareas - Semanas</h2>
       <div class="grid" id="weeksGrid">
-        <!-- 13 semanas (2 por fila) -->
-        <div class="card" onclick="openWeek(1)"><h3>Semana 1</h3><p>Manual y guía</p></div>
-        <div class="card" onclick="openWeek(2)"><h3>Semana 2</h3><p>Ejemplo y guía MySQL</p></div>
-        <div class="card" onclick="openWeek(3)"><h3>Semana 3</h3><p>Informe comparativa</p></div>
-        <div class="card" onclick="openWeek(4)"><h3>Semana 4</h3><p>-</p></div>
-        <div class="card" onclick="openWeek(5)"><h3>Semana 5</h3><p>-</p></div>
-        <div class="card" onclick="openWeek(6)"><h3>Semana 6</h3><p>-</p></div>
-        <div class="card" onclick="openWeek(7)"><h3>Semana 7</h3><p>-</p></div>
-        <div class="card" onclick="openWeek(8)"><h3>Semana 8</h3><p>-</p></div>
-        <div class="card" onclick="openWeek(9)"><h3>Semana 9</h3><p>-</p></div>
-        <div class="card" onclick="openWeek(10)"><h3>Semana 10</h3><p>-</p></div>
-        <div class="card" onclick="openWeek(11)"><h3>Semana 11</h3><p>-</p></div>
-        <div class="card" onclick="openWeek(12)"><h3>Semana 12</h3><p>-</p></div>
-        <div class="card" onclick="openWeek(13)"><h3>Semana 13</h3><p>-</p></div>
+        <!-- tarjetas (2 por fila) -->
+        <div class="card" data-week="1"><h3>Semana 1</h3><p>Manual y guía</p></div>
+        <div class="card" data-week="2"><h3>Semana 2</h3><p>Ejemplo y guía MySQL</p></div>
+        <div class="card" data-week="3"><h3>Semana 3</h3><p>Informe comparativa</p></div>
+        <div class="card" data-week="4"><h3>Semana 4</h3><p>-</p></div>
+        <div class="card" data-week="5"><h3>Semana 5</h3><p>-</p></div>
+        <div class="card" data-week="6"><h3>Semana 6</h3><p>-</p></div>
+        <div class="card" data-week="7"><h3>Semana 7</h3><p>-</p></div>
+        <div class="card" data-week="8"><h3>Semana 8</h3><p>-</p></div>
+        <div class="card" data-week="9"><h3>Semana 9</h3><p>-</p></div>
+        <div class="card" data-week="10"><h3>Semana 10</h3><p>-</p></div>
+        <div class="card" data-week="11"><h3>Semana 11</h3><p>-</p></div>
+        <div class="card" data-week="12"><h3>Semana 12</h3><p>-</p></div>
+        <div class="card" data-week="13"><h3>Semana 13</h3><p>-</p></div>
       </div>
     </section>
 
-    <!-- SEMANA (visor) -->
+    <!-- SEMANA / VISOR -->
     <section id="semana" class="panel" style="display:none">
       <h2 id="weekTitle">Semana</h2>
       <div id="fileList" class="file-list">Selecciona un archivo para visualizarlo aquí.</div>
@@ -97,17 +97,18 @@
 
       <div class="controls">
         <button class="btn" id="openRepoBtn">Ir al repositorio</button>
-        <button class="btn ghost" onclick="backToTasks()">Volver a Tareas</button>
+        <button class="btn ghost" id="backBtn">Volver a Tareas</button>
       </div>
     </section>
   </main>
 
   <script>
-    // --- CONFIG (NO toques) ---
+    // ---- CONFIG: no modifiques estos valores ----
     const USER = "KEVIN43287";
     const REPO = "Actividades";
-    const BASE_PAGES = https://${USER}.github.io/${REPO}; // GitHub Pages base
-    // Archivos que me proporcionaste (nombres exactos)
+    const BASE_PAGES = https://${USER}.github.io/${REPO};
+
+    // archivos que me diste (nombres exactos; ya codificados espacios)
     const filesByWeek = {
       1: [
         "Semana1/Manual%20de%20como%20subir%20pagina%20web%20a%20Githlub.pdf",
@@ -120,92 +121,100 @@
       3: [
         "Semana3/Informe_%20Comparativa_Arquitecturas.pdf"
       ]
-      // semanas 4..13: sin archivos (vacío)
+      // 4..13: vacío por ahora
     };
+
+    // estado
     let currentWeek = 0;
 
-    // Navegación simple: muestra secciones
-    function showSection(id){
+    // helper: mostrar sección
+    function showSectionId(id) {
       document.querySelectorAll('main > section').forEach(s => s.style.display = 'none');
       const el = document.getElementById(id);
       if (el) el.style.display = 'block';
-      // actualizar nav visual
+
+      // marcar nav activo
       document.querySelectorAll('nav.header-nav a').forEach(a => a.removeAttribute('aria-current'));
       if (id === 'inicio') document.getElementById('nav-inicio').setAttribute('aria-current','page');
       if (id === 'tareas') document.getElementById('nav-tareas').setAttribute('aria-current','page');
-      window.scrollTo({top:0,behavior:'smooth'});
     }
 
-    // Abrir semana: lista archivos y permite verlos
-    function openWeek(n){
+    // arrancar: asignar listeners de nav y tarjetas
+    (function init(){
+      // nav
+      document.getElementById('nav-inicio').addEventListener('click', (e)=>{ e.preventDefault(); showSectionId('inicio'); });
+      document.getElementById('nav-tareas').addEventListener('click', (e)=>{ e.preventDefault(); showSectionId('tareas'); });
+
+      // tarjetas semanas: cada .card con data-week
+      document.querySelectorAll('.card').forEach(card=>{
+        const w = card.getAttribute('data-week');
+        card.addEventListener('click', ()=> openWeek(Number(w)));
+      });
+
+      document.getElementById('backBtn').addEventListener('click', ()=> showSectionId('tareas'));
+
+      // openRepo button
+      document.getElementById('openRepoBtn').addEventListener('click', ()=>{
+        if (!currentWeek) return;
+        const repoUrl = https://github.com/${USER}/${REPO}/tree/main/Semana${currentWeek};
+        window.open(repoUrl, '_blank');
+      });
+
+      // mostrar por defecto la sección "tareas"
+      showSectionId('tareas');
+    })();
+
+    // abrir semana: listar archivos y preparar visor
+    function openWeek(n) {
       currentWeek = n;
-      document.getElementById('weekTitle').textContent = 'Semana ' + n;
+      document.getElementById('weekTitle').textContent = Semana ${n};
       const fileList = document.getElementById('fileList');
-      fileList.innerHTML = '';
-      document.getElementById('viewer').style.display = 'none';
-      document.getElementById('viewer').src = '';
+      fileList.innerHTML = ''; // limpiar
+      const viewer = document.getElementById('viewer');
+      viewer.style.display = 'none';
+      viewer.src = '';
 
       const arr = filesByWeek[n] || [];
       if (arr.length === 0) {
         fileList.innerHTML = "<p class='note'>No hay archivos cargados para esta semana.</p>";
       } else {
-        arr.forEach((path, idx) => {
-          // Mostrar nombre legible (decodificar)
+        arr.forEach(path => {
           const name = decodeURIComponent(path.split('/').pop());
           const a = document.createElement('a');
           a.href = '#';
           a.textContent = name;
-          a.onclick = (e) => { e.preventDefault(); viewFile(path); };
+          a.addEventListener('click', function(e){
+            e.preventDefault();
+            viewFile(path);
+          });
           fileList.appendChild(a);
         });
       }
 
-      // configurar botón repo para abrir carpeta en GitHub (vista código)
-      const repoBtn = document.getElementById('openRepoBtn');
-      repoBtn.onclick = () => {
-        const folder = https://github.com/${USER}/${REPO}/tree/main/Semana${n};
-        window.open(folder, '_blank');
-      };
-
-      showSection('semana');
+      showSectionId('semana');
     }
 
-    // Mostrar archivo en iframe usando GitHub Pages raw URL (no API)
-    function viewFile(path){
-      // Try to load via GitHub Pages URL (works if files are published)
+    // cargar archivo en iframe via GitHub Pages (estable)
+    function viewFile(path) {
       const url = ${BASE_PAGES}/${path};
       const viewer = document.getElementById('viewer');
-
-      // decide cómo mostrar según extensión
       const ext = path.split('.').pop().toLowerCase();
+
       if (['pdf','png','jpg','jpeg','gif','svg','html','htm','txt','md'].includes(ext)) {
         viewer.src = url;
         viewer.style.display = 'block';
         viewer.scrollIntoView({behavior:'smooth'});
       } else if (['docx','xlsx','pptx','doc','xls','ppt'].includes(ext)) {
-        // usar Google Viewer para docs (si GitHub Pages permite acceso público)
-        const g = https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true;
-        viewer.src = g;
+        const google = https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true;
+        viewer.src = google;
         viewer.style.display = 'block';
         viewer.scrollIntoView({behavior:'smooth'});
       } else {
-        // fallback
         viewer.src = url;
         viewer.style.display = 'block';
         viewer.scrollIntoView({behavior:'smooth'});
       }
     }
-
-    function backToTasks(){
-      showSection('tareas');
-    }
-
-    // Enlaces del header
-    document.getElementById('nav-inicio').addEventListener('click', (e)=>{ e.preventDefault(); showSection('inicio'); });
-    document.getElementById('nav-tareas').addEventListener('click', (e)=>{ e.preventDefault(); showSection('tareas'); });
-
-    // Al iniciar, mostramos Tareas (como querías antes)
-    showSection('tareas');
   </script>
 </body>
 </html>
