@@ -1,171 +1,180 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BASE DE DATOS II - Actividades</title>
-<style>
-  body {
-    margin: 0;
-    background-color: #000;
-    color: #e0ffe0;
-    font-family: "Poppins", sans-serif;
-  }
-  header {
-    background-color: #0c0c0c;
-    color: #00ff99;
-    padding: 15px;
-    text-align: center;
-    border-bottom: 2px solid #00ff99;
-  }
-  header h1 {
-    margin: 0;
-  }
-  header p {
-    margin: 4px 0;
-    color: #b3ffcc;
-  }
-  main {
-    padding: 20px;
-    text-align: center;
-  }
-  .weeks {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 12px;
-    margin-top: 20px;
-  }
-  button {
-    background-color: #00ff99;
-    border: none;
-    color: #000;
-    padding: 8px 14px;
-    border-radius: 6px;
-    font-weight: 700;
-    cursor: pointer;
-  }
-  button:hover {
-    background-color: #aaffcc;
-  }
-  a {
-    color: #00ff99;
-    text-decoration: none;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
-  iframe {
-    width: 100%;
-    height: 600px;
-    border: none;
-    border-radius: 8px;
-    margin-top: 10px;
-    display: none;
-  }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BASE DE DATOS 2 - Actividades</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg:#0f1110;
+      --panel:#161616;
+      --accent:#00ff88;
+      --muted:#b9e6c4;
+      --text:#e9efe8;
+      --card-border: rgba(0,255,136,0.12);
+    }
+    *{box-sizing:border-box}
+    body {
+      margin:0;
+      font-family:"Poppins", Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+    header {
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      align-items:center;
+      gap:20px;
+      padding:18px 26px;
+      background:#0b0b0b;
+    }
+    .header-left img {height:72px;border-radius:8px;}
+    .header-center {text-align:center;}
+    .header-center h1{margin:0;font-size:22px;color:var(--text);}
+    .header-center .uni{font-size:13px;color:var(--muted);}
+    .header-center .name{font-size:14px;font-weight:600;color:var(--accent);}
+    nav.header-nav{display:flex;gap:12px;}
+    nav.header-nav a{
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:600;
+      padding:8px 12px;
+      border-radius:8px;
+    }
+    nav.header-nav a[aria-current="page"]{
+      background:rgba(0,255,136,0.08);
+      color:var(--text);
+    }
+    main {max-width:1000px;margin:28px auto;padding:0 18px;}
+    .panel {
+      background:var(--panel);
+      border-radius:12px;
+      padding:22px;
+      border:1px solid var(--card-border);
+    }
+    h2{color:var(--accent);}
+    .tasks-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:18px;
+      margin-top:20px;
+    }
+    .task-card {
+      background:#111;
+      border:1px solid var(--card-border);
+      border-radius:12px;
+      padding:18px;
+      text-align:center;
+      cursor:pointer;
+      transition:.3s;
+    }
+    .task-card:hover {
+      border-color:var(--accent);
+      transform:translateY(-5px);
+    }
+    .task-icon{font-size:28px;color:var(--accent);}
+    .task-num{font-size:24px;font-weight:700;}
+    .task-label{font-weight:600;}
+
+    .section {display:none;}
+    .section.active{display:block;}
+    iframe {
+      width:100%;
+      height:500px;
+      border:none;
+      margin-top:15px;
+      border-radius:8px;
+      background:#000;
+    }
+    button {
+      margin-top:14px;
+      background:var(--accent);
+      border:none;
+      border-radius:8px;
+      padding:8px 12px;
+      font-weight:600;
+      cursor:pointer;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>BASE DE DATOS II</h1>
-    <p>Universidad Peruana Los Andes - Kevin Alfredo Macha Bruno</p>
+    <div class="header-left"><img src="upla.PNG" alt="Logo"></div>
+    <div class="header-center">
+      <h1>BASE DE DATOS 2</h1>
+      <div class="uni">Universidad Peruana Los Andes</div>
+      <div class="name">Kevin Alfredo Macha Bruno</div>
+    </div>
+    <nav class="header-nav">
+      <a href="#" aria-current="page" onclick="showSection(event,'inicio')">Inicio</a>
+      <a href="#" onclick="showSection(event,'tareas')">Tareas</a>
+    </nav>
   </header>
 
   <main>
-    <h2>Selecciona una Semana</h2>
-    <div class="weeks" id="weeks"></div>
-
-    <div id="viewerSection" style="display:none;">
-      <h2 id="weekTitle"></h2>
-      <div id="fileList"></div>
-      <iframe id="viewer"></iframe>
-      <div style="margin-top:12px;">
-        <button id="repoBtn">Ir al repositorio</button>
-        <button onclick="backToWeeks()">Volver</button>
+    <section id="inicio" class="section active">
+      <div class="panel">
+        <h2>Bienvenido</h2>
+        <p>Bienvenido al portal de <strong>Base de Datos 2</strong>. Aquí podrás ver las tareas de cada semana y acceder directamente al repositorio correspondiente.</p>
       </div>
-    </div>
+    </section>
+
+    <section id="tareas" class="section">
+      <div class="panel">
+        <h2>Tareas por Semana</h2>
+        <div class="tasks-grid" id="tasks-grid"></div>
+      </div>
+    </section>
+
+    <section id="semana" class="section">
+      <div class="panel">
+        <h2 id="week-title">Semana</h2>
+        <iframe id="week-frame"></iframe>
+        <button id="repo-btn">Ir al repositorio</button>
+        <br><br>
+        <button onclick="backToTasks()">← Volver a Tareas</button>
+      </div>
+    </section>
   </main>
 
   <script>
-    const USER = "KEVIN43287";
-    const REPO = "Actividades";
-    const TOTAL_WEEKS = 16;
-    const weeksDiv = document.getElementById("weeks");
-    const viewerSection = document.getElementById("viewerSection");
-    const fileList = document.getElementById("fileList");
-    const viewer = document.getElementById("viewer");
-    const weekTitle = document.getElementById("weekTitle");
-    const repoBtn = document.getElementById("repoBtn");
+    const totalSemanas = 13; // Ajusta según tus carpetas
+    const repoBase = "https://github.com/KEVIN43287/Actividades/tree/main/";
+    const pageBase = "https://kevin43287.github.io/Actividades/";
 
-    // Crear botones de semanas
-    for (let i = 1; i <= TOTAL_WEEKS; i++) {
-      const btn = document.createElement("button");
-      btn.textContent = `Semana ${i}`;
-      btn.onclick = () => openWeek(i);
-      weeksDiv.appendChild(btn);
+    const grid = document.getElementById("tasks-grid");
+    for(let i=1;i<=totalSemanas;i++){
+      const card=document.createElement("div");
+      card.className="task-card";
+      card.innerHTML=`<div class="task-icon"><i class="fas fa-folder"></i></div>
+                      <div class="task-num">${i.toString().padStart(2,'0')}</div>
+                      <div class="task-label">Semana ${i}</div>`;
+      card.onclick=()=>openWeek(i);
+      grid.appendChild(card);
     }
 
-    function backToWeeks() {
-      viewerSection.style.display = "none";
-      weeksDiv.style.display = "grid";
+    function showSection(evt,id){
+      if(evt) evt.preventDefault();
+      document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      document.querySelectorAll("nav a").forEach(a=>a.removeAttribute("aria-current"));
+      if(evt) evt.target.setAttribute("aria-current","page");
     }
 
-    function openWeek(n) {
-      const folder = `Semana${n}`;
-      const folderURL = `https://${USER}.github.io/${REPO}/${folder}/`;
-      repoBtn.onclick = () => window.open(`https://github.com/${USER}/${REPO}/tree/main/${folder}`, "_blank");
-
-      weekTitle.textContent = `Semana ${n}`;
-      fileList.innerHTML = "Cargando archivos...";
-      weeksDiv.style.display = "none";
-      viewerSection.style.display = "block";
-      viewer.style.display = "none";
-
-      fetch(folderURL)
-        .then(r => r.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, "text/html");
-          const links = [...doc.querySelectorAll("a")];
-          const files = links
-            .map(a => a.getAttribute("href"))
-            .filter(h => h && !h.includes(".gitkeep") && !h.startsWith("?") && !h.startsWith("/"));
-
-          if (files.length === 0) {
-            fileList.innerHTML = `<p>No hay archivos en esta semana.</p>`;
-            return;
-          }
-
-          fileList.innerHTML = "";
-          files.forEach(name => {
-            const link = document.createElement("a");
-            link.href = "#";
-            link.textContent = name;
-            link.onclick = (e) => {
-              e.preventDefault();
-              viewFile(folder, name);
-            };
-            fileList.appendChild(link);
-            fileList.appendChild(document.createElement("br"));
-          });
-        })
-        .catch(() => {
-          fileList.innerHTML = `<p>Error al cargar los archivos. Asegúrate de que la carpeta "${folder}" esté publicada.</p>`;
-        });
+    function openWeek(num){
+      document.getElementById("week-title").textContent=Semana ${num};
+      const frame=document.getElementById("week-frame");
+      frame.src=${pageBase}Semana${num}/;
+      const repoBtn=document.getElementById("repo-btn");
+      repoBtn.onclick=()=>window.open(${repoBase}Semana${num},"_blank");
+      showSection(null,"semana");
     }
 
-    function viewFile(folder, name) {
-      const url = `https://${USER}.github.io/${REPO}/${folder}/${name}`;
-      const ext = name.split(".").pop().toLowerCase();
-
-      if (["pdf", "png", "jpg", "jpeg", "gif", "svg", "html", "htm"].includes(ext)) {
-        viewer.src = url;
-      } else if (["docx", "pptx", "xlsx"].includes(ext)) {
-        viewer.src = `https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`;
-      } else {
-        viewer.src = url;
-      }
-      viewer.style.display = "block";
-    }
+    function backToTasks(){showSection(null,"tareas");}
   </script>
 </body>
 </html>
