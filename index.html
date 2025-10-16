@@ -18,6 +18,7 @@
       --text:#e9efe8;
       --card-border: rgba(0,255,136,0.12);
     }
+
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
@@ -27,6 +28,8 @@
       color:var(--text);
       line-height:1.5;
     }
+
+    /* HEADER */
     header{
       display:grid;
       grid-template-columns: auto 1fr auto;
@@ -35,16 +38,39 @@
       padding:18px 26px;
       background:#0b0b0b;
     }
+
     .header-left img{
       height:72px; width:auto;
       display:block;
       border-radius:8px;
     }
-    .header-center{text-align:center;}
-    .header-center h1{margin:0;font-size:22px;text-transform:uppercase;color:var(--text);}
-    .header-center .uni{margin-top:6px;font-size:13px;color:var(--muted);}
-    .header-center .name{margin-top:4px;font-size:14px;font-weight:600;color:var(--accent);}
-    nav.header-nav{display:flex;gap:12px;justify-self:end;}
+
+    .header-center{
+      text-align:center;
+    }
+    .header-center h1{
+      margin:0;
+      font-size:22px;
+      text-transform:uppercase;
+      color:var(--text);
+    }
+    .header-center .uni{
+      margin-top:6px;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .header-center .name{
+      margin-top:4px;
+      font-size:14px;
+      font-weight:600;
+      color:var(--accent);
+    }
+
+    nav.header-nav{
+      display:flex;
+      gap:12px;
+      justify-self:end;
+    }
     nav.header-nav a{
       color:var(--accent);
       text-decoration:none;
@@ -62,7 +88,13 @@
       color:var(--text);
       background: rgba(0,255,136,0.06);
     }
-    main{max-width:1100px;margin:28px auto;padding:0 18px 60px;}
+
+    main{
+      max-width:1100px;
+      margin:28px auto;
+      padding:0 18px 60px;
+    }
+
     .panel{
       background:var(--panel);
       border-radius:12px;
@@ -70,14 +102,17 @@
       box-shadow: 0 10px 32px rgba(0,0,0,0.6);
       border:1px solid var(--card-border);
     }
+
     h2{margin:0 0 14px 0;color:var(--accent);font-size:20px}
     .welcome p{color:#dfeee2;margin:12px 0}
+
     .tasks-grid{
       margin-top:18px;
       display:grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap:18px;
     }
+
     .task-card{
       display:flex;
       flex-direction:column;
@@ -103,25 +138,42 @@
     .task-icon{font-size:28px;color:var(--accent)}
     .task-num{font-size:28px;font-weight:700;color:var(--text)}
     .task-label{font-weight:600;color:var(--text)}
-    .section{display:none;opacity:0;transform: translateY(10px);transition: opacity 0.5s ease, transform 0.5s ease;}
-    .section.active{display:block;opacity:1;transform: translateY(0);}
-    .file-list{list-style:none;padding:0;margin:0;}
-    .file-list li{padding:6px 0;}
-    @media (max-width:520px){
-      .tasks-grid{ grid-template-columns:1fr; }
-      header{ grid-template-columns: 1fr; row-gap:12px; text-align:center; }
-      nav.header-nav{ justify-self:center; }
+
+    .file-section{
+      margin-top:20px;
     }
-    .repo-button{
-      margin-top:10px;
-      padding:6px 12px;
-      background:var(--accent);
+    .file-section h3{
+      color:var(--accent);
+      font-size:18px;
+      margin-bottom:10px;
+    }
+    .file-list{
+      list-style:none;
+      padding:0;
+      margin:0;
+    }
+    .file-list li{
+      background:#222;
+      padding:8px 12px;
+      border-radius:6px;
+      margin-bottom:6px;
+    }
+    .file-list a{
+      color:var(--accent);
+      text-decoration:none;
+    }
+    .file-list button{
+      margin-left:10px;
+      background:#00ff88;
       color:#000;
       border:none;
       border-radius:6px;
+      padding:4px 8px;
       cursor:pointer;
-      font-weight:600;
     }
+
+    .section{display:none;opacity:0;transform: translateY(10px);transition: opacity 0.5s ease, transform 0.5s ease;}
+    .section.active{display:block;opacity:1;transform: translateY(0);}
   </style>
 </head>
 <body>
@@ -141,6 +193,7 @@
   </header>
 
   <main>
+    <!-- INICIO -->
     <section id="inicio" class="section active">
       <div class="panel">
         <h2>Bienvenido</h2>
@@ -150,66 +203,48 @@
       </div>
     </section>
 
+    <!-- TAREAS -->
     <section id="tareas" class="section">
       <div class="panel">
         <h2>Tareas - Semanas</h2>
-        <div class="tasks-grid" id="tasks-grid">
-          <!-- SEMANAS 1-16 generadas por JS -->
+        <div class="tasks-grid" id="weeks-container">
+          <!-- Aquí se crearán automáticamente las semanas -->
         </div>
       </div>
     </section>
 
+    <!-- SEMANA -->
     <section id="semana" class="section">
       <div class="panel">
         <h2 id="week-title">Semana</h2>
-        <ul class="file-list" id="file-list"></ul>
-        <button class="repo-button" id="repo-button">Ir al repositorio</button>
-        <button class="repo-button" onclick="showSection(null,'tareas')">← Volver a Tareas</button>
+        <div class="file-section">
+          <h3>Archivos de la semana</h3>
+          <ul id="file-list" class="file-list"></ul>
+          <button id="btn-repo" onclick="">Ir al repositorio</button>
+        </div>
+        <button onclick="showSection(null,'tareas')">← Volver a Tareas</button>
       </div>
     </section>
   </main>
 
-<script>
-const user = "KEVIN43287";
-const repo = "Actividades";
-const tasksGrid = document.getElementById("tasks-grid");
-const semanaSection = document.getElementById("semana");
-const fileList = document.getElementById("file-list");
-const repoButton = document.getElementById("repo-button");
-let currentWeek = null;
+  <script>
+    const username = 'KEVIN43287';
+    const repo = 'Actividades';
+    const weeks = 16;
 
-function showSection(evt,id){
-  if(evt) evt.preventDefault();
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('nav.header-nav a').forEach(a=>a.removeAttribute('aria-current'));
-  if(document.getElementById('nav-'+id)){
-    document.getElementById('nav-'+id).setAttribute('aria-current','page');
-  }
-  window.scrollTo({top:0,behavior:'smooth'});
-}
+    function showSection(evt, id) {
+      if(evt) evt.preventDefault();
+      document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('nav.header-nav a').forEach(a=>a.removeAttribute('aria-current'));
+      if(document.getElementById('nav-' + id)) document.getElementById('nav-'+id).setAttribute('aria-current','page');
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
 
-// Crear tarjetas de semanas
-for(let i=1;i<=16;i++){
-  const card = document.createElement("div");
-  card.className="task-card";
-  card.innerHTML=`<div class="task-icon"><i class="fas fa-folder"></i></div>
-                  <div class="task-num">${i.toString().padStart(2,"0")}</div>
-                  <div class="task-label">Semana ${i}</div>`;
-  card.onclick = ()=>openWeek(i);
-  tasksGrid.appendChild(card);
-}
-
-function openWeek(week){
-  currentWeek = week;
-  document.getElementById("week-title").textContent="Semana "+week;
-  showSection(null,"semana");
-  loadFiles(week);
-}
-
-// Cargar archivos desde GitHub
-async function loadFiles(week){
-  fileList.innerHTML="<li>Cargando archivos...</li>";
-  const path = Semana${week};
-  try{
-    const res = await fetch(`https
+    function openWeek(weekNum){
+      document.getElementById('week-title').textContent = 'Semana ' + weekNum;
+      showSection(null,'semana');
+      const fileList = document.getElementById('file-list');
+      fileList.innerHTML = '';
+      // Crear URL de la carpeta de GitHub
+      const baseUrl = `https://github.com/${username}/${repo}/tree/main/Semana
