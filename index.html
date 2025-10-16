@@ -1,216 +1,163 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BASE DE DATOS 2 - Kevin Alfredo Macha Bruno</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+  <title>Actividades - Kevin</title>
   <style>
-    :root {
-      --fondo: #0f1110;
-      --panel: #161616;
-      --resalte: #00ff88;
-      --texto: #e9efe8;
-      --muted: #b5c4b8;
-      --borde: rgba(0,255,136,0.15);
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7fb;
+      margin: 0;
+      padding: 0;
     }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{background:var(--fondo);color:var(--texto);font-family:'Poppins',sans-serif}
 
-    /* HEADER */
-    header{
-      display:grid;
-      grid-template-columns:auto 1fr auto;
-      align-items:center;
-      padding:18px 28px;
-      background:#0b0b0b;
-      border-bottom:1px solid rgba(255,255,255,0.1);
+    header {
+      background-color: #002b5c;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
     }
-    .header-left img{height:70px;border-radius:8px}
-    .header-center{text-align:center}
-    .header-center h1{font-size:22px;letter-spacing:1px}
-    .header-center .uni{font-size:13px;color:var(--muted)}
-    .header-center .name{font-size:14px;font-weight:700;color:var(--resalte);margin-top:4px}
-    .header-nav{display:flex;gap:12px}
-    .header-nav a{
-      color:var(--resalte);
-      text-decoration:none;
-      padding:8px 12px;
-      border-radius:8px;
-      font-weight:600;
-      transition:all .2s;
-    }
-    .header-nav a[aria-current="page"]{
-      background:rgba(0,255,136,0.1);
-      color:var(--texto);
-    }
-    .header-nav a:hover{background:rgba(0,255,136,0.1);color:var(--texto)}
 
-    main{max-width:1100px;margin:28px auto;padding:0 16px 60px}
-    .panel{
-      background:var(--panel);
-      border:1px solid var(--borde);
-      border-radius:12px;
-      padding:22px;
-      box-shadow:0 0 20px rgba(0,0,0,0.4);
+    header img {
+      height: 60px;
     }
-    h2{color:var(--resalte);margin-bottom:14px}
 
-    /* GRID SEMANAS */
-    .tasks-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:18px;
+    nav a {
+      color: white;
+      margin-left: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
     }
-    .task-card{
-      background:#1d1d1d;
-      border:1px solid var(--borde);
-      border-radius:10px;
-      text-align:center;
-      padding:20px;
-      transition:transform .2s,box-shadow .2s,border .2s;
-      cursor:pointer;
-    }
-    .task-card:hover{
-      transform:translateY(-6px);
-      border-color:var(--resalte);
-      box-shadow:0 6px 18px rgba(0,255,136,0.2);
-    }
-    .task-card .icon{font-size:26px;color:var(--resalte);margin-bottom:8px}
-    .task-card .num{font-size:26px;font-weight:700}
-    .task-card .label{color:var(--muted);font-weight:600}
 
-    /* SECCIONES */
-    .section{display:none;opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s}
-    .section.active{display:block;opacity:1;transform:translateY(0)}
-    .file-list{list-style:none;padding:0}
-    .file-list li{
-      background:#222;
-      margin-bottom:8px;
-      padding:10px 12px;
-      border-radius:6px;
-      display:flex;
-      align-items:center;
-      gap:10px;
+    nav a:hover {
+      color: #00aaff;
     }
-    .file-list a{color:var(--resalte);text-decoration:none;font-weight:600}
-    .btn{
-      background:transparent;
-      border:1px solid var(--borde);
-      color:var(--muted);
-      padding:8px 12px;
-      border-radius:8px;
-      cursor:pointer;
-      margin-top:10px;
-      margin-right:8px;
-      transition:.2s;
+
+    .title {
+      text-align: center;
     }
-    .btn:hover{background:rgba(0,255,136,0.1);color:var(--texto)}
-    @media(max-width:600px){.tasks-grid{grid-template-columns:1fr}}
+
+    main {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .semanas {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .boton-semana {
+      display: inline-block;
+      background-color: #0056b3;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      margin: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .boton-semana:hover {
+      background-color: #007bff;
+    }
+
+    .contenido {
+      margin-top: 20px;
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: none;
+    }
+
+    .github-btn {
+      display: inline-block;
+      background-color: #24292e;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      margin-top: 15px;
+      text-decoration: none;
+    }
+
+    .github-btn:hover {
+      background-color: #0366d6;
+    }
   </style>
 </head>
 <body>
-<header>
-  <div class="header-left"><img src="upla.PNG" alt="UPLA"></div>
-  <div class="header-center">
-    <h1>BASE DE DATOS 2</h1>
-    <div class="uni">Universidad Peruana Los Andes</div>
-    <div class="name">Kevin Alfredo Macha Bruno</div>
-  </div>
-  <nav class="header-nav">
-    <a href="#" id="nav-inicio" aria-current="page" onclick="showSection(event,'inicio')">Inicio</a>
-    <a href="#" id="nav-tareas" onclick="showSection(event,'tareas')">Tareas</a>
-  </nav>
-</header>
+  <header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Logo_universidad.png" alt="Logo Universidad">
+    <div class="title">
+      <h1>BASE DE DATOS - UNIVERSIDAD</h1>
+      <p>Kevin Alfredo Macha Bruno</p>
+    </div>
+    <nav>
+      <a href="#" id="inicio">Inicio</a>
+      <a href="#" id="tareas">Tareas</a>
+    </nav>
+  </header>
 
-<main>
-  <!-- INICIO -->
-  <section id="inicio" class="section active">
-    <div class="panel">
+  <main>
+    <section id="inicio-section">
       <h2>Bienvenido</h2>
-      <p>Hola, este es el portal del curso <strong>Base de Datos 2</strong>.</p>
-      <p>Pulsa <strong>Tareas</strong> para ver las semanas del curso.</p>
-    </div>
-  </section>
+      <p>Aquí podrás visualizar todas las semanas y actividades desarrolladas del curso.</p>
+    </section>
 
-  <!-- TAREAS -->
-  <section id="tareas" class="section">
-    <div class="panel">
-      <h2>Tareas - Semanas</h2>
-      <div id="weeksGrid" class="tasks-grid"></div>
-    </div>
-  </section>
+    <section id="tareas-section" class="semanas">
+      <h2>Selecciona una Semana</h2>
+      <div id="botones-semanas"></div>
+      <div id="contenido-semana" class="contenido"></div>
+    </section>
+  </main>
 
-  <!-- SEMANA -->
-  <section id="semana" class="section">
-    <div class="panel">
-      <h2 id="week-title">Semana</h2>
-      <ul id="file-list" class="file-list"><li>Cargando...</li></ul>
-      <button class="btn" id="open-repo-btn">Ver contenido en GitHub</button>
-      <button class="btn" onclick="showSection(null,'tareas')">← Volver a Tareas</button>
-    </div>
-  </section>
-</main>
+  <script>
+    const tareasBtn = document.getElementById('tareas');
+    const inicioBtn = document.getElementById('inicio');
+    const inicioSection = document.getElementById('inicio-section');
+    const tareasSection = document.getElementById('tareas-section');
+    const botonesSemanas = document.getElementById('botones-semanas');
+    const contenidoSemana = document.getElementById('contenido-semana');
 
-<script>
-  const repoUser = "KEVIN43287";
-  const repoName = "Actividades";
-  const WEEKS = 16;
+    // Tu usuario GitHub (ajusta si cambia el nombre del repo)
+    const usuario = "KEVIN43287";
+    const repo = "Actividades";
 
-  // crear tarjetas
-  const grid = document.getElementById('weeksGrid');
-  for(let i=1;i<=WEEKS;i++){
-    const card=document.createElement('div');
-    card.className='task-card';
-    card.innerHTML=`<div class="icon"><i class="fas fa-folder-open"></i></div>
-      <div class="num">${String(i).padStart(2,'0')}</div>
-      <div class="label">Semana ${i}</div>`;
-    card.addEventListener('click',()=>openWeek(i));
-    grid.appendChild(card);
-  }
-
-  function showSection(e,id){
-    if(e)e.preventDefault();
-    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-    const el=document.getElementById(id);
-    if(el)el.classList.add('active');
-    document.querySelectorAll('.header-nav a').forEach(a=>a.removeAttribute('aria-current'));
-    const nav=document.getElementById('nav-'+id);
-    if(nav)nav.setAttribute('aria-current','page');
-    window.scrollTo({top:0,behavior:'smooth'});
-  }
-
-  async function openWeek(num){
-    showSection(null,'semana');
-    document.getElementById('week-title').textContent='Semana '+num;
-    const fileList=document.getElementById('file-list');
-    fileList.innerHTML='<li>Cargando archivos...</li>';
-    const repoBtn=document.getElementById('open-repo-btn');
-    repoBtn.onclick=()=>window.open(https://github.com/${repoUser}/${repoName}/tree/main/semanas/semana${num},'_blank');
-
-    const url=https://api.github.com/repos/${repoUser}/${repoName}/contents/semanas/semana${num};
-    try{
-      const res=await fetch(url);
-      if(res.status===404){
-        fileList.innerHTML='<li>No hay archivos en esta semana.</li>';
-        return;
-      }
-      const data=await res.json();
-      const files=Array.isArray(data)?data.filter(f=>f.type==='file'):[];
-      if(!files.length){fileList.innerHTML='<li>No hay archivos.</li>';return;}
-      fileList.innerHTML='';
-      files.forEach(f=>{
-        const li=document.createElement('li');
-        li.innerHTML=<i class="fas fa-file"></i><a href="${f.html_url}" target="_blank">${f.name}</a>;
-        fileList.appendChild(li);
-      });
-    }catch(err){
-      fileList.innerHTML='<li>Error al cargar archivos.</li>';
+    // Crear botones de semana automáticamente
+    for (let i = 1; i <= 16; i++) {
+      const btn = document.createElement("div");
+      btn.classList.add("boton-semana");
+      btn.textContent = "Semana " + i;
+      btn.onclick = () => cargarSemana(i);
+      botonesSemanas.appendChild(btn);
     }
-  }
-</script>
+
+    // Mostrar secciones
+    tareasBtn.onclick = () => {
+      inicioSection.style.display = "none";
+      tareasSection.style.display = "block";
+    };
+
+    inicioBtn.onclick = () => {
+      tareasSection.style.display = "none";
+      inicioSection.style.display = "block";
+    };
+
+    // Cargar contenido de la semana
+    function cargarSemana(num) {
+      const urlGitHub = https://github.com/${usuario}/${repo}/tree/main/Semana${num};
+      contenidoSemana.style.display = "block";
+      contenidoSemana.innerHTML = `
+        <h3>Semana ${num}</h3>
+        <p>Aquí aparecerán las actividades de esta semana.</p>
+        <a href="${urlGitHub}" target="_blank" class="github-btn">Ver contenido en GitHub</a>
+      `;
+    }
+  </script>
 </body>
 </html>
