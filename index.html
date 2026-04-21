@@ -56,9 +56,9 @@
     <div class="name">Kevin Alfredo Macha Bruno</div>
   </div>
   <nav class="header-nav">
-    <a href="#" onclick="showSection('inicio')">Inicio</a>
-    <a href="#" onclick="showSection('tareas')">Tareas</a>
-    <a href="#" onclick="showSection('login')">Login</a>
+    <a href="#" onclick="showSection(event,'inicio')">Inicio</a>
+    <a href="#" onclick="showSection(event,'tareas')">Tareas</a>
+    <a href="#" onclick="showSection(event,'login')">Login</a>
   </nav>
 </header>
 
@@ -110,9 +110,13 @@
 const repoUser="KEVIN43287";
 const repoName="Actividades";
 
-function showSection(id){
+function showSection(evt,id){
+  if(evt) evt.preventDefault();
+
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 // UNIDADES
@@ -127,7 +131,7 @@ for(let u=1;u<=4;u++){
 
 // CARGAR SEMANAS
 function loadUnit(u){
-  showSection('weeks-view');
+  showSection(null,'weeks-view');
   const weeks=document.getElementById('weeks');
   weeks.innerHTML="";
   let start=(u-1)*4+1;
@@ -144,7 +148,7 @@ function loadUnit(u){
 
 // CARGAR ARCHIVOS
 async function loadWeek(num){
-  showSection('semana-view');
+  showSection(null,'semana-view');
   document.getElementById('semana-title').innerText="Semana "+num;
 
   const container=document.getElementById('file-container');
