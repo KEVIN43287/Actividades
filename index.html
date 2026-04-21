@@ -23,7 +23,7 @@
     .uni{margin-top:6px;font-size:13px;color:var(--muted);}
     .name{margin-top:4px;font-size:14px;font-weight:600;color:var(--accent);}
     nav.header-nav{display:flex;gap:12px;justify-self:end;}
-    nav.header-nav a{color:var(--accent);text-decoration:none;font-weight:600;padding:8px 12px;border-radius:8px;transition:all .16s ease;}
+    nav.header-nav a{color:var(--accent);text-decoration:none;font-weight:600;padding:8px 12px;border-radius:8px;transition:all .16s ease;cursor:pointer;}
     nav.header-nav a[aria-current="page"]{background:rgba(0,255,136,0.08);color:var(--text);}
     nav.header-nav a:hover{transform:translateY(-3px);color:var(--text);background:rgba(0,255,136,0.06);}
 
@@ -41,6 +41,10 @@
     .file-list a{display:block;color:var(--muted);margin:4px 0;text-decoration:none;}
     .file-list a:hover{color:var(--accent);}
     .repo-btn{margin-top:14px;display:inline-block;padding:8px 14px;background:var(--accent);color:#000;border-radius:8px;text-decoration:none;font-weight:600;}
+    
+    /* Estilos básicos para el login */
+    #login input { display: block; margin-bottom: 10px; padding: 8px; width: 100%; max-width: 300px; background: #222; border: 1px solid var(--accent); color: white; border-radius: 4px; }
+    #login button { padding: 10px 20px; background: var(--accent); border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
 
   </style>
 </head>
@@ -56,9 +60,9 @@
     <div class="name">Kevin Alfredo Macha Bruno</div>
   </div>
   <nav class="header-nav">
-    <a href="#" onclick="showSection(event,'inicio')">Inicio</a>
-    <a href="#" onclick="showSection(event,'tareas')">Tareas</a>
-    <a href="#" onclick="showSection(event,'login')">Login</a>
+    <a onclick="showSection(event,'inicio')">Inicio</a>
+    <a onclick="showSection(event,'tareas')">Tareas</a>
+    <a onclick="showSection(event,'login')">Login</a>
   </nav>
 </header>
 
@@ -74,7 +78,8 @@
 <section id="tareas" class="section">
   <div class="panel">
     <h2>Unidades</h2>
-    <div class="tasks-grid" id="units"></div>
+    <div class="tasks-grid" id="units">
+        </div>
   </div>
 </section>
 
@@ -99,7 +104,7 @@
     <input id="user" placeholder="Usuario">
     <input id="pass" type="password" placeholder="Contraseña">
     <button onclick="login()">Ingresar</button>
-    <p id="error"></p>
+    <p id="login-msg"></p>
   </div>
 </section>
 
@@ -107,81 +112,82 @@
 
 <script>
   const weeksContainer = document.getElementById('weeks');
+  const unitsContainer = document.getElementById('units');
   const repoUser = "KEVIN43287";
   const repoName = "Actividades";
 
-  // CREAR SEMANAS
-  for (let i = 1; i <= 16; i++) {
+  // CREAR LAS 4 UNIDADES
+  for (let u = 1; u <= 4; u++) {
     const card = document.createElement('div');
     card.className = 'task-card';
     card.innerHTML = `
-      <div class="task-icon"><i class="fas fa-database"></i></div>
-      <div class="task-num">${String(i).padStart(2,'0')}</div>
-      <div class="task-label">Semana ${i}</div>
+      <div class="task-icon"><i class="fas fa-folder"></i></div>
+      <div class="task-label">Unidad ${u}</div>
     `;
-    card.onclick = function() {
-      loadWeek(i);
-    };
-    weeksContainer.appendChild(card);
+    card.onclick = () => showWeeksOfUnit(u);
+    unitsContainer.appendChild(card);
   }
 
-  // CAMBIO DE SECCIONES (FIX REAL)
+  function showWeeksOfUnit(unitNum) {
+    document.getElementById('unit-title').textContent = "Semanas de la Unidad " + unitNum;
+    weeksContainer.innerHTML = "";
+    
+    // Cada unidad tiene 4 semanas (Total 16)
+    let start = (unitNum - 1) * 4 + 1;
+    let end = start + 3;
+
+    for (let i = start; i <= end; i++) {
+      const card = document.createElement('div');
+      card.className = 'task-card';
+      card.innerHTML = `
+        <div class="task-icon"><i class="fas fa-database"></i></div>
+        <div class="task-num">${String(i).padStart(2,'0')}</div>
+        <div class="task-label">Semana ${i}</div>
+      `;
+      card.onclick = () => loadWeek(i);
+      weeksContainer.appendChild(card);
+    }
+    showSection(null, 'weeks-view');
+  }
+
   function showSection(e, id) {
     if (e) e.preventDefault();
-
     const sections = document.querySelectorAll('.section');
     sections.forEach(sec => sec.classList.remove('active'));
 
     const target = document.getElementById(id);
     if (target) target.classList.add('active');
-
-    const links = document.querySelectorAll('nav.header-nav a');
-    links.forEach(a => a.removeAttribute('aria-current'));
-
-    const activeLink = document.getElementById('nav-' + id);
-    if (activeLink) activeLink.setAttribute('aria-current', 'page');
   }
 
-  // CARGAR ARCHIVOS DE GITHUB
   async function loadWeek(num) {
-    const weekName = Semana${num};
+    const weekName = "Semana" + num; 
     showSection(null, 'semana-view');
 
-    document.getElementById('semana-title').textContent = Archivos - ${weekName};
-
+    document.getElementById('semana-title').textContent = "Archivos - " + weekName;
     const fileContainer = document.getElementById('file-container');
     const repoLink = document.getElementById('repo-link');
 
-    repoLink.href = https://github.com/${repoUser}/${repoName}/tree/main/${weekName};
+    repoLink.href = "https://github.com/" + repoUser + "/" + repoName + "/tree/main/" + weekName;
     fileContainer.innerHTML = "Cargando archivos...";
 
     try {
-      const res = await fetch(https://api.github.com/repos/${repoUser}/${repoName}/contents/${weekName});
+      const res = await fetch("https://api.github.com/repos/" + repoUser + "/" + repoName + "/contents/" + weekName);
       const data = await res.json();
 
       if (Array.isArray(data)) {
-        const files = data.filter(f => !f.name.includes('.git'));
-
-        if (files.length === 0) {
-          fileContainer.innerHTML = "No hay archivos.";
-          return;
-        }
-
-        fileContainer.innerHTML = files.map(f => `
+        fileContainer.innerHTML = data.map(f => `
           <div>
             <a href="${f.download_url}" target="_blank">${f.name}</a>
           </div>
         `).join('');
       } else {
-        fileContainer.innerHTML = "No hay archivos.";
+        fileContainer.innerHTML = "No se encontraron archivos en esta semana.";
       }
-
     } catch (error) {
-      fileContainer.innerHTML = "Error al cargar.";
+      fileContainer.innerHTML = "Error al conectar con GitHub.";
     }
   }
 
-  // LOGIN SIMPLE
   function login() {
     const user = document.getElementById("user").value;
     const pass = document.getElementById("pass").value;
@@ -189,7 +195,7 @@
 
     if (user === "kevin" && pass === "123456") {
       msg.style.color = "lime";
-      msg.textContent = "Acceso correcto";
+      msg.textContent = "Acceso correcto. ¡Hola Kevin!";
     } else {
       msg.style.color = "red";
       msg.textContent = "Usuario o contraseña incorrectos";
