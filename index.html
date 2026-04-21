@@ -14,140 +14,163 @@
       --text:#e9efe8;--card-border: rgba(0,255,136,0.12);
     }
     *{box-sizing:border-box}html,body{height:100%}
-    body{margin:0;font-family:"Poppins",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;}
+    body{margin:0;font-family:"Poppins",Arial,sans-serif;background:var(--bg);color:var(--text);}
 
     header{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:20px;padding:18px 26px;background:#0b0b0b;}
     .header-left img{height:72px;border-radius:8px;}
     .header-center{text-align:center;}
-    .header-center h1{margin:0;font-size:22px;text-transform:uppercase;color:var(--text);}
-    .uni{margin-top:6px;font-size:13px;color:var(--muted);}
-    .name{margin-top:4px;font-size:14px;font-weight:600;color:var(--accent);}
-    nav.header-nav{display:flex;gap:12px;justify-self:end;}
-    nav.header-nav a{color:var(--accent);text-decoration:none;font-weight:600;padding:8px 12px;border-radius:8px;transition:all .16s ease;}
-    nav.header-nav a[aria-current="page"]{background:rgba(0,255,136,0.08);color:var(--text);}
-    nav.header-nav a:hover{transform:translateY(-3px);color:var(--text);background:rgba(0,255,136,0.06);}
+    .header-center h1{margin:0;font-size:22px;text-transform:uppercase;}
+    .uni{font-size:13px;color:var(--muted);}
+    .name{font-size:14px;font-weight:600;color:var(--accent);}
+    nav.header-nav{display:flex;gap:12px;}
+    nav.header-nav a{color:var(--accent);text-decoration:none;font-weight:600;padding:8px 12px;border-radius:8px;}
+    nav.header-nav a:hover{background:rgba(0,255,136,0.06);}
 
-    main{max-width:1100px;margin:28px auto;padding:0 18px 60px;}
-    .panel{background:var(--panel);border-radius:12px;padding:22px;box-shadow:0 10px 32px rgba(0,0,0,0.6);border:1px solid var(--card-border);}
-    h2{margin:0 0 14px;color:var(--accent);font-size:20px;}
-    .tasks-grid{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;}
-    .task-card{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:22px;border-radius:12px;border:2px solid var(--card-border);background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0));transition:transform .18s,box-shadow .18s,border-color .18s;box-shadow:0 8px 22px rgba(0,0,0,0.6);text-decoration:none;color:var(--text);cursor:pointer;}
-    .task-card:hover{transform:translateY(-8px);box-shadow:0 18px 46px rgba(0,255,136,0.08);border-color:rgba(0,255,136,0.28);}
-    .task-icon{font-size:28px;color:var(--accent);}
-    .task-num{font-size:28px;font-weight:700;color:var(--text);}
-    .task-label{font-weight:600;color:var(--text);}
-    .section{display:none;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s;}
-    .section.active{display:block;opacity:1;transform:translateY(0);}
-    .file-list a{display:block;color:var(--muted);margin:4px 0;text-decoration:none;}
-    .file-list a:hover{color:var(--accent);}
-    iframe{width:100%;height:600px;border:none;margin-top:12px;border-radius:10px;}
-    .repo-btn{margin-top:14px;display:inline-block;padding:8px 14px;background:var(--accent);color:#000;border-radius:8px;text-decoration:none;font-weight:600;}
-    @media (max-width:520px){.tasks-grid{grid-template-columns:1fr;}header{grid-template-columns:1fr;row-gap:12px;text-align:center;}nav.header-nav{justify-self:center;}}
+    main{max-width:1100px;margin:28px auto;padding:0 18px;}
+    .panel{background:var(--panel);border-radius:12px;padding:22px;border:1px solid var(--card-border);}
+    h2{color:var(--accent);}
+
+    .tasks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-top:18px;}
+    .task-card{padding:20px;text-align:center;border-radius:12px;border:2px solid var(--card-border);cursor:pointer;}
+    .task-card:hover{border-color:var(--accent);}
+
+    .section{display:none;}
+    .section.active{display:block;}
+
+    input{padding:10px;border-radius:8px;border:none;margin:5px 0;width:100%;}
+    button{padding:10px;border:none;border-radius:8px;background:var(--accent);cursor:pointer;}
+
+    .error{color:red;margin-top:10px;}
   </style>
 </head>
+
 <body>
-  <header>
-    <div class="header-left">
-      <img src="upla.PNG" alt="Logo">
-    </div>
-    <div class="header-center">
-      <h1>BASE DE DATOS 2</h1>
-      <div class="uni">Universidad Peruana Los Andes</div>
-      <div class="name">Kevin Alfredo Macha Bruno</div>
-    </div>
-    <nav class="header-nav">
-      <a href="#" id="nav-inicio" aria-current="page" onclick="showSection(event,'inicio')">Inicio</a>
-      <a href="#" id="nav-tareas" onclick="showSection(event,'tareas')">Tareas</a>
-    </nav>
-  </header>
 
-  <main>
-    <!-- INICIO -->
-    <section id="inicio" class="section active">
-      <div class="panel">
-        <h2>Bienvenido</h2>
-        <p>Bienvenido al portal de <strong>Base de Datos 2</strong>. Aquí accederás a las tareas semanales del curso.</p>
-      </div>
-    </section>
+<header>
+  <div class="header-left">
+    <img src="upla.PNG" alt="Logo">
+  </div>
+  <div class="header-center">
+    <h1>BASE DE DATOS 2</h1>
+    <div class="uni">Universidad Peruana Los Andes</div>
+    <div class="name">Kevin Alfredo Macha Bruno</div>
+  </div>
+  <nav class="header-nav">
+    <a href="#" onclick="showSection('inicio')">Inicio</a>
+    <a href="#" onclick="showSection('tareas')">Tareas</a>
+    <a href="#" onclick="showSection('login')">Login</a>
+  </nav>
+</header>
 
-    <!-- TAREAS -->
-    <section id="tareas" class="section">
-      <div class="panel">
-        <h2>Tareas - Semanas</h2>
-        <div class="tasks-grid" id="weeks"></div>
-      </div>
-    </section>
+<main>
 
-    <!-- CONTENIDO DE SEMANA -->
-    <section id="semana-view" class="section">
-      <div class="panel">
-        <h2 id="semana-title"></h2>
-        <div id="file-container" class="file-list"></div>
-        <a id="repo-link" class="repo-btn" target="_blank">Ir al repositorio</a>
-      </div>
-    </section>
-  </main>
+<section id="inicio" class="section active">
+  <div class="panel">
+    <h2>Bienvenido</h2>
+    <p>Portal del curso Base de Datos 2</p>
+  </div>
+</section>
 
-  <script>
-    const weeksContainer = document.getElementById('weeks');
-    const repoUser = "KEVIN43287";
-    const repoName = "Actividades";
+<section id="tareas" class="section">
+  <div class="panel">
+    <h2>Unidades</h2>
+    <div class="tasks-grid" id="units"></div>
+  </div>
+</section>
 
-    for (let i = 1; i <= 16; i++) {
-      const card = document.createElement('div');
-      card.className = 'task-card';
-      card.innerHTML = `
-        <div class="task-icon"><i class="fas fa-database"></i></div>
-        <div class="task-num">${String(i).padStart(2,'0')}</div>
-        <div class="task-label">Semana ${i}</div>
-      `;
-      card.onclick = () => loadWeek(i);
-      weeksContainer.appendChild(card);
-    }
+<section id="weeks-view" class="section">
+  <div class="panel">
+    <h2 id="unit-title"></h2>
+    <div class="tasks-grid" id="weeks"></div>
+  </div>
+</section>
 
-    function showSection(evt,id){
-      if(evt) evt.preventDefault();
-      document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      document.querySelectorAll('nav.header-nav a').forEach(a=>a.removeAttribute('aria-current'));
-      if(document.getElementById('nav-'+id)) document.getElementById('nav-'+id).setAttribute('aria-current','page');
-      window.scrollTo({top:0,behavior:'smooth'});
-    }
+<section id="semana-view" class="section">
+  <div class="panel">
+    <h2 id="semana-title"></h2>
+    <div id="file-container"></div>
+    <a id="repo-link" target="_blank">Ir al repositorio</a>
+  </div>
+</section>
 
-    async function loadWeek(num){
-      const weekName = `Semana${num}`;
-      showSection(null,'semana-view');
-      document.getElementById('semana-title').textContent = `Archivos - ${weekName}`;
-      const fileContainer = document.getElementById('file-container');
-      const repoLink = document.getElementById('repo-link');
-      repoLink.href = `https://github.com/${repoUser}/${repoName}/tree/main/${weekName}`;
-      fileContainer.innerHTML = "Cargando archivos...";
+<section id="login" class="section">
+  <div class="panel">
+    <h2>Login</h2>
+    <input type="text" id="user" placeholder="Usuario">
+    <input type="password" id="pass" placeholder="Contraseña">
+    <button onclick="login()">Ingresar</button>
+    <div id="error" class="error"></div>
+  </div>
+</section>
 
-      try {
-        const res = await fetch(`https://api.github.com/repos/${repoUser}/${repoName}/contents/${weekName}`);
-        if (!res.ok) throw new Error("No se pudo acceder a los archivos");
-        const data = await res.json();
+</main>
 
-        if (Array.isArray(data) && data.length) {
-          const visibleFiles = data.filter(f => !f.name.startsWith('.git') && !f.name.endsWith('.gitkeep'));
-          if (visibleFiles.length) {
-            fileContainer.innerHTML = visibleFiles.map(f => `
-              <div>
-                <a href="${f.download_url}" target="_blank"><i class="fa-solid fa-file"></i> ${f.name}</a>
-                ${f.name.endsWith('.pdf') || f.name.endsWith('.png') || f.name.endsWith('.jpg') ? 
-                  `<iframe src="${f.download_url}"></iframe>` : ''}
-              </div>
-            `).join('');
-          } else {
-            fileContainer.innerHTML = "No hay archivos visibles en esta semana.";
-          }
-        } else {
-          fileContainer.innerHTML = "No hay archivos en esta semana.";
-        }
-      } catch (err) {
-        fileContainer.innerHTML = "Error al cargar los archivos.";
-      }
-    }
-  </script>
+<script>
+
+const repoUser="KEVIN43287";
+const repoName="Actividades";
+
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// UNIDADES
+const unitsContainer=document.getElementById('units');
+for(let u=1;u<=4;u++){
+  let div=document.createElement('div');
+  div.className="task-card";
+  div.innerText="Unidad "+u;
+  div.onclick=()=>loadUnit(u);
+  unitsContainer.appendChild(div);
+}
+
+// CARGAR SEMANAS
+function loadUnit(u){
+  showSection('weeks-view');
+  const weeks=document.getElementById('weeks');
+  weeks.innerHTML="";
+  let start=(u-1)*4+1;
+  let end=start+3;
+
+  for(let i=start;i<=end;i++){
+    let card=document.createElement('div');
+    card.className="task-card";
+    card.innerText="Semana "+i;
+    card.onclick=()=>loadWeek(i);
+    weeks.appendChild(card);
+  }
+}
+
+// CARGAR ARCHIVOS
+async function loadWeek(num){
+  showSection('semana-view');
+  document.getElementById('semana-title').innerText="Semana "+num;
+
+  const container=document.getElementById('file-container');
+  container.innerHTML="Cargando...";
+
+  const res=await fetch(https://api.github.com/repos/${repoUser}/${repoName}/contents/Semana${num});
+  const data=await res.json();
+
+  container.innerHTML=data.map(f=><a href="${f.download_url}" target="_blank">${f.name}</a>).join('<br>');
+}
+
+// LOGIN
+function login(){
+  const u=document.getElementById('user').value;
+  const p=document.getElementById('pass').value;
+  const error=document.getElementById('error');
+
+  if(u==="kevin" && p==="123456"){
+    alert("Bienvenido Kevin (modo admin activado)");
+    error.innerText="";
+  }else{
+    error.innerText="Usuario o contraseña incorrectos";
+  }
+}
+
+</script>
+
 </body>
 </html>
