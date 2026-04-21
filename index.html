@@ -13,34 +13,14 @@
       --bg:#0f1110;--panel:#161616;--accent:#00ff88;--muted:#b9e6c4;
       --text:#e9efe8;--card-border: rgba(0,255,136,0.12);
     }
-    *{box-sizing:border-box}html,body{height:100%}
-    body{margin:0;font-family:"Poppins",Arial,sans-serif;background:var(--bg);color:var(--text);}
-
+    body{margin:0;font-family:"Poppins";background:var(--bg);color:var(--text);}
     header{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:20px;padding:18px 26px;background:#0b0b0b;}
     .header-left img{height:72px;border-radius:8px;}
-    .header-center{text-align:center;}
-    .header-center h1{margin:0;font-size:22px;text-transform:uppercase;}
-    .uni{font-size:13px;color:var(--muted);}
-    .name{font-size:14px;font-weight:600;color:var(--accent);}
-    nav.header-nav{display:flex;gap:12px;}
-    nav.header-nav a{color:var(--accent);text-decoration:none;font-weight:600;padding:8px 12px;border-radius:8px;}
-    nav.header-nav a:hover{background:rgba(0,255,136,0.06);}
-
+    nav a{color:var(--accent);margin:0 5px;text-decoration:none;cursor:pointer;}
     main{max-width:1100px;margin:28px auto;padding:0 18px;}
-    .panel{background:var(--panel);border-radius:12px;padding:22px;border:1px solid var(--card-border);}
-    h2{color:var(--accent);}
-
-    .tasks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-top:18px;}
-    .task-card{padding:20px;text-align:center;border-radius:12px;border:2px solid var(--card-border);cursor:pointer;}
-    .task-card:hover{border-color:var(--accent);}
-
     .section{display:none;}
     .section.active{display:block;}
-
-    input{padding:10px;border-radius:8px;border:none;margin:5px 0;width:100%;}
-    button{padding:10px;border:none;border-radius:8px;background:var(--accent);cursor:pointer;}
-
-    .error{color:red;margin-top:10px;}
+    .task-card{padding:20px;border:1px solid #333;margin:10px;cursor:pointer;text-align:center;}
   </style>
 </head>
 
@@ -48,131 +28,123 @@
 
 <header>
   <div class="header-left">
-    <img src="upla.PNG" alt="Logo">
+    <img src="upla.PNG">
   </div>
-  <div class="header-center">
-    <h1>BASE DE DATOS 2</h1>
-    <div class="uni">Universidad Peruana Los Andes</div>
-    <div class="name">Kevin Alfredo Macha Bruno</div>
+
+  <div>
+    <h2>BASE DE DATOS 2</h2>
+    <p>Universidad Peruana Los Andes</p>
   </div>
-  <nav class="header-nav">
-    <a href="#" onclick="showSection(event,'inicio')">Inicio</a>
-    <a href="#" onclick="showSection(event,'tareas')">Tareas</a>
-    <a href="#" onclick="showSection(event,'login')">Login</a>
+
+  <nav>
+    <a onclick="showSection('inicio')">Inicio</a>
+    <a onclick="showSection('tareas')">Tareas</a>
+    <a onclick="showSection('login')">Login</a>
   </nav>
 </header>
 
 <main>
 
 <section id="inicio" class="section active">
-  <div class="panel">
-    <h2>Bienvenido</h2>
-    <p>Portal del curso Base de Datos 2</p>
-  </div>
+  <h2>Bienvenido</h2>
 </section>
 
 <section id="tareas" class="section">
-  <div class="panel">
-    <h2>Unidades</h2>
-    <div class="tasks-grid" id="units"></div>
-  </div>
+  <h2>Unidades</h2>
+  <div id="units"></div>
 </section>
 
 <section id="weeks-view" class="section">
-  <div class="panel">
-    <h2 id="unit-title"></h2>
-    <div class="tasks-grid" id="weeks"></div>
-  </div>
+  <h2 id="unit-title"></h2>
+  <div id="weeks"></div>
 </section>
 
 <section id="semana-view" class="section">
-  <div class="panel">
-    <h2 id="semana-title"></h2>
-    <div id="file-container"></div>
-    <a id="repo-link" target="_blank">Ir al repositorio</a>
-  </div>
+  <h2 id="semana-title"></h2>
+  <div id="file-container"></div>
 </section>
 
 <section id="login" class="section">
-  <div class="panel">
-    <h2>Login</h2>
-    <input type="text" id="user" placeholder="Usuario">
-    <input type="password" id="pass" placeholder="Contraseña">
-    <button onclick="login()">Ingresar</button>
-    <div id="error" class="error"></div>
-  </div>
+  <h2>Login</h2>
+  <input id="user" placeholder="Usuario">
+  <input id="pass" type="password" placeholder="Contraseña">
+  <button onclick="login()">Entrar</button>
+  <p id="error" style="color:red;"></p>
 </section>
 
 </main>
 
 <script>
 
+document.addEventListener("DOMContentLoaded", ()=>{
+
 const repoUser="KEVIN43287";
 const repoName="Actividades";
 
-function showSection(evt,id){
-  if(evt) evt.preventDefault();
-
+window.showSection = function(id){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-
-  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 // UNIDADES
-const unitsContainer=document.getElementById('units');
+const units=document.getElementById('units');
 for(let u=1;u<=4;u++){
   let div=document.createElement('div');
   div.className="task-card";
   div.innerText="Unidad "+u;
   div.onclick=()=>loadUnit(u);
-  unitsContainer.appendChild(div);
+  units.appendChild(div);
 }
 
-// CARGAR SEMANAS
-function loadUnit(u){
-  showSection(null,'weeks-view');
+// SEMANAS
+window.loadUnit=function(u){
+  showSection('weeks-view');
   const weeks=document.getElementById('weeks');
   weeks.innerHTML="";
   let start=(u-1)*4+1;
   let end=start+3;
 
   for(let i=start;i<=end;i++){
-    let card=document.createElement('div');
-    card.className="task-card";
-    card.innerText="Semana "+i;
-    card.onclick=()=>loadWeek(i);
-    weeks.appendChild(card);
+    let div=document.createElement('div');
+    div.className="task-card";
+    div.innerText="Semana "+i;
+    div.onclick=()=>loadWeek(i);
+    weeks.appendChild(div);
   }
 }
 
-// CARGAR ARCHIVOS
-async function loadWeek(num){
-  showSection(null,'semana-view');
+// ARCHIVOS
+window.loadWeek=async function(num){
+  showSection('semana-view');
   document.getElementById('semana-title').innerText="Semana "+num;
 
-  const container=document.getElementById('file-container');
-  container.innerHTML="Cargando...";
+  const cont=document.getElementById('file-container');
+  cont.innerHTML="Cargando...";
 
-  const res=await fetch(https://api.github.com/repos/${repoUser}/${repoName}/contents/Semana${num});
-  const data=await res.json();
+  try{
+    const res=await fetch(https://api.github.com/repos/${repoUser}/${repoName}/contents/Semana${num});
+    const data=await res.json();
 
-  container.innerHTML=data.map(f=><a href="${f.download_url}" target="_blank">${f.name}</a>).join('<br>');
+    cont.innerHTML=data.map(f=><a href="${f.download_url}" target="_blank">${f.name}</a>).join('<br>');
+  }catch{
+    cont.innerHTML="Error cargando archivos";
+  }
 }
 
 // LOGIN
-function login(){
+window.login=function(){
   const u=document.getElementById('user').value;
   const p=document.getElementById('pass').value;
-  const error=document.getElementById('error');
 
   if(u==="kevin" && p==="123456"){
-    alert("Bienvenido Kevin (modo admin activado)");
-    error.innerText="";
+    alert("Bienvenido Kevin");
+    document.getElementById('error').innerText="";
   }else{
-    error.innerText="Usuario o contraseña incorrectos";
+    document.getElementById('error').innerText="Usuario o contraseña incorrectos";
   }
 }
+
+});
 
 </script>
 
