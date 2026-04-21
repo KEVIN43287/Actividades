@@ -106,86 +106,95 @@
 </main>
 
 <script>
-document.addEventListener("DOMContentLoaded", function(){
+  const weeksContainer = document.getElementById('weeks');
+  const repoUser = "KEVIN43287";
+  const repoName = "Actividades";
 
-const repoUser="KEVIN43287";
-const repoName="Actividades";
-
-// 🔥 navegación
-window.showSection=function(evt,id){
-  if(evt) evt.preventDefault();
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-// 🔥 unidades
-const units=document.getElementById('units');
-for(let u=1;u<=4;u++){
-  let div=document.createElement('div');
-  div.className="task-card";
-  div.innerHTML=<div class="task-label">Unidad ${u}</div>;
-  div.onclick=()=>loadUnit(u);
-  units.appendChild(div);
-}
-
-// 🔥 semanas
-window.loadUnit=function(u){
-  showSection(null,'weeks-view');
-  const weeks=document.getElementById('weeks');
-  weeks.innerHTML="";
-  let start=(u-1)*4+1;
-
-  for(let i=start;i<start+4;i++){
-    let div=document.createElement('div');
-    div.className="task-card";
-    div.innerHTML=<div class="task-label">Semana ${i}</div>;
-    div.onclick=()=>loadWeek(i);
-    weeks.appendChild(div);
+  // CREAR SEMANAS
+  for (let i = 1; i <= 16; i++) {
+    const card = document.createElement('div');
+    card.className = 'task-card';
+    card.innerHTML = `
+      <div class="task-icon"><i class="fas fa-database"></i></div>
+      <div class="task-num">${String(i).padStart(2,'0')}</div>
+      <div class="task-label">Semana ${i}</div>
+    `;
+    card.onclick = function() {
+      loadWeek(i);
+    };
+    weeksContainer.appendChild(card);
   }
-}
 
-// 🔥 archivos (NO rompe lo que ya tenías)
-window.loadWeek=async function(num){
-  showSection(null,'semana-view');
+  // CAMBIO DE SECCIONES (FIX REAL)
+  function showSection(e, id) {
+    if (e) e.preventDefault();
 
-  document.getElementById('semana-title').textContent="Semana "+num;
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(sec => sec.classList.remove('active'));
 
-  const cont=document.getElementById('file-container');
-  const repoLink=document.getElementById('repo-link');
+    const target = document.getElementById(id);
+    if (target) target.classList.add('active');
 
-  repoLink.href=https://github.com/${repoUser}/${repoName}/tree/main/Semana${num};
-  cont.innerHTML="Cargando...";
+    const links = document.querySelectorAll('nav.header-nav a');
+    links.forEach(a => a.removeAttribute('aria-current'));
 
-  try{
-    const res=await fetch(https://api.github.com/repos/${repoUser}/${repoName}/contents/Semana${num});
-    if(!res.ok) throw new Error();
-    const data=await res.json();
-
-    cont.innerHTML=data.map(f=>`
-      <div>
-        <a href="${f.download_url}" target="_blank">${f.name}</a>
-      </div>
-    `).join('');
-
-  }catch{
-    cont.innerHTML="Error al cargar archivos";
+    const activeLink = document.getElementById('nav-' + id);
+    if (activeLink) activeLink.setAttribute('aria-current', 'page');
   }
-}
 
-// 🔥 login
-window.login=function(){
-  const u=document.getElementById('user').value;
-  const p=document.getElementById('pass').value;
+  // CARGAR ARCHIVOS DE GITHUB
+  async function loadWeek(num) {
+    const weekName = Semana${num};
+    showSection(null, 'semana-view');
 
-  if(u==="kevin" && p==="123456"){
-    alert("Bienvenido Kevin");
-    document.getElementById('error').innerText="";
-  }else{
-    document.getElementById('error').innerText="Usuario o contraseña incorrectos";
+    document.getElementById('semana-title').textContent = Archivos - ${weekName};
+
+    const fileContainer = document.getElementById('file-container');
+    const repoLink = document.getElementById('repo-link');
+
+    repoLink.href = https://github.com/${repoUser}/${repoName}/tree/main/${weekName};
+    fileContainer.innerHTML = "Cargando archivos...";
+
+    try {
+      const res = await fetch(https://api.github.com/repos/${repoUser}/${repoName}/contents/${weekName});
+      const data = await res.json();
+
+      if (Array.isArray(data)) {
+        const files = data.filter(f => !f.name.includes('.git'));
+
+        if (files.length === 0) {
+          fileContainer.innerHTML = "No hay archivos.";
+          return;
+        }
+
+        fileContainer.innerHTML = files.map(f => `
+          <div>
+            <a href="${f.download_url}" target="_blank">${f.name}</a>
+          </div>
+        `).join('');
+      } else {
+        fileContainer.innerHTML = "No hay archivos.";
+      }
+
+    } catch (error) {
+      fileContainer.innerHTML = "Error al cargar.";
+    }
   }
-}
 
-});
+  // LOGIN SIMPLE
+  function login() {
+    const user = document.getElementById("user").value;
+    const pass = document.getElementById("pass").value;
+    const msg = document.getElementById("login-msg");
+
+    if (user === "kevin" && pass === "123456") {
+      msg.style.color = "lime";
+      msg.textContent = "Acceso correcto";
+    } else {
+      msg.style.color = "red";
+      msg.textContent = "Usuario o contraseña incorrectos";
+    }
+  }
 </script>
 
 </body>
