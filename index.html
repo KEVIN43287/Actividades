@@ -42,146 +42,145 @@
     .file-list a:hover{color:var(--accent);}
     iframe{width:100%;height:600px;border:none;margin-top:12px;border-radius:10px;}
     .repo-btn{margin-top:14px;display:inline-block;padding:8px 14px;background:var(--accent);color:#000;border-radius:8px;text-decoration:none;font-weight:600;}
-    @media (max-width:520px){.tasks-grid{grid-template-columns:1fr;}header{grid-template-columns:1fr;row-gap:12px;text-align:center;}nav.header-nav{justify-self:center;}}
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="header-left">
-      <img src="upla.PNG" alt="Logo">
-    </div>
 
-    <div class="header-center">
-      <h1>BASE DE DATOS 2</h1>
-      <div class="uni">Universidad Peruana Los Andes</div>
-      <div class="name">Kevin Alfredo Macha Bruno</div>
-    </div>
+<header>
+  <div class="header-left">
+    <img src="upla.PNG" alt="Logo">
+  </div>
+  <div class="header-center">
+    <h1>BASE DE DATOS 2</h1>
+    <div class="uni">Universidad Peruana Los Andes</div>
+    <div class="name">Kevin Alfredo Macha Bruno</div>
+  </div>
+  <nav class="header-nav">
+    <a href="#" onclick="showSection(event,'inicio')">Inicio</a>
+    <a href="#" onclick="showSection(event,'tareas')">Tareas</a>
+    <a href="#" onclick="showSection(event,'login')">Login</a>
+  </nav>
+</header>
 
-    <nav class="header-nav">
-      <a href="#" onclick="showSection(event,'inicio')" id="nav-inicio" aria-current="page">Inicio</a>
-      <a href="#" onclick="showSection(event,'tareas')" id="nav-tareas">Tareas</a>
-      <a href="#" onclick="showSection(event,'login')" id="nav-login">Login</a>
-    </nav>
-  </header>
+<main>
 
-  <main>
-    <section id="inicio" class="section active">
-      <div class="panel">
-        <h2>Bienvenido</h2>
-        <p>Bienvenido al portal de <strong>Base de Datos 2</strong>.</p>
-      </div>
-    </section>
+<section id="inicio" class="section active">
+  <div class="panel">
+    <h2>Bienvenido</h2>
+    <p>Bienvenido al portal de <strong>Base de Datos 2</strong>.</p>
+  </div>
+</section>
 
-    <section id="tareas" class="section">
-      <div class="panel">
-        <h2>Unidades</h2>
-        <div class="tasks-grid" id="units"></div>
-      </div>
-    </section>
+<section id="tareas" class="section">
+  <div class="panel">
+    <h2>Unidades</h2>
+    <div class="tasks-grid" id="units"></div>
+  </div>
+</section>
 
-    <section id="weeks-view" class="section">
-      <div class="panel">
-        <h2 id="unit-title"></h2>
-        <div class="tasks-grid" id="weeks"></div>
-      </div>
-    </section>
+<section id="weeks-view" class="section">
+  <div class="panel">
+    <h2 id="unit-title"></h2>
+    <div class="tasks-grid" id="weeks"></div>
+  </div>
+</section>
 
-    <section id="semana-view" class="section">
-      <div class="panel">
-        <h2 id="semana-title"></h2>
-        <div id="file-container" class="file-list"></div>
-        <a id="repo-link" class="repo-btn" target="_blank">Ir al repositorio</a>
-      </div>
-    </section>
+<section id="semana-view" class="section">
+  <div class="panel">
+    <h2 id="semana-title"></h2>
+    <div id="file-container" class="file-list"></div>
+    <a id="repo-link" class="repo-btn" target="_blank">Ir al repositorio</a>
+  </div>
+</section>
 
-    <section id="login" class="section">
-      <div class="panel">
-        <h2>Login</h2>
-        <input id="user" placeholder="Usuario">
-        <input id="pass" type="password" placeholder="Contraseña">
-        <button onclick="login()">Ingresar</button>
-        <div id="error"></div>
-      </div>
-    </section>
-  </main>
+<section id="login" class="section">
+  <div class="panel">
+    <h2>Login</h2>
+    <input id="user" placeholder="Usuario">
+    <input id="pass" type="password" placeholder="Contraseña">
+    <button onclick="login()">Ingresar</button>
+    <p id="error" style="color:red;"></p>
+  </div>
+</section>
+
+</main>
 
 <script>
 document.addEventListener("DOMContentLoaded", function(){
 
-const repoUser = "KEVIN43287";
-const repoName = "Actividades";
+const repoUser="KEVIN43287";
+const repoName="Actividades";
 
-window.showSection = function(evt,id){
+// 🔥 SOLUCIÓN: funciones globales
+window.showSection=function(evt,id){
   if(evt) evt.preventDefault();
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-const unitsContainer = document.getElementById('units');
-
-for (let u = 1; u <= 4; u++) {
-  const div = document.createElement('div');
-  div.className = 'task-card';
-  div.innerHTML = <div class="task-label">Unidad ${u}</div>;
-  div.onclick = () => loadUnit(u);
-  unitsContainer.appendChild(div);
+// UNIDADES
+const units=document.getElementById('units');
+for(let u=1;u<=4;u++){
+  let div=document.createElement('div');
+  div.className="task-card";
+  div.innerHTML=<div class="task-label">Unidad ${u}</div>;
+  div.onclick=()=>loadUnit(u);
+  units.appendChild(div);
 }
 
-window.loadUnit = function(u){
+// SEMANAS
+window.loadUnit=function(u){
   showSection(null,'weeks-view');
-  const weeks = document.getElementById('weeks');
-  weeks.innerHTML = "";
-
-  let start = (u-1)*4+1;
+  const weeks=document.getElementById('weeks');
+  weeks.innerHTML="";
+  let start=(u-1)*4+1;
 
   for(let i=start;i<start+4;i++){
-    const card = document.createElement('div');
-    card.className = 'task-card';
-    card.innerHTML = <div class="task-label">Semana ${i}</div>;
-    card.onclick = () => loadWeek(i);
-    weeks.appendChild(card);
+    let div=document.createElement('div');
+    div.className="task-card";
+    div.innerHTML=<div class="task-label">Semana ${i}</div>;
+    div.onclick=()=>loadWeek(i);
+    weeks.appendChild(div);
   }
 }
 
-window.loadWeek = async function(num){
+// ARCHIVOS
+window.loadWeek=async function(num){
   showSection(null,'semana-view');
 
-  document.getElementById('semana-title').textContent = Semana ${num};
+  document.getElementById('semana-title').innerText="Semana "+num;
 
-  const container = document.getElementById('file-container');
-  const repoLink = document.getElementById('repo-link');
+  const cont=document.getElementById('file-container');
+  const repoLink=document.getElementById('repo-link');
 
-  repoLink.href = https://github.com/${repoUser}/${repoName}/tree/main/Semana${num};
-  container.innerHTML = "Cargando archivos...";
+  repoLink.href=https://github.com/${repoUser}/${repoName}/tree/main/Semana${num};
+  cont.innerHTML="Cargando...";
 
-  try {
-    const res = await fetch(https://api.github.com/repos/${repoUser}/${repoName}/contents/Semana${num});
-    if (!res.ok) throw new Error();
+  try{
+    const res=await fetch(https://api.github.com/repos/${repoUser}/${repoName}/contents/Semana${num});
+    const data=await res.json();
 
-    const data = await res.json();
-
-    container.innerHTML = data.map(f => `
+    cont.innerHTML=data.map(f=>`
       <div>
         <a href="${f.download_url}" target="_blank">${f.name}</a>
       </div>
     `).join('');
-
-  } catch {
-    container.innerHTML = "Error al cargar los archivos.";
+  }catch{
+    cont.innerHTML="Error al cargar archivos";
   }
 }
 
-window.login = function(){
-  const u = document.getElementById('user').value;
-  const p = document.getElementById('pass').value;
-  const error = document.getElementById('error');
+// LOGIN
+window.login=function(){
+  const u=document.getElementById('user').value;
+  const p=document.getElementById('pass').value;
 
   if(u==="kevin" && p==="123456"){
     alert("Bienvenido Kevin");
-    error.innerText="";
+    document.getElementById('error').innerText="";
   }else{
-    error.innerText="Usuario o contraseña incorrectos";
+    document.getElementById('error').innerText="Usuario o contraseña incorrectos";
   }
 }
 
