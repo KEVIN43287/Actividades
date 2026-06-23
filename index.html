@@ -10,7 +10,6 @@
 
   <style>
     :root{
-      /* TUS COLORES ORIGINALES EXACTOS */
       --bg:#050706; 
       --panel:rgba(22, 22, 22, 0.8);
       --accent:#00ff88;
@@ -116,32 +115,28 @@
       border-color: var(--accent);
       background: rgba(0,255,136,0.05);
       box-shadow: 0 0 20px rgba(0,255,136,0.2);
-      transform: translateY(-4px); /* EFECTO VISUAL: Eleva sutilmente las tarjetas al pasar el mouse */
+      transform: scale(1.05);
     }
     .task-icon i { font-size: 24px; color: var(--accent); }
-    .task-num { font-size: 11px; color: var(--muted); font-weight: bold; }
+
     .task-label{font-weight:600;}
 
     .section{display:none;opacity:0;}
     .section.active{display:block;opacity:1;}
 
-    /* LISTA DE ARCHIVOS MEJORADA VISUALMENTE */
     .file-list a{
-      display: block;
-      color: var(--muted);
-      margin: 8px 0;
-      text-decoration: none;
-      padding: 12px;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.03); /* Un fondo gris traslúcido muy elegante */
-      border: 1px solid rgba(0, 255, 136, 0.1); /* Bordes sutiles en verde neón */
-      transition: all 0.25s ease;
+      display:block;
+      color:var(--muted);
+      margin:4px 0;
+      text-decoration:none;
+      padding: 10px;
+      border-radius: 5px;
+      transition: 0.2s;
     }
     .file-list a:hover{
-      color: var(--accent);
+      color:var(--accent);
       background: rgba(0,255,136,0.1);
-      padding-left: 20px; /* EFECTO VISUAL: El archivo se desplaza suavemente a la derecha */
-      border-color: var(--accent);
+      padding-left: 15px;
     }
     .repo-btn{
       margin-top:14px;
@@ -213,9 +208,9 @@
   <div class="panel">
     <h2 id="semana-title"></h2>
     <div id="file-container" class="file-list"></div>
-    <div style="display:flex; gap:10px; align-items:center; margin-top: 15px;">
+    <div style="display:flex; gap:10px; align-items:center;">
       <a id="repo-link" class="repo-btn" target="_blank">Ir al repositorio</a>
-      <button onclick="showSection(event,'weeks-view')" style="background:transparent; border:1px solid #555; color:#fff; padding:10px; cursor:pointer; border-radius:8px;">Atrás</button>
+      <button onclick="showSection(event,'weeks-view')" style="margin-top:14px; background:transparent; border:1px solid #555; color:#fff; padding:10px; cursor:pointer; border-radius:8px;">Atrás</button>
     </div>
   </div>
 </section>
@@ -303,10 +298,10 @@
 
       if (Array.isArray(data)) {
         fileContainer.innerHTML = data.map(f => {
-          const filePath = f.path; 
-          
-          /* CORRECCIÓN EXPLICITA: Abre en pestaña nueva sin forzar descarga */
-          const viewUrl = https://raw.githubusercontent.com/${repoUser}/${repoName}/main/${encodeURIComponent(filePath)};
+          // Tomamos la ruta del archivo (Ej: Semana 1/archivo.pdf)
+          const filePath = f.path;
+          // Creamos la URL directa (raw) para previsualizar el PDF sin forzar la descarga
+          const viewUrl = "https://raw.githubusercontent.com/" + repoUser + "/" + repoName + "/main/" + encodeURIComponent(filePath);
 
           return `
             <div>
