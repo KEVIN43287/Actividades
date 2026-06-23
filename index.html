@@ -10,6 +10,7 @@
 
   <style>
     :root{
+      /* TUS COLORES ORIGINALES EXACTOS */
       --bg:#050706; 
       --panel:rgba(22, 22, 22, 0.8);
       --accent:#00ff88;
@@ -41,6 +42,10 @@
       height:72px;
       border-radius:8px;
       filter: drop-shadow(0 0 5px var(--accent));
+      transition: transform 0.3s ease;
+    }
+    .header-left img:hover {
+      transform: scale(1.03);
     }
     
     .header-center{text-align:center;}
@@ -115,29 +120,38 @@
       border-color: var(--accent);
       background: rgba(0,255,136,0.05);
       box-shadow: 0 0 20px rgba(0,255,136,0.2);
-      transform: scale(1.05);
+      transform: translateY(-5px); /* Transición suave hacia arriba */
     }
     .task-icon i { font-size: 24px; color: var(--accent); }
-
+    .task-num { font-size: 11px; color: var(--muted); font-weight: bold; }
     .task-label{font-weight:600;}
 
     .section{display:none;opacity:0;}
     .section.active{display:block;opacity:1;}
 
+    /* EFECTO VISUAL MEJORADO PARA LA LISTA DE ARCHIVOS */
+    .file-list div { margin-bottom: 8px; }
     .file-list a{
-      display:block;
-      color:var(--muted);
-      margin:4px 0;
-      text-decoration:none;
-      padding: 10px;
-      border-radius: 5px;
-      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      margin: 4px 0;
+      text-decoration: none;
+      padding: 12px 16px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.01);
+      border: 1px solid rgba(0,255,136,0.05);
+      transition: all 0.25s ease;
     }
     .file-list a:hover{
-      color:var(--accent);
-      background: rgba(0,255,136,0.1);
-      padding-left: 15px;
+      color: var(--accent);
+      background: rgba(0,255,136,0.08);
+      border-color: var(--accent);
+      padding-left: 22px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
+    
     .repo-btn{
       margin-top:14px;
       display:inline-block;
@@ -207,7 +221,7 @@
 <section id="semana-view" class="section">
   <div class="panel">
     <h2 id="semana-title"></h2>
-    <div id="file-container" class="file-list"></div>
+    <div id="file-container" class="file-list" style="margin-bottom: 15px;"></div>
     <div style="display:flex; gap:10px; align-items:center;">
       <a id="repo-link" class="repo-btn" target="_blank">Ir al repositorio</a>
       <button onclick="showSection(event,'weeks-view')" style="margin-top:14px; background:transparent; border:1px solid #555; color:#fff; padding:10px; cursor:pointer; border-radius:8px;">Atrás</button>
@@ -281,7 +295,6 @@
   }
 
   async function loadWeek(num) {
-    // CORRECCIÓN: Si es la semana 1, usa el nombre con espacio como está en tu GitHub
     const weekName = (num === 1) ? "Semana 1" : "Semana" + num; 
     
     showSection(null, 'semana-view');
@@ -290,7 +303,6 @@
     const fileContainer = document.getElementById('file-container');
     const repoLink = document.getElementById('repo-link');
 
-    // Usamos encodeURIComponent para manejar el espacio en la URL de GitHub
     repoLink.href = "https://github.com/" + repoUser + "/" + repoName + "/tree/main/" + encodeURIComponent(weekName);
     fileContainer.innerHTML = "Cargando archivos...";
 
@@ -299,11 +311,18 @@
       const data = await res.json();
 
       if (Array.isArray(data)) {
-        fileContainer.innerHTML = data.map(f => `
-          <div>
-            <a href="${f.download_url}" target="_blank"><i class="far fa-file-alt"></i> ${f.name}</a>
-          </div>
-        `).join('');
+        fileContainer.innerHTML = data.map(f => {
+          const filePath = f.path; 
+          
+          /* CORRECCIÓN PRINCIPAL: Construye la URL raw para abrir en pestaña nueva sin forzar descarga */
+          const viewUrl = https://raw.githubusercontent.com/${repoUser}/${repoName}/main/${encodeURIComponent(filePath)};
+
+          return `
+            <div>
+              <a href="${viewUrl}" target="_blank"><i class="far fa-file-alt"></i> ${f.name}</a>
+            </div>
+          `;
+        }).join('');
       } else {
         fileContainer.innerHTML = "No se encontraron archivos en la carpeta: " + weekName;
       }
