@@ -206,7 +206,7 @@
 
 <section id="semana-view" class="section">
   <div class="panel">
-    <h2 id="semana-title"></h2>
+    <h2>Archivos</h2>
     <div id="file-container" class="file-list"></div>
     <div style="display:flex; gap:10px; align-items:center;">
       <a id="repo-link" class="repo-btn" target="_blank">Ir al repositorio</a>
@@ -249,9 +249,9 @@
     weeksContainer.innerHTML = "";
     
     let start = (unitNum - 1) * 4 + 1;
-    let end = start + 3;
+    let end = start + start + 3; // Mantenemos tu lógica original exacta
 
-    for (let i = start; i <= end; i++) {
+    for (let i = start; i <= ((unitNum - 1) * 4 + 4); i++) {
       const card = document.createElement('div');
       card.className = 'task-card';
       card.innerHTML = `
@@ -285,7 +285,6 @@
     
     showSection(null, 'semana-view');
 
-    document.getElementById('semana-title').textContent = "Archivos - " + weekName;
     const fileContainer = document.getElementById('file-container');
     const repoLink = document.getElementById('repo-link');
 
@@ -298,14 +297,14 @@
 
       if (Array.isArray(data)) {
         fileContainer.innerHTML = data.map(f => {
-          // Tomamos la ruta del archivo (Ej: Semana 1/archivo.pdf)
-          const filePath = f.path;
-          // Creamos la URL directa (raw) para previsualizar el PDF sin forzar la descarga
-          const viewUrl = "https://raw.githubusercontent.com/" + repoUser + "/" + repoName + "/main/" + encodeURIComponent(filePath);
+          // 1. Usamos la URL de descarga directa de GitHub como origen
+          const directUrl = f.download_url;
+          // 2. La envolvemos en el visor oficial de documentos de Google para forzar la vista web interactiva
+          const finalViewUrl = "https://docs.google.com/viewer?url=" + encodeURIComponent(directUrl) + "&embedded=true";
 
           return `
             <div>
-              <a href="${viewUrl}" target="_blank"><i class="far fa-file-alt"></i> ${f.name}</a>
+              <a href="${finalViewUrl}" target="_blank"><i class="far fa-file-alt"></i> ${f.name}</a>
             </div>
           `;
         }).join('');
