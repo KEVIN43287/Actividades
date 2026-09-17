@@ -1367,7 +1367,32 @@
 
 
     #units .task-card{
-      min-height:190px;
+      min-height:245px;
+      padding:26px 20px;
+    }
+
+
+    #weeks .task-card{
+      min-height:215px;
+      padding:24px 20px;
+    }
+
+
+    #units .task-label,
+    #weeks .task-label{
+      max-width:100%;
+      line-height:1.55;
+      text-wrap:balance;
+    }
+
+
+    #units .task-label{
+      font-size:14px;
+    }
+
+
+    #weeks .task-label{
+      font-size:13px;
     }
 
 
@@ -2807,10 +2832,26 @@
       #units .task-card,
       #weeks .task-card{
 
-        min-height:145px;
+        min-height:180px;
 
         padding:
-          20px 16px;
+          22px 16px;
+      }
+
+
+      #units .task-card{
+        min-height:205px;
+      }
+
+
+      #weeks .task-card{
+        min-height:195px;
+      }
+
+
+      #units .task-label,
+      #weeks .task-label{
+        line-height:1.5;
       }
 
 
@@ -3309,6 +3350,46 @@
 
 
     /* =====================================================
+       CONTENIDO DE UNIDADES Y SEMANAS
+       ===================================================== */
+
+    const unitNames = [
+      "Arquitecturas de Bases de Datos y Configuración del Entorno Corporativo",
+      "Administración de Instancias, Estructuras de Almacenamiento y Gestión de Datos Masivos",
+      "Seguridad Corporativa, Conectividad de Red y Alta Disponibilidad de Datos",
+      "Monitoreo de Servidores, Optimización del Desempeño y Recuperación Basada en Flashback"
+    ];
+
+
+    const unitRoman = [
+      "I",
+      "II",
+      "III",
+      "IV"
+    ];
+
+
+    const weekNames = [
+      "Formulación del Proyecto y Selección de la Arquitectura",
+      "Despliegue y Configuración de Motores de Datos (DBMS)",
+      "Modelamiento Físico y Mecanismos de Integración",
+      "Sustentación y Validación de la Infraestructura de Datos",
+      "Configuración de la Instancia y Gestión de Memoria del Servidor",
+      "Arquitectura Física de Almacenamiento y Distribución de Archivos",
+      "Organización de Esquemas Lógicos y Estrategias de Indexación",
+      "Sustentación y Pruebas de Carga de la Infraestructura de Almacenamiento",
+      "Configuración de Conectividad de Red y Seguridad del Entorno",
+      "Gestión de Privilegios, Roles y Auditoría de Datos",
+      "Estrategias de Backups Avanzados y Automatización (Jobs)",
+      "Recuperación ante Fallos y Planes de Contingencia",
+      "Auditoría, Monitoreo de Eventos y Diagnóstico de Alertas",
+      "Afinamiento y Optimización del Desempeño de Consultas (Tuning)",
+      "Implementación de Tecnologías de Recuperación Flashback",
+      "Sustentación Final e Integración del Proyecto de la Asignatura"
+    ];
+
+
+    /* =====================================================
        CREAR UNIDADES
        ===================================================== */
 
@@ -3332,7 +3413,7 @@
 
         <div class="task-label">
 
-          Unidad ${u}
+          Unidad ${unitRoman[u - 1]}: ${unitNames[u - 1]}
 
         </div>
 
@@ -3358,7 +3439,8 @@
         'unit-title'
       ).textContent =
         "Semanas de la Unidad " +
-        unitNum;
+        unitRoman[unitNum - 1] + ": " +
+        unitNames[unitNum - 1];
 
 
       weeksContainer.innerHTML =
@@ -3399,7 +3481,7 @@
 
           <div class="task-label">
 
-            Semana ${i}
+            Semana ${i}: ${weekNames[i - 1]}
 
           </div>
 
